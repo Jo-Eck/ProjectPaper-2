@@ -1,0 +1,110 @@
+% HIER EDITIEREN: 
+% Typ der Arbeit (für Deckblatt und ehrenwörtliche Erklärung)
+% - bitte Zutreffendes auswählen
+\newcommand{\typMeinerArbeit}{2. Project Paper} 
+
+
+% Thema der Arbeit (für ehrenwörtliche Erklärung, ohne Umbrüche)
+% HIER EDITIEREN: 
+\newcommand{\themaMeinerArbeit}{"Development and demonstration of a proof-of-concept for the integration of programming frameworks for high performance computing into a container-based workflow orchestrator."}
+
+% Vorname, Name der Autorin/des Autors (für Titelseite und Metadaten)
+% HIER EDITIEREN:
+\newcommand{\meinName}{Jon Eckerth}
+
+\thispagestyle{empty}
+
+% Include DHBW and Corporate Logo
+
+\begin{center}	
+\begin{tikzpicture}:
+    \node[midway,xshift=-5cm](c){\includegraphics[width=0.35\textwidth]{graphics/Hewlett_Packard_Labs_logo.png}};
+    \node[midway,xshift=5cm](c){\includegraphics[width=0.35\textwidth]{graphics/DHBW_Logo.png}};
+\end{tikzpicture}
+\end{center}
+
+
+\begin{spacing}{1}
+\begin{center}	
+~\vspace{0mm}
+
+% HIER EDITIEREN: Titel der Arbeit
+{\sffamily
+\large  
+% \Large  % bei sehr langen Titeln ggf. etwas kleinere Schriftart wählen
+\textbf{
+    Development and demonstration of a proof-of-concept for the integration of programming frameworks for high performance computing into a container-based workflow orchestrator.
+    }
+\bigskip
+\textbf{}
+}
+
+
+\vspace{15mm}
+
+% Typ wird automatisch eingefügt (oben festlegen)
+{\Large \typMeinerArbeit}
+
+\vspace{1cm}
+
+% HIER ggf. EDITIEREN
+submitted on \today 
+
+\vspace{15mm}
+
+Faculty of Economics
+\medskip
+
+%Studiengang:
+Degree program in Business Informatics
+
+\medskip
+
+% HIER EDITIEREN: Kurs eintragen
+International Management for Business and Information Technology 
+
+\vspace{10mm}
+
+von
+
+\vspace{10mm}
+    
+% Vorname und Name wird automatisch eingefügt (oben festlegen) 
+{\large\textsc{\meinName}}
+
+\vspace{10mm}
+\end{center}
+
+\vfill
+
+% HIER EDITIEREN: Name des Unternehmens, Name der Betreuerin/des Betreuers
+\begin{tabular}{ll}
+Practice supervisor : & DHBW Stuttgart: \\
+\hspace{0.4\linewidth} & \\
+$\langle$ Hewlett Packard Labs $\rangle$ & $\langle$ Titel, Vorname und Nachname $\rangle$ \\
+$\langle$ Harumi Kuno $\rangle$ 
+& $\langle$ der/des wissenschaftlichen Betreuerin/Prüferin (TBD) $\rangle$ \\
+$\langle$ Principal Research Scientist $\rangle$ \\
+\\
+Signature of the practice supervisor: \\
+\end{tabular}
+
+
+\vspace{1cm}
+%(etwas Platz für die Unterschrift der Betreuerin/des Betreuers aus der Ausbildungsstätte)
+\end{spacing}
+
+% falls ein Vertraulichkeitsvermerk erforderlich ist,
+% die Kommentarzeichen in den nachfolgenden Zeilen entfernen:
+ 
+% \begin{center}
+% \small
+% \textbf{Vertraulichkeitsvermerk}:
+% Der Inhalt dieser Arbeit darf weder als Ganzes noch in Auszügen \\
+% Personen außerhalb des Prüfungs- und Evaluationsverfahrens zugänglich gemacht werden, sofern keine anders lautende Genehmigung des Dualen Partners vorliegt. 
+% \end{center}
+
+% Meta-Daten für PDF-Datei basierend auf obigen Angaben
+\hypersetup{pdftitle={\themaMeinerArbeit}}
+\hypersetup{pdfauthor={\meinName}}
+\hypersetup{pdfsubject={\typMeinerArbeit\ DHBW Stuttgart \the\year}}
