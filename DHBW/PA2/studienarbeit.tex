@@ -1,0 +1,81 @@
+%%% LaTeX-Vorlage Version 1.8 %%%
+
+% Grundlegende Dokumenteneigenschaften gemäß DHBW-Vorgaben
+\documentclass[a4paper,fontsize=11pt,oneside,parskip=half,headings=normal]{scrreprt} 
+% \usepackage{showframe} % nur für Kontrolle der Ränder 
+
+%%% Präambel einbinden (mit Festlegungen gemäß DHBW-Vorgaben) %%%
+\input{includes/boilerplate/_dhbw_praeambel.tex}
+
+%%% Name der eigenen Literatur-Datenbank (ggf. anpassen) %%%
+\bibliography{includes/boilerplate/literatur-datenbank.bib}
+
+\begin{document}
+%%% Deckblatt einbinden %%% 
+% Anpassungen nötig (Name, Titel etc.)
+\input{includes/boilerplate/deckblatt.tex}
+
+%%% Declaration of originality einbinden %%%
+\input{includes/boilerplate/declaration.tex}
+
+%%% Umstellung der Seiten-Nummerierung auf i, ii, iii ... %%%
+\pagenumbering{Roman} 
+
+%%% Abstract einbinden (optionale Kurzfassung Ihrer Arbeit) %%%
+\input{includes/content/abstract.tex}
+\cleardoublepage
+
+%%% Inhalts-, Abbildungs-, Tabellenverzeichnisse %%%
+% sollen einzeilig gesetzt werden, um Platz zu sparen 
+\begin{spacing}{1}
+\tableofcontents
+\clearpage
+\input{includes/boilerplate/abkuerzungen.tex}
+
+\clearpage
+\thispagestyle{kapitelkopfzeile}
+\listoffigures
+\phantomsection
+\addcontentsline{toc}{chapter}{List of figures} % Abb.verz. ins Inh.verz. aufnehmen
+
+\clearpage
+\listoftables
+\phantomsection
+\addcontentsline{toc}{chapter}{List of tables}    % Tab.verz. ins Inh.verz. aufnehmen
+\end{spacing}    
+
+%%% Umstellung der Seiten-Nummerierung auf 1, 2, 3 ... %%%
+\cleardoublepage
+\pagenumbering{arabic}
+
+
+% ----------------------- Inhalt -------------------------------------
+
+
+\input{includes/content/introduction.tex}
+
+\input{includes/content/methodology.tex}
+
+
+\input{includes/content/conclusion.tex}
+
+\input{includes/content/summary.tex}
+
+
+
+% ----------------------- Ende Inhalt ---------------------------------
+
+%%% Aknowledgements %%%
+% \clearpage
+% \input{includes/boilerplate/acknowledgement.tex}
+
+%%% Quellenverzeichnisse (keine Anpassung nötig) %%%
+\clearpage
+\literaturverzeichnis
+%%% Ende Quellenverzeichnisse %%%
+
+
+%%% Erklärung (keine Anpassungen nötig) %%%
+% steht ganz am Ende des Dokuments
+\cleardoublepage
+\end{document}
