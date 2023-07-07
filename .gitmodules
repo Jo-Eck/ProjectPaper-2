@@ -1,0 +1,3 @@
+[submodule "project/Arkouda/arkouda"]
+	path = project/Arkouda/arkouda
+	url = git@github.com:Bears-R-Us/arkouda.git
