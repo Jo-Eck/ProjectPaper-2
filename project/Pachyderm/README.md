@@ -261,10 +261,9 @@ and for the etcd at around `L144`
 ... 
 ```
 
-#### SSL Certificates
+<!-- #### SSL Certificates
 
-My setup refuses to work without SSL certificates, so I had to generate some.
-
+This breaks the connection of the proxy to the pachd server.
 ```bash
 openssl genrsa -out <CertName>.key 2048 
 openssl req -new -x509 -sha256 -key <CertName>.key -out <CertName>.crt
@@ -282,7 +281,7 @@ We then edit the `values.yaml` file at around `L683` to use the certificates.
     newSecret:
       create: false
     ...
-```
+``` -->
 
 ### CLI
 
