@@ -592,3 +592,111 @@ Which can be deployed by moving into the `arkouda-helm-charts` dir and running t
 ```bash
 helm install -n arkouda arkouda-server arkouda-udp-server/
 ```
+
+---
+
+## Arkouda - Pachyderm Client
+
+Now that Pachyderm and Arkouda are running we need to interface them. \
+As Arkouda is based on a Client -> CnC_Server -> Worker architecture, \
+we can create a container which runs the client which gets spawned by Pachyderm. 
+
+### Dockerfile
+
+Our docker file is loosly based on the [arkouda-full-stack dockerfile](https://github.com/Bears-R-Us/arkouda-contrib/blob/main/arkouda-docker/arkouda-full-stack) from the arkouda repo. \
+But in order to get it to work with the Corporate Proxy we need to make a couple of changes.
+
+```dockerfile
+ARG CHAPEL_SMP_IMAGE=${CHAPEL_SMP_IMAGE}
+
+FROM ${CHAPEL_SMP_IMAGE}
+
+USER root
+WORKDIR /opt
+RUN chmod 777 /opt
+
+# Download Arkouda
+ARG ARKOUDA_DOWNLOAD_URL=${ARKOUDA_DOWNLOAD_URL}
+ENV ARKOUDA_DOWNLOAD_URL=${ARKOUDA_DOWNLOAD_URL}
+ARG ARKOUDA_DISTRO_NAME=${ARKOUDA_DISTRO_NAME}
+ENV ARKOUDA_DISTRO_NAME=${ARKOUDA_DISTRO_NAME}
+ARG ARKOUDA_BRANCH_NAME=${ARKOUDA_BRANCH_NAME}
+ENV ARKOUDA_BRANCH_NAME=${ARKOUDA_BRANCH_NAME}
+
+ENV https_proxy=http://proxy.its.hpecorp.net:80
+ENV HTTPS_PROXY=${https_proxy}
+ENV HTTP_PROXY=${https_proxy}
+ENV http_proxy=${https_proxy}
+ENV no_proxy=localhost,127.0.0.1,192.168.49.2
+ENV NO_PROXY=${no_proxy}
+
+# Install dependencies
+RUN apt-get update && apt upgrade -y && \
+    apt-get install unzip libcurl4-openssl-dev -y
+
+# Download desired Arkouda distro, move to commont /opt/arkouda dir
+RUN wget $ARKOUDA_DOWNLOAD_URL && \
+    unzip $ARKOUDA_DISTRO_NAME.zip && \
+    mv /opt/arkouda-$ARKOUDA_BRANCH_NAME /opt/arkouda
+
+WORKDIR /opt/arkouda
+
+# Install Arkouda server
+RUN make install-deps && make
+
+# Install Arkouda python client, ipython, and jupyter
+RUN python3 setup.py bdist_wheel --universal && \
+    pip3 install dist/*.whl
+
+# Remove unneeded files
+RUN rm -rf /opt/$ARKOUDA_DISTRO_NAME.zip && \
+    rm -rf /opt/chapel && \
+    cd /opt/arkouda && \
+    rm -rf benchmarks converter examples *.md pictures pydoc resources runs src test tests toys
+
+# Set up environment variables
+ENV ARKOUDA_HOME=/opt/arkouda
+```
+
+### Setting up local registry
+
+If you do not have a local podman registry running you can create one with the following command:
+
+```bash
+sudo mkdir -p /var/lib/registry
+sudo podman run --privileged -d --name registry -p 5000:5000 -v /var/lib/registry:/var/lib/registry --restart=always registry:2
+```
+
+Then you need to add the registry to the registries.conf file.
+
+```bash
+sudo nano /etc/containers/registries.conf
+```
+
+```conf
+unqualified-search-registries = ["docker.io"]
+
+[[registry]]
+prefix = "docker.io"
+location = "docker.io"
+mirror = [
+  { location = "localhost:5000" }
+]
+```
+
+
+### Build and Push
+
+Based on the build script from the [arkouda-contrib repo](https://github.com/Bears-R-Us/arkouda-contrib/blob/main/arkouda-docker/build_docker_image.py) we can build and push our docker image to dockerhub.
+
+This is using the docker command directly, without using the python script.
+
+```bash
+docker build --build-arg CHAPEL_SMP_IMAGE=bearsrus/chapel-gasnet-smp:1.30.0 --build-arg ARKOUDA_DISTRO_NAME=v2023.06.16 --build-arg ARKOUDA_DOWNLOAD_URL=https://github.com/Bears-R-Us/arkouda/archive/refs/tags/v2023.06.16.zip --build-arg ARKOUDA_BRANCH_NAME=2023.06.16 -f arkouda-full-stack -t localhost:5000/pachykouda-interface:latest .
+```
+
+Then you can push the image to the registry with the following command:
+
+```bash
+docker push localhost:5000/pachykouda-interface:latest
+```
