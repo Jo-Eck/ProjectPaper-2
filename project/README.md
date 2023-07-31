@@ -658,33 +658,6 @@ RUN rm -rf /opt/$ARKOUDA_DISTRO_NAME.zip && \
 ENV ARKOUDA_HOME=/opt/arkouda
 ```
 
-### Setting up local registry
-
-If you do not have a local podman registry running you can create one with the following command:
-
-```bash
-sudo mkdir -p /var/lib/registry
-sudo podman run --privileged -d --name registry -p 5000:5000 -v /var/lib/registry:/var/lib/registry --restart=always registry:2
-```
-
-Then you need to add the registry to the registries.conf file.
-
-```bash
-sudo nano /etc/containers/registries.conf
-```
-
-```conf
-unqualified-search-registries = ["docker.io"]
-
-[[registry]]
-prefix = "docker.io"
-location = "docker.io"
-mirror = [
-  { location = "localhost:5000" }
-]
-```
-
-
 ### Build and Push
 
 Based on the build script from the [arkouda-contrib repo](https://github.com/Bears-R-Us/arkouda-contrib/blob/main/arkouda-docker/build_docker_image.py) we can build and push our docker image to dockerhub.
@@ -692,11 +665,11 @@ Based on the build script from the [arkouda-contrib repo](https://github.com/Bea
 This is using the docker command directly, without using the python script.
 
 ```bash
-docker build --build-arg CHAPEL_SMP_IMAGE=bearsrus/chapel-gasnet-smp:1.30.0 --build-arg ARKOUDA_DISTRO_NAME=v2023.06.16 --build-arg ARKOUDA_DOWNLOAD_URL=https://github.com/Bears-R-Us/arkouda/archive/refs/tags/v2023.06.16.zip --build-arg ARKOUDA_BRANCH_NAME=2023.06.16 -f arkouda-full-stack -t localhost:5000/pachykouda-interface:latest .
+docker build --build-arg CHAPEL_SMP_IMAGE=bearsrus/chapel-gasnet-smp:1.30.0 --build-arg ARKOUDA_DISTRO_NAME=v2023.06.16 --build-arg ARKOUDA_DOWNLOAD_URL=https://github.com/Bears-R-Us/arkouda/archive/refs/tags/v2023.06.16.zip --build-arg ARKOUDA_BRANCH_NAME=2023.06.16 -f arkouda-full-stack -t heydar20.labs.hpecorp.net:31320/pachykouda-interface  .
 ```
 
-Then you can push the image to the registry with the following command:
+And because we already create the registy during the kubernetes setup, we can push the image to the registry.
 
 ```bash
-docker push localhost:5000/pachykouda-interface:latest
+docker push heydar20.labs.hpecorp.net:31320/pachykouda-interface
 ```
