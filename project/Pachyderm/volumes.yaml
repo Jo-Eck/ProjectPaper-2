@@ -1,3 +1,10 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: pachyderm
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -9,12 +16,18 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: manual
+  storageClassName: pachyderm
   local:
     path: /mnt/pachyderm/etcd
-    
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - heydar20.labs.hpecorp.net
 ---
-
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -22,38 +35,18 @@ metadata:
   labels:
     type: local
 spec:
-    capacity:
-        storage: 10Gi
-    accessModes:
-        - ReadWriteOnce
-    storageClassName: manual
-    local:
-        path: /mnt/pachyderm/postgres
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: etcd-pvc
-spec:
-    storageClassName: manual
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-            storage: 10Gi
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-spec:
-    storageClassName: manual
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-            storage: 10Gi
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: pachyderm
+  local:
+    path: /mnt/pachyderm/postgres
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - heydar20.labs.hpecorp.net 
