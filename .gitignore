@@ -302,3 +302,10 @@ TSWLatexianTemp*
 
 DHBW/quellen/
 project/CLASP_Code/
+project/setup/registry/ca.crt
+project/Arkouda/config/secrets/tls.key
+project/Arkouda/config/secrets/tls.csr
+project/Arkouda/config/secrets/tls.crt
+project/Arkouda/config/secrets/id_rsa.pub
+project/Arkouda/config/secrets/id_rsa
+.vscode/settings.json
