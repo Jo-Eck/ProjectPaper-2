@@ -590,4 +590,5 @@ Now if you want to push or pull from this repository you need to add the certifi
 
 ```bash
 sudo -S bash -c 'openssl s_client -showcerts -connect heydar20.labs.hpecorp.net:31320 </dev/null 2>/dev/null | openssl x509 -outform PEM > /tmp/heydar20.labs.hpecorp.net.pem && mkdir -p /etc/docker/certs.d/heydar20.labs.hpecorp.net:31320 && cp /tmp/heydar20.labs.hpecorp.net.pem /etc/docker/certs.d/heydar20.labs.hpecorp.net:31320/ca.crt && systemctl restart docker'
+
 ```
