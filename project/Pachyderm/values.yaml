@@ -52,11 +52,9 @@ global:
   customCaCerts: false
   # Sets the HTTP/S proxy server address for console, pachd, and enterprise server.  (This is for
   # traffic leaving the cluster, not traffic coming into the cluster.)
-  #  proxy: "http://web-proxy.corp.hpecorp.net:8080"
-  #proxy: ""
+  proxy: ""
   # If proxy is set, this allows you to set a comma-separated list of destinations that bypass the proxy
-  noProxy: "10.244.0.1,10.101.154.222,10.111.36.98,10.93.226.124,localhost,127.0.0.1,192.168.49.2,10.96.0.0/12,192.168.59.0/24,192.168.49.0/24,192.168.39.0/24"
-  #noProxy: ""
+  noProxy: ""
   # Set security context runAs users. If running on openshift, set enabled to false as openshift creates its own contexts.
   securityContexts:
     enabled: true
@@ -73,7 +71,7 @@ console:
     pullPolicy: "IfNotPresent"
     # tag is the image repo to pull from; together with repository it
     # replicates the --console-image argument to pachctl deploy.
-    tag: "2.6.4-1"
+    tag: "2.6.6-1"
   priorityClassName: ""
   nodeSelector: {}
   tolerations: []
@@ -105,7 +103,7 @@ console:
     # labels specifies labels to add to the console service.
     labels: {}
     # type specifies the Kubernetes type of the console service.
-    type: LoadBalancer
+    type: NodePort
 
 etcd:
   affinity: {}
@@ -140,9 +138,7 @@ etcd:
   # AWS: https://docs.aws.amazon.com/eks/latest/userguide/storage-classes.html
   # GCP: https://cloud.google.com/compute/docs/disks/performance#disk_types
   # Azure: https://docs.microsoft.com/en-us/azure/aks/concepts-storage#storage-classes
-  #storageClass: manual
-  storageClassName: manual
-
+  storageClass: "pachyderm"
   # storageSize specifies the size of the volume to use for etcd.
   # Recommended Minimum Disk size for Microsoft/Azure: 256Gi  - 1,100 IOPS https://azure.microsoft.com/en-us/pricing/details/managed-disks/
   # Recommended Minimum Disk size for Google/GCP: 50Gi        - 1,500 IOPS https://cloud.google.com/compute/docs/disks/performance
@@ -223,7 +219,7 @@ loki-stack:
     serviceAccount:
       automountServiceAccountToken: false
     persistence:
-      enabled: true
+      enabled: false
       accessModes:
         - ReadWriteOnce
       size: 10Gi
@@ -420,9 +416,14 @@ pachd:
   developmentLogger: false
   # If lokiDeploy is true, a Pachyderm-specific instance of Loki will
   # be deployed.
-  lokiDeploy: true
+  lokiDeploy: false
   # lokiLogging enables Loki logging if set.
-  lokiLogging: true
+  lokiLogging: false
+  # lokiHost and lokiPort should only be set when using an external Loki instance. lokiDeploy should be false.
+  # lokiHost should be the hostname of the Loki instance to use.
+  lokiHost: ""
+  # lokiPort should be the port of the Loki instance to use.
+  lokiPort: 0
   metrics:
     # enabled sets the METRICS environment variable if set.
     enabled: true
@@ -460,7 +461,7 @@ pachd:
     # labels specifies labels to add to the pachd service.
     labels: {}
     # type specifies the Kubernetes type of the pachd service.
-    type: "ClusterIP"
+    type: "NodePort"
     annotations: {}
     apiGRPCPort: 30650
     prometheusPort: 30656
@@ -519,7 +520,7 @@ pachd:
   enterpriseServerAddress: ""
   enterpriseCallbackAddress: ""
   # Indicates to pachd whether dex is embedded in its process.
-  localhostIssuer: "false" # "true", "false", or "" (used string as bool doesn't support empty value)
+  localhostIssuer: "" # "true", "false", or "" (used string as bool doesn't support empty value)
   # set the initial pachyderm cluster role bindings, mapping a user to their list of roles
   # ex.
   # pachAuthClusterRoleBindings:
@@ -634,13 +635,13 @@ pachd:
       secret: ""
     minio:
       # minio bucket name
-      bucket: "reeee"
+      bucket: "ree"
       # the minio endpoint. Should only be the hostname:port, no http/https.
-      endpoint: "10.93.226.124:9000"
+      endpoint: "10.93.246.87:9000"
       # the username/id with readwrite access to the bucket.
-      id: "oPr1Uc6ZBeVcLDLiVQge"
+      id: "7YEfYU48zHp1g4rKclkj"
       # the secret/password of the user with readwrite access to the bucket.
-      secret: "lzpBdxWoNDkK9G3x90qji9GlUtv0UX140J6pvyyQ"
+      secret: "LDbsSvLvd3Zpha4z9lVw9hI3mW5XVk3eEHqFjYez"
       # enable https for minio with "true" defaults to "false"
       secure: "false"
       # Enable S3v2 support by setting signature to "1". This feature is being deprecated
@@ -682,7 +683,7 @@ pachd:
   # 3. Enabled, newSecret, must specify cert, key and name
   tls:
     enabled: false
-    secretName: "pachd"
+    secretName: ""
     newSecret:
       create: false
       crt: ""
@@ -712,6 +713,27 @@ pachd:
   defaultSidecarCPURequest: ""
   defaultSidecarMemoryRequest: ""
   defaultSidecarStorageRequest: ""
+  # readinessProbe, livenessProbe, startupProbe: Configure the probe settings.
+  # Acceptable inputs for each probe include initialDelaySeconds, timeoutSeconds, periodSeconds, successThreshold, and failureThreshold.
+  readinessProbe:
+    initialDelaySeconds: 0
+    timeoutSeconds: 1
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 3
+  livenessProbe:
+    initialDelaySeconds: 0
+    failureThreshold: 10
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 30
+  startupProbe:
+    initialDelaySeconds: 0
+    failureThreshold: 10
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 30
+
 kubeEventTail:
   # Deploys a lightweight app that watches kubernetes events and echos them to logs.
   enabled: true
@@ -780,9 +802,7 @@ postgresql:
     # AWS: https://docs.aws.amazon.com/eks/latest/userguide/storage-classes.html
     # GCP: https://cloud.google.com/compute/docs/disks/performance#disk_types
     # Azure: https://docs.microsoft.com/en-us/azure/aks/concepts-storage#storage-classes
-
-    storageClassName: manual
-    storageClass: manual
+    storageClass: "pachyderm"
     # storageSize specifies the size of the volume to use for postgresql
     # Recommended Minimum Disk size for Microsoft/Azure: 256Gi  - 1,100 IOPS https://azure.microsoft.com/en-us/pricing/details/managed-disks/
     # Recommended Minimum Disk size for Google/GCP: 50Gi        - 1,500 IOPS https://cloud.google.com/compute/docs/disks/performance
@@ -909,7 +929,7 @@ proxy:
   # If enabled, create a proxy deployment (based on the Envoy proxy) and a service to expose it.  If
   # ingress is also enabled, any Ingress traffic will be routed through the proxy before being sent
   # to pachd or Console.
-  enabled: true
+  enabled: false
   # The external hostname (including port if nonstandard) that the proxy will be reachable at.
   # If you have ingress enabled and an ingress hostname defined, the proxy will use that.
   # Ingress will be deprecated in the future so configuring the proxy host instead is recommended.
@@ -994,4 +1014,3 @@ proxy:
     secretName: ""
     # If set, generate the secret from values here.  This is intended only for unit tests.
     secret: {}
-
