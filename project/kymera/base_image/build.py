@@ -1,19 +1,15 @@
 import subprocess
 import json
 import os
-from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 
 def build_docker_image(build_args, tag, context, log_file_name="build.log"):
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    log_file_name_with_timestamp = f"{timestamp}_{log_file_name}"
-
     command = ["docker", "build"]
     for key, value in build_args.items():
         command.extend(["--build-arg", f"{key}={value}"])
     command.extend(["-t", tag, context, "--progress=plain"])
 
-    log_file_path = os.path.join(context, log_file_name_with_timestamp)
+    log_file_path = os.path.join(context, log_file_name)
     with open(log_file_path, 'w') as file:
         process = subprocess.Popen(command, stdout=file, stderr=file)
         try:
