@@ -1,11 +1,12 @@
 ###################################################
-#                Dependancies                     #
+#                Dependencies                     #
 ###################################################
 
 # Build stage with SSH keys to clone private repositories
 FROM ubuntu:20.04 AS builder
 
 # Define build arguments
+ARG DEBUG
 ARG REPO_URL
 ARG BRANCH_NAME
 ARG COMMIT_HASH
@@ -19,6 +20,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV HTTP_PROXY=$HTTP_PROXY
 ENV HTTPS_PROXY=$HTTP_PROXY
 ENV NO_PROXY=$NO_PROXY
+ENV DEBUG_BUILD_OPTION=$DEBUGz
+
+# Create directories
+RUN mkdir -p /workspace/sw/
+WORKDIR /workspace/sw
 
 
 # Install necessary dependencies
@@ -66,16 +72,12 @@ RUN mkdir /root/.ssh/ && \
     chmod 600 /root/.ssh/id_rsa && \
     ssh-keyscan -H github.hpe.com > /root/.ssh/known_hosts
 
-# Create directories
-RUN mkdir -p /workspace/sw/
-
 # Clone repositories
 WORKDIR /workspace/sw
-RUN git clone --branch $BRANCH_NAME $REPO_URL OpenFAM 
-
+RUN git clone --depth 1 --branch $BRANCH_NAME $REPO_URL OpenFAM
 WORKDIR /workspace/sw/OpenFAM
+RUN git fetch --depth 1 origin $COMMIT_HASH
 RUN git checkout $COMMIT_HASH    
-
 
 
 ###################################################
@@ -118,7 +120,7 @@ ENV HTTP_PROXY=$HTTP_PROXY
 ENV HTTPS_PROXY=$HTTP_PROXY
 ENV NO_PROXY=$NO_PROXY
 
-RUN mkdir -p /workspace/sw/OpenFAM3
+RUN mkdir -p /workspace/sw/OpenFAM
 WORKDIR /workspace/sw
 
 # Copy over necessary dependencies and files from the builder stage
