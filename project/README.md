@@ -67,11 +67,13 @@ sudo apt-get install helm
 ### [Persistent Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 
 We need to create a persistent volume for etcd and the postgres database.
-Therefore we need to create a directory for each of them.
+Therefore we need to create a directory for each of them. and change the owner to the user `nobody`.
 
 ```bash
-mkdir -p /mnt/pachyderm/etcd
-mkdir -p /mnt/pachyderm/postgres
+sudo mkdir -p /mnt/pachyderm/etcd
+sudo mkdir -p /mnt/pachyderm/postgres
+
+sudo chown -R nobody:nogroup /mnt/pachyderm
 ```
 
 We then create the configuration files for the persistent volumes.
@@ -108,36 +110,6 @@ spec:
     storageClassName: manual
     local:
         path: /mnt/pachyderm/postgres
-```
-
-And then the corresponding persistent volume claims.
-
-```yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: etcd-pvc
-spec:
-    storageClassName: manual
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-        storage: 10Gi
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-spec:
-    storageClassName: manual
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-        storage: 10Gi
 ```
 
 Then we add the storage class to the cluster.
@@ -296,10 +268,9 @@ curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/down
 Now that the values file is ready we can install Pachyderm.
 
 ```bash
-helm install pachyderm pachyderm/pachyderm \
-  -f ./values.yml pachyderm/pachyderm \
+helm install pachyderm -n pachyderm pachyderm/pachyderm \
+  -f ./values.yaml pachyderm/pachyderm \
   --set postgresql.volumePermissions.enabled=true \
-  --set deployTarget=LOCAL \
   --set proxy.enabled=true \
   --set proxy.service.type=NodePort  \
   --set proxy.host=localhost \
@@ -353,10 +324,10 @@ As requested by the [dokumentation](https://github.com/Bears-R-Us/arkouda-contri
 
 ```bash
 adduser ubuntu --disabled-password --gecos ""
-su ubuntu -c "ssh-keygen -t rsa -b 4096 -C \"ubuntu@arkouda\" -f ./id_rsa -q -N \"\""
+su ubuntu -c "ssh-keygen -t rsa -b 4096 -C \"ubuntu@arkouda\" -f ~/id_rsa -q -N \"\""
 
 # then we create the secret
-kubectl create secret generic arkouda-ssh --from-file=id_rsa=./id_rsa --from-file=id_rsa.pub=./id_rsa.pub
+kark create secret generic arkouda-ssh --from-file=id_rsa=./id_rsa --from-file=id_rsa.pub=./id_rsa.pub
 ```
 
 #### SSL
@@ -376,7 +347,7 @@ openssl req -new -key tls.key -out tls.csr -subj "/CN=arkouda/O=group1"
 
 # now we create a CSR object in the kubernetes api
 
-cat <<EOF | kubectl apply -f -
+cat <<EOF | kark apply -f -
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 metadata:
@@ -391,18 +362,18 @@ spec:
 EOF
 
 # and get it approved by an admin
-kubectl certificate approve arkouda
+kark certificate approve arkouda
 
 
 # from this we get the certificate
-kubectl get csr arkouda -o jsonpath='{.status.certificate}' | base64 --decode > tls.crt
+kark get csr arkouda -o jsonpath='{.status.certificate}' | base64 --decode > tls.crt
 
 # now we can verify whether the certificate is valid (this is specific to minikube)
 curl --cacert /home/<your username>/.minikube/ca.crt --cert ./tls.crt --key ./tls.key https://$(minikube ip):8443/api/
 
 
 # and create the secret
-kubectl create secret generic arkouda-tls --from-file=tls.crt=./tls.crt --from-file=tls.key=./tls.key -n arkouda
+kark create secret generic arkouda-tls --from-file=tls.crt=./tls.crt --from-file=tls.key=./tls.key 
 ```
 
 #### Cluster Role
@@ -524,6 +495,7 @@ helm install -n arkouda arkouda-locale arkouda-udp-locale/
 
 Same goes for the `arkouda-udp-server.yaml` file. \
 For reference, the following is the configuration on my test setup.
+(to find out what the `k8sHost` is, run `kubectl cluster-info`)
 
 ```yaml
 resources:
@@ -591,4 +563,31 @@ Which can be deployed by moving into the `arkouda-helm-charts` dir and running t
 
 ```bash
 helm install -n arkouda arkouda-server arkouda-udp-server/
+```
+
+Horray! We now have a working Arkouda cluster running in our kubernetes cluster.
+
+## Pachykouda - Client
+
+Now we have to create an image which enables pachyderm to send messages to the arkouda cluster.
+To accomplish this we need to create a docker image which contains the arkouda client, takes the arkouda server ip and arbitrary arkouda commands as arguments and then executes the commands on the server.
+
+### Local Registry
+
+To be able to develop and deploy this image locally, we need to set up a local docker registry within the kubernetes cluster.
+
+```bash
+sudo mkdir -p /mnt/registry/certs
+
+# create the certificate
+
+sudo openssl req -newkey rsa:4096 -nodes -sha256 -keyout /mnt/registry/certs/registry.key -addext "subjectAltName = DNS:master-node-k8" -x509 -days 365 -out /mnt/registry/certs/registry.crt
+
+sudo chown -R nobody:nogroup /mnt/registry
+```
+
+Now if you want to push or pull from this repository you need to add the certificate to your trusted certificates.
+
+```bash
+sudo -S bash -c 'openssl s_client -showcerts -connect heydar20.labs.hpecorp.net:31320 </dev/null 2>/dev/null | openssl x509 -outform PEM > /tmp/heydar20.labs.hpecorp.net.pem && mkdir -p /etc/docker/certs.d/heydar20.labs.hpecorp.net:31320 && cp /tmp/heydar20.labs.hpecorp.net.pem /etc/docker/certs.d/heydar20.labs.hpecorp.net:31320/ca.crt && systemctl restart docker'
 ```
