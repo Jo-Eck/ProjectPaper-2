@@ -9,13 +9,20 @@
             "REPO_URL": "ssh://git@github.hpe.com/john-l-byrne/OpenFAM",
             "BRANCH_NAME": "john.l.byrne/3_1",
             "COMMIT_HASH": "aaed960c948838adeaa4e04a4cff61675998a1d0",
-            "TAG": "heydar20.labs.hpecorp.net:31320/custom_fam:3.1"
+            "TAG": "heydar20.labs.hpecorp.net:31320/custom_fam:latest"
         },
         "custom_chapel": {
             "REPO_URL": "ssh://git@github.hpe.com/john-l-byrne/chapel-fam",
             "BRANCH_NAME": "1.30.0_openfam3.1",
             "COMMIT_HASH": "1b3cfbdfb7666c12dd9470ebf0b1032d9d7354b7",
-            "TAG": "heydar20.labs.hpecorp.net:31320/custom_chapel:1.30.0"
+            "TAG": "heydar20.labs.hpecorp.net:31320/custom_chapel:latest"
+        },
+        "custom_arkouda": {
+            "REPO_URL": "ssh://git@github.hpe.com/john-l-byrne/arkouda",
+            "BRANCH_NAME": "john.l.byrne/v2023.05.05.fam",
+            "COMMIT_HASH": "d7b5cb30123973838d573323bddc8c8fd364a658",
+            "TAG": "heydar20.labs.hpecorp.net:31320/custom_arkouda:latest"
         }
+
     }
 }

@@ -1,19 +1,16 @@
 import subprocess
 import json
 import os
-from datetime import datetime
+import sys
 from concurrent.futures import ThreadPoolExecutor
 
 def build_docker_image(build_args, tag, context, log_file_name="build.log"):
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    log_file_name_with_timestamp = f"{timestamp}_{log_file_name}"
-
     command = ["docker", "build"]
     for key, value in build_args.items():
         command.extend(["--build-arg", f"{key}={value}"])
     command.extend(["-t", tag, context, "--progress=plain"])
 
-    log_file_path = os.path.join(context, log_file_name_with_timestamp)
+    log_file_path = os.path.join(context, log_file_name)
     with open(log_file_path, 'w') as file:
         process = subprocess.Popen(command, stdout=file, stderr=file)
         try:
@@ -40,16 +37,22 @@ for key, value in common_args.items():
     if value.startswith("./"):
         common_args[key] = read_file(value)
 
+# Get the image name from the CLI arguments if provided
+specific_image_name = None
+if len(sys.argv) > 1:
+    specific_image_name = sys.argv[1]
+
 # Use a thread pool to build the images in parallel
 with ThreadPoolExecutor() as executor:
     futures = []
     for image_name, image_config in config['images'].items():
-        build_args = {**common_args, **image_config}
-        context = os.path.join(os.getcwd(), image_name)
-        tag = build_args.pop('TAG')
-        print(f"Starting build for image {tag}...")
-        future = executor.submit(build_docker_image, build_args, tag, context)
-        futures.append(future)
+        if specific_image_name is None or specific_image_name == image_name:
+            build_args = {**common_args, **image_config}
+            context = os.path.join(os.getcwd(), image_name)
+            tag = build_args.pop('TAG')
+            print(f"Starting build for image {tag}...")
+            future = executor.submit(build_docker_image, build_args, tag, context)
+            futures.append(future)
 
     # Wait for all build processes to complete
     for future in futures:
