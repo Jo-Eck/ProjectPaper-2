@@ -309,3 +309,5 @@ project/Arkouda/config/secrets/tls.crt
 project/Arkouda/config/secrets/id_rsa.pub
 project/Arkouda/config/secrets/id_rsa
 .vscode/settings.json
+project/Kymera/Arkouda/arkouda
+.pachykouda
