@@ -1,675 +1,106 @@
-# Installation instructions
+# 📊 Pachykouda: HPC Workflow Integration with Pachyderm and Arkouda
 
-## Pachyderm
+`Pachykouda` integrates the prowess of [Pachyderm](https://www.pachyderm.io/) and Arkouda, presenting a template for crafting intricate high-performance computing (HPC) workflows. Pachyderm specializes in the creation of data-driven workflows, while Arkouda shines in executing parallelized computations on vast datasets.
 
-These instructions are based upon the excellent guide by [Pachyderm](https://docs.pachyderm.com/latest/set-up/on-prem/)
+## 📌 Overview
 
-### Proxy
+With `Pachykouda`, you'll navigate through the setup, integration, and deployment of:
 
-If you are in the HPE internal network, you will need to set up the proxy.
-Simply execute the following command:
+- **Kubernetes Cluster**: Set up with 20 nodes on the Heydar machines, using flannel as a network overlay.
+- **Pachyderm**: See a [live installation](http://heydar20.labs.hpecorp.net:30080/) operating on the cluster.
+- **Minio Server**: Operates on bare metal on the heydar20 node, providing S3-compatible object storage for Pachyderm.
+- **Arkouda**: Features a containerized rendition of HPE's tailored Arkouda solution, optimized for Fabric-Attached Memory (FAM). (In Progress)
+  - **Arkouda-Proxy**: Flawlessly merged into the Pachyderm process.
+  - **Arkouda-Workers**: A scalable suite fortified with FAM.
+- **Docker Registry**: A repository that spans the entire cluster, reserved for Pachykouda-Catalog images.
+- **Pachykouda-Catalog**: Repository of Code available as source for Pachyderm Pipelines, taken from the Clasp-Catalog and modified for Pachyderm. (Coming Soon!)
+- **FAM-Based Container Communication**: Leveraging FAM to achieve high-performance data transfer between containers. (Coming Soon!)
 
-```bash
-export HTTP_PROXY=http://web-proxy.corp.hpecorp.net:8080
-export HTTPS_PROXY=http://web-proxy.corp.hpecorp.net:8080
+![Pachykouda Architecture](.images/Pachykouda.png)
+
+## 🏗️ Project Layout
+
+Explore the main sections of the project:
+
+- **[Kubernetes_Setup](./Kubernetes_Setup)**: Comprehensive resources for initiating the Kubernetes cluster and Registry on Heydar machines, complemented with utility scripts.
+- **[Kymera](./Kymera)**: Houses Docker files and extensive documentation for the Arkouda-Proxy and Arkouda-Worker images.
+- **[Pachyderm](./Pachyderm)**: Offers detailed guides and configuration elements for the Pachyderm installation.
+
+``` plaintext
+Pachykouda
+├── Kubernetes_Setup
+│   ├── kube-flannel.yml
+│   ├── registry
+│   ├── tools
+│   ├── setup_scripts
+│   └── setup_kubernetes.md
+├── Kymera
+│   ├── Arkouda
+│   ├── base_image
+│   └── docu.md
+├── Pachyderm
+│   ├── README.md
+│   ├── values.yaml
+│   └── volumes.yaml
+└── README.md
 ```
 
-If you want to make this permanent, add these lines to the `~/.bashrc` or equivalent file.
+## 🔒 Access
 
-### kubectl
+### Pachyderm Dashboard
 
-Simply following the instructions on the [kubernetes website](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/) should be sufficient.
-But for the sake of completeness, here is what I did:
+For internal network access to the Pachyderm dashboard, use:
 
-```bash
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+``` bash
+http://heydar20.labs.hpecorp.net:30080/
 ```
 
-If the proxy is giving you grief one can simply download the binary elsewhere and copy it to the target machine. (not recommended)
+### Pachyderm CLI
 
-### Installing minikube
+Creating a Pipeline requires CLI access. Achieve this by installing the Pachyderm CLI or Pachctl tool. Install with:
 
-The same things apply for minikube as for kubectl.
-The propper instructions can be found on the [minikube website](https://minikube.sigs.k8s.io/docs/start/)
-But here is what I did anyway:
-
-```bash
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-sudo dpkg -i minikube_latest_amd64.deb
+``` bash
+TBD
 ```
 
-We can then test the installation by running:
+Once installed, utilize the CLI:
 
-```bash
-minikube start
-kubectl cluster-info
+``` bash
+TBD
 ```
 
-If you are getting an error stating that it is not able to connect to the cluster you might need to set the following environment variable:
+Commands are available in the [Pachyderm CLI Documentation](https://docs.pachyderm.com/latest/reference/pachctl/pachctl/).
 
-```bash
-export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.59.0/24,192.168.49.0/24,192.168.39.0/24
+### Kubernetes CLI
+
+For Kubernetes cluster access via the CLI, install the specified Kubernetes CLI:
+
+``` bash
 ```
 
-### Installing [helm](https://helm.sh/docs/intro/install/)
+Next, download the kubeconfig file from the master node and position it in the .kube directory:
 
-Same procedure as every year...
-
-```bash
-curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-sudo apt-get install apt-transport-https --yes
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-sudo apt-get update
-sudo apt-get install helm
+``` bash
+scp <user>@heydar20.labs.hpecorp.net:/etc/kubernetes/admin.conf ~/.kube/config
 ```
 
-### [Persistent Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
+### Minio
 
-We need to create a persistent volume for etcd and the postgres database.
-Therefore we need to create a directory for each of them.
+Access Minio via a web browser:
 
-```bash
-mkdir -p /mnt/pachyderm/etcd
-mkdir -p /mnt/pachyderm/postgres
+``` bash
+TBD
 ```
 
-We then create the configuration files for the persistent volumes.
+Alternatively, upload data directly to Minio:
 
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: etcd-pv
-labels:
-    type: local
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: manual
-  local:
-    path: /mnt/pachyderm/etcd
-    
----
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgres-pv
-labels:
-    type: local
-spec:
-    capacity:
-        storage: 10Gi
-    accessModes:
-        - ReadWriteOnce
-    storageClassName: manual
-    local:
-        path: /mnt/pachyderm/postgres
+``` bash
+mc cp <file> minio/pfs/<repo>/<branch>/<path>
 ```
 
-And then the corresponding persistent volume claims.
+## 📚 Additional Resources
 
-```yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: etcd-pvc
-spec:
-    storageClassName: manual
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-        storage: 10Gi
+Delve deeper with comprehensive documentation and installation guidance:
 
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-spec:
-    storageClassName: manual
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-        storage: 10Gi
-```
-
-Then we add the storage class to the cluster.
-
-```bash
-kubectl apply -f filename.yaml
-```
-
-We then take note of the storage class name because we will add it to the helm values file later. \
-In this case it is `manual`.
-
-### Installing [MinIO](https://min.io/docs/minio/linux/index.html)
-
-We now install an S3 compatible storage system. Which one does not really matter, but I chose MinIO because it is easy to install and configure.
-
-```bash
-wget https://dl.min.io/server/minio/release/linux-amd64/archive/minio_20230619195250.0.0_amd64.deb -O minio.deb
-sudo dpkg -i minio.deb
-
-mkdir -p /mnt/pachyderm/minio
-
-# to manually start the server
-minio server /mnt/pachyderm/minio --console-address :9001
-```
-
-The standard password is `minioadmin:minioadmin`
-
-Then you can access the web interface at `http://localhost:9001` where you should login, change the password and create a bucket. \
-The access credentials for the bucket will be added to the helm values file later, so take note of them.
-
-### Installing [Pachyderm](https://docs.pachyderm.com/latest/set-up/on-prem/)
-
-First we need to add the Pachyderm helm repository:
-
-```bash
-helm repo add pachyderm https://helm.pachyderm.com
-helm repo update
-```
-
-We then get the values file from the repository and edit it to our liking.\
-My setup is based on the version `2.6.4-1`, so it might be different for future versions.
-
-```bash
-wget https://raw.githubusercontent.com/pachyderm/pachyderm/2.6.x/etc/helm/pachyderm/values.yaml  
-```
-
-#### MinIO
-
-First we change the deploy target at line `L7`
-
-```yaml
-# Deploy Target configures the storage backend to use and cloud provider
-# settings (storage classes, etc). It must be one of GOOGLE, AMAZON,
-# MINIO, MICROSOFT, CUSTOM or LOCAL.
-deployTarget: "MINIO"
-...
-```
-
-This does not need to be set when using something else but with MinIO we also have to set `L544` to "MINIO"
-
-```yaml
-...
-storage:
-    # backend configures the storage backend to use.  It must be one
-    # of GOOGLE, AMAZON, MINIO, MICROSOFT or LOCAL. This is set automatically
-    # if deployTarget is GOOGLE, AMAZON, MICROSOFT, or LOCAL
-    backend: "MINIO"
-    ...
-```
-
-A little further down (`L635`) we find the MinIO configuration. We need to set the endpoint, access key and secret key.
-
-This point was a little tricky as I had MinIO installed on the same machine as Pachyderm, but it would take no other value than the outward facing IP address of the machine.
-
-```yaml
-...
-    minio:
-      # minio bucket name
-      bucket: "<bucket name>"
-      # the minio endpoint. Should only be the hostname:port, no http/https.
-      endpoint: "10.X.X.X:9000"
-      # the username/id with readwrite access to the bucket.
-      id: "<id>"
-      # the secret/password of the user with readwrite access to the bucket.
-      secret: "<secret>"
-      # enable https for minio with "true" defaults to "false"
-      secure: "false"   
-      # Enable S3v2 support by setting signature to "1". This feature is being deprecated
-      signature: ""
-      ...
-```
-
-#### Storage classes
-
-Now we add the storage classes we created earlier to the Postgres at `L784`
-
-```yaml
-...
-    # AWS: https://docs.aws.amazon.com/eks/latest/userguide/storage-classes.html
-    # GCP: https://cloud.google.com/compute/docs/disks/performance#disk_types
-    # Azure: https://docs.microsoft.com/en-us/azure/aks/concepts-storage#storage-classes
-    storageClass: manual 
-    # storageSize specifies the size of the volume to use for postgresql
-    # Recommended Minimum Disk size for Microsoft/Azure: 256Gi  - 1,100 IOPS https://azure.microsoft.com/en-us/pricing/details/managed-disks/
-...
-```
-
-and for the etcd at around `L144`
-
-```yaml
-...
-
-  # GCP: https://cloud.google.com/compute/docs/disks/performance#disk_types
-  # Azure: https://docs.microsoft.com/en-us/azure/aks/concepts-storage#storage-classes
-  #storageClass: manual
-  storageClassName: manual
-
-  # storageSize specifies the size of the volume to use for etcd.
-  # Recommended Minimum Disk size for Microsoft/Azure: 256Gi  - 1,100 IOPS https://azure.microsoft.com/en-us/pricing/details/managed-disks/
-
-... 
-```
-
-<!-- #### SSL Certificates
-
-This breaks the connection of the proxy to the pachd server.
-```bash
-openssl genrsa -out <CertName>.key 2048 
-openssl req -new -x509 -sha256 -key <CertName>.key -out <CertName>.crt
-
-kubectl create secret tls <SecretName> --cert=<CertName>.crt --key=<CertName>.key
-```
-
-We then edit the `values.yaml` file at around `L683` to use the certificates.
-
-```yaml
-...
-  tls:
-    enabled: true
-    secretName: "<SecretName>"
-    newSecret:
-      create: false
-    ...
-``` -->
-
-### CLI
-
-To directly interact with the cluster we need to install the Pachyderm CLI.
-
-```bash
-curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v2.6.5/pachctl_2.6.5_amd64.deb && sudo dpkg -i /tmp/pachctl.deb
-```
-
-### Deploy
-
-Now that the values file is ready we can install Pachyderm.
-
-```bash
-helm install pachyderm pachyderm/pachyderm \
-  -f ./values.yml pachyderm/pachyderm \
-  --set postgresql.volumePermissions.enabled=true \
-  --set deployTarget=LOCAL \
-  --set proxy.enabled=true \
-  --set proxy.service.type=NodePort  \
-  --set proxy.host=localhost \
-  --set proxy.service.httpPort=8080
-  
-```
-
-Now you might want to connect to the dashboard. This can be done by port-forwarding the service.
-
-```bash
-pachctl port-forward
-```
-
-:tada: Now we should be able to access the dashboard at `http://localhost:4000` :tada:
-
----
-
-## Arkouda
-
-Based on the helm charts in the [Arkouda Contrip repository](https://github.com/Bears-R-Us/arkouda-contrib/tree/main/arkouda-helm-charts),
-we can now start to deploy Arkouda in our kubernetes Kluster.
-
-```bash
-git clone git@github.com:Bears-R-Us/arkouda-contrib.git
-```
-
-### Namespace
-
-For this we create its own namespace.
-
-```bash
-kubectl create namespace arkouda
-```
-
-If you want to make your live a little bit easier and work with many differnt namespaces, you can add the following alias to your `.bashrc` or `.zshrc` file.
-
-```bash
-alias kark='kubectl --namespace arkouda'
-```
-
-This keeps you from having to type `--namespace arkouda` or `-n arkouda` every time you want to interact with the arkouda namespace.
-
-### Secrets
-
-To get the containers to to talk to each other and to interface with the kubernetes api we need to create some secrets.
-
-#### SSH
-
-The first secret we create is the ssh secret. This is used to connect to the pods and to the kubernetes api. \
-As requested by the [dokumentation](https://github.com/Bears-R-Us/arkouda-contrib/tree/3e4050bfef2bf2a24c7418bb1115996b37637e25/arkouda-helm-charts/arkouda-udp-server#ssh-secret), this ssh key needs to be created while impersonating a user with the `ubuntu` username.
-
-```bash
-adduser ubuntu --disabled-password --gecos ""
-su ubuntu -c "ssh-keygen -t rsa -b 4096 -C \"ubuntu@arkouda\" -f ./id_rsa -q -N \"\""
-
-# then we create the secret
-kubectl create secret generic arkouda-ssh --from-file=id_rsa=./id_rsa --from-file=id_rsa.pub=./id_rsa.pub
-```
-
-#### SSL
-
-The second secret we need is a ssl secret. This is used to connect to the Kubernetes API. \
-This secret is created by generating a self signed certificate.
-
-```bash
-
-# we start by generating the certificate
-# note do not change the name of the certificate, as it is hardcoded in the yaml file
-openssl genrsa -out tls.key 2048
-
-# creating the certificate signing request
-openssl req -new -key tls.key -out tls.csr -subj "/CN=arkouda/O=group1"
-
-
-# now we create a CSR object in the kubernetes api
-
-cat <<EOF | kubectl apply -f -
-apiVersion: certificates.k8s.io/v1
-kind: CertificateSigningRequest
-metadata:
-  name: arkouda
-spec:
-  request: $(cat tls.csr | base64 | tr -d '\n')
-  signerName: kubernetes.io/kube-apiserver-client
-  usages:
-  - digital signature
-  - key encipherment
-  - client auth
-EOF
-
-# and get it approved by an admin
-kubectl certificate approve arkouda
-
-
-# from this we get the certificate
-kubectl get csr arkouda -o jsonpath='{.status.certificate}' | base64 --decode > tls.crt
-
-# now we can verify whether the certificate is valid (this is specific to minikube)
-curl --cacert /home/<your username>/.minikube/ca.crt --cert ./tls.crt --key ./tls.key https://$(minikube ip):8443/api/
-
-
-# and create the secret
-kubectl create secret generic arkouda-tls --from-file=tls.crt=./tls.crt --from-file=tls.key=./tls.key -n arkouda
-```
-
-#### Cluster Role
-
-The following section is an excerpt of the  [Arkouda UDP Server documentation](https://github.com/Bears-R-Us/arkouda-contrib/tree/3e4050bfef2bf2a24c7418bb1115996b37637e25/arkouda-helm-charts/arkouda-udp-server#clusterroles).
-
-### ClusterRoles
-
-The Kubernetes API permissions are in the form of a ClusterRole (scoped to all namespaces). For the purposes of this demonstration, the ClusterRoles are as follows. Corresponding Role definitions only differ in that that the Kind field is Role and metadata has a namespace element.
-
-#### GASNET udp Integration
-
-The arkouda-udp-server deployment discovers all arkouda-udp-locale pods on startup to create the GASNET udp connections between all Arkouda locales. Accordingly, Arkouda requires Kubernetes pod list and get permissions. The corresponding ClusterRole is as follows:
-
-```yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: arkouda-pod-reader
-rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
-```
-
-This ClusterRole is bound to the arkouda Kubernetes user as follows:
-
-```yaml
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: arkouda-pod-reader-binding
-subjects:
-- kind: User
-  name: arkouda
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: ClusterRole
-  name: pod-reader
-  apiGroup: rbac.authorization.k8s.io
-```
-
-#### Service Integration
-
-Arkouda-on-Kubernetes integrates with Kubernetes service discovery by creating a Kubernetes service upon arkouda-udp-server startup and deleting the Kubernetes service upon teardown. Consequently, Arkouda-on-Kubernetes requires full Kubernetes service CRUD permissions to enable service discovery. The corresponding ClusterRole is as follows:
-
-```yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: service-endpoints-crud
-rules:
-- apiGroups: [""]
-  resources: ["services","endpoints"]
-  verbs: ["get","watch","list","create","delete","update"]
-```
-
-This ClusterRole is bound to the arkouda Kubernetes user as follows:
-
-```yaml
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: arkouda-service-endpoints-crud
-subjects:
-- kind: User
-  name: arkouda
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: ClusterRole
-  name: service-endpoints-crud
-  apiGroup: rbac.authorization.k8s.io
-```
-
-### Locale-Pods
-
-Now we can edit the `arkouda-udp-locale.yaml` file to match our needs. \
-For reference, the following is the configuration on my test setup.
-
-```yaml
-######################## Pod Settings ########################
-
-imageRepository: bearsrus
-releaseVersion: v2023.05.05
-imagePullPolicy: IfNotPresent
-
-resources:
-  limits:
-    cpu: 1000m
-    memory: 1024Mi
-  requests:
-    cpu: 1000m
-    memory: 1024Mi
-
-################ Arkouda Locale Configuration ################
-
-server: 
-  port: # Arkouda port, defaults to 5555
-  memTrack: true
-  numLocales: 4
-  threadsPerLocale: 4
-external:
-  persistence: 
-    enabled: false
-    path: /arkouda-files # pod directory path, must match arkouda-udp-server 
-    hostPath: /mnt/arkouda # host directory path, must match arkouda-udp-server
-secrets:
-  tls: arkouda-tls # name of tls secret used to access Kubernetes API
-  ssh: arkouda-ssh # name of ssh secret used to launch Arkouda locales
-```
-
-These can be deployed by moving into the `arkouda-helm-charts` dir and running the following command:
-
-```bash
-helm install -n arkouda arkouda-locale arkouda-udp-locale/
-```
-
-### Arkouda-Server
-
-Same goes for the `arkouda-udp-server.yaml` file. \
-For reference, the following is the configuration on my test setup.
-
-```yaml
-resources:
-  limits:
-    cpu: 1000m
-    memory: 1024Mi
-  requests:
-    cpu: 1000m
-    memory: 1024Mi
-
-######################## Pod Settings ########################
-
-imageRepository: bearsrus
-releaseVersion: v2023.05.05
-imagePullPolicy: IfNotPresent
-
-################ Arkouda Driver Configuration ################
-
-server: 
-  numLocales: 1 # total number of Arkouda locales = number of arkouda-udp-locale pods + 1
-  authenticate: false # whether to require token authentication
-  verbose: true # enable verbose logging
-  threadsPerLocale: 5 # number of cpu cores to be used per locale
-  memMax: 2000 # maximum bytes of RAM to be used per locale
-  memTrack: true
-  logLevel: LogLevel.DEBUG
-  service:
-    type: ClusterIP # k8s service type, usually ClusterIP, NodePort, or LoadBalancer
-    port: # k8s service port Arkouda is listening on, defaults to 5555
-    nodeport: # if service type is Nodeport
-    name: # k8s service name
-  metrics:
-    collectMetrics: false # whether to collect metrics and make them available via  k8s service
-    service:
-      name: # k8s service name for the Arkouda metrics service endpoint
-      port: # k8s service port for the Arkouda metrics service endpoint, defaults to 5556
-      targetPort: # k8s targetPort mapping to the Arkouda metrics port, defaults to 5556
-locale:
-  appName: arkouda-locale
-  podMethod: GET_POD_IPS
-external:
-  persistence:
-    enabled: true
-    path: /opt/locale # pod directory path, must match arkouda-udp-locale
-    hostPath: /mnt/arkouda # host machine path, must match arkouda-udp-locale
-  k8sHost: https://192.168.49.2:8443
-  namespace: arkouda # namespace Arkouda will register service
-  service:
-    name: arkoudaserver # k8s service name Arkouda will register
-    port: # k8s service port Arkouda will register, defaults to 5555
-metricsExporter:
-  imageRepository: bearsrus
-  releaseVersion: v2023.05.05 # prometheus-arkouda-exporter release version
-  imagePullPolicy: IfNotPresent
-  service:
-    name: # prometheus-arkouda-exporter service name
-    port: 5080 # prometheus-arkouda-exporter service port, defaults to 5080
-  pollingIntervalSeconds: 5
-secrets:
-  tls: arkouda-tls # name of tls secret used to access Kubernetes API
-  ssh: arkouda-ssh # name of ssh secret used to launch Arkouda locales
-```
-
-Which can be deployed by moving into the `arkouda-helm-charts` dir and running the following command:
-
-```bash
-helm install -n arkouda arkouda-server arkouda-udp-server/
-```
-
----
-
-## Arkouda - Pachyderm Client
-
-Now that Pachyderm and Arkouda are running we need to interface them. \
-As Arkouda is based on a Client -> CnC_Server -> Worker architecture, \
-we can create a container which runs the client which gets spawned by Pachyderm. 
-
-### Dockerfile
-
-Our docker file is loosly based on the [arkouda-full-stack dockerfile](https://github.com/Bears-R-Us/arkouda-contrib/blob/main/arkouda-docker/arkouda-full-stack) from the arkouda repo. \
-But in order to get it to work with the Corporate Proxy we need to make a couple of changes.
-
-```dockerfile
-ARG CHAPEL_SMP_IMAGE=${CHAPEL_SMP_IMAGE}
-
-FROM ${CHAPEL_SMP_IMAGE}
-
-USER root
-WORKDIR /opt
-RUN chmod 777 /opt
-
-# Download Arkouda
-ARG ARKOUDA_DOWNLOAD_URL=${ARKOUDA_DOWNLOAD_URL}
-ENV ARKOUDA_DOWNLOAD_URL=${ARKOUDA_DOWNLOAD_URL}
-ARG ARKOUDA_DISTRO_NAME=${ARKOUDA_DISTRO_NAME}
-ENV ARKOUDA_DISTRO_NAME=${ARKOUDA_DISTRO_NAME}
-ARG ARKOUDA_BRANCH_NAME=${ARKOUDA_BRANCH_NAME}
-ENV ARKOUDA_BRANCH_NAME=${ARKOUDA_BRANCH_NAME}
-
-ENV https_proxy=http://proxy.its.hpecorp.net:80
-ENV HTTPS_PROXY=${https_proxy}
-ENV HTTP_PROXY=${https_proxy}
-ENV http_proxy=${https_proxy}
-ENV no_proxy=localhost,127.0.0.1,192.168.49.2
-ENV NO_PROXY=${no_proxy}
-
-# Install dependencies
-RUN apt-get update && apt upgrade -y && \
-    apt-get install unzip libcurl4-openssl-dev -y
-
-# Download desired Arkouda distro, move to commont /opt/arkouda dir
-RUN wget $ARKOUDA_DOWNLOAD_URL && \
-    unzip $ARKOUDA_DISTRO_NAME.zip && \
-    mv /opt/arkouda-$ARKOUDA_BRANCH_NAME /opt/arkouda
-
-WORKDIR /opt/arkouda
-
-# Install Arkouda server
-RUN make install-deps && make
-
-# Install Arkouda python client, ipython, and jupyter
-RUN python3 setup.py bdist_wheel --universal && \
-    pip3 install dist/*.whl
-
-# Remove unneeded files
-RUN rm -rf /opt/$ARKOUDA_DISTRO_NAME.zip && \
-    rm -rf /opt/chapel && \
-    cd /opt/arkouda && \
-    rm -rf benchmarks converter examples *.md pictures pydoc resources runs src test tests toys
-
-# Set up environment variables
-ENV ARKOUDA_HOME=/opt/arkouda
-```
-
-### Build and Push
-
-Based on the build script from the [arkouda-contrib repo](https://github.com/Bears-R-Us/arkouda-contrib/blob/main/arkouda-docker/build_docker_image.py) we can build and push our docker image to dockerhub.
-
-This is using the docker command directly, without using the python script.
-
-```bash
-docker build --build-arg CHAPEL_SMP_IMAGE=bearsrus/chapel-gasnet-smp:1.30.0 --build-arg ARKOUDA_DISTRO_NAME=v2023.06.16 --build-arg ARKOUDA_DOWNLOAD_URL=https://github.com/Bears-R-Us/arkouda/archive/refs/tags/v2023.06.16.zip --build-arg ARKOUDA_BRANCH_NAME=2023.06.16 -f arkouda-full-stack -t heydar20.labs.hpecorp.net:31320/pachykouda-interface  .
-```
-
-And because we already create the registy during the kubernetes setup, we can push the image to the registry.
-
-```bash
-docker push heydar20.labs.hpecorp.net:31320/pachykouda-interface
-```
+- [Pachyderm Setup](./Pachyderm/README.md)
+- [Kubernetes Setup](./Kubernetes_Setup/README.md)

@@ -1,0 +1,29 @@
+######################## Pod Settings ########################
+
+imageRepository: bearsrus
+releaseVersion: v2023.05.05
+imagePullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+  requests:
+    cpu: 1000m
+    memory: 1024Mi
+
+################ Arkouda Locale Configuration ################
+
+server:
+  port: # Arkouda port, defaults to 5555
+  memTrack: true
+  numLocales: 4
+  threadsPerLocale: 4
+external:
+  persistence:
+    enabled: false
+    path: /arkouda-files # pod directory path, must match arkouda-udp-server 
+    hostPath: /mnt/arkouda # host directory path, must match arkouda-udp-server
+secrets:
+  tls: arkouda-tls # name of tls secret used to access Kubernetes API
+  ssh: arkouda-ssh # name of ssh secret used to launch Arkouda locales

@@ -302,8 +302,17 @@ TSWLatexianTemp*
 
 DHBW/quellen/
 project/CLASP_Code/
+
 project/Arkouda/chapel-1.22.0
 project/Arkouda/tls
 project/kymera/base_image/id_rsa
 project/kymera/base_image/id_rsa.pub
+project/setup/registry/ca.crt
+project/Arkouda/config/secrets/tls.key
+project/Arkouda/config/secrets/tls.csr
+project/Arkouda/config/secrets/tls.crt
+project/Arkouda/config/secrets/id_rsa.pub
+project/Arkouda/config/secrets/id_rsa
 .vscode/settings.json
+project/Kymera/Arkouda/arkouda
+.pachykouda
