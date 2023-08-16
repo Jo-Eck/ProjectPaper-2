@@ -1,0 +1,172 @@
+    pipeline {
+        agent any
+
+        environment {
+            CREDENTIALS_ID = '5513945e-5e04-4e15-b934-066ee0d09930'
+            DOCKER_REGISTRY = 'heydar20.labs.hpecorp.net:31320'
+            PROJECT_NAME = 'your_project_name'
+            PYTHON_BASELINE_IMAGE = 'heydar20.labs.hpecorp.net:31320/python:baseline'
+        }
+
+        stages {
+            // Checking out the source code from Git
+            stage('Checkout Code') {
+                steps {
+                    echo "Checking out code from the repository..."
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/main']],
+                        userRemoteConfigs: [[url: env.URL, credentialsId: CREDENTIALS_ID]],
+                        doGenerateSubmoduleConfigurations: false
+                    ])
+                    echo "Code checkout completed."
+                }
+            }
+
+            // Analyzing the changes to determine further actions
+            stage('Analyze Changes') {
+                steps {
+                    echo "Analyzing the changes made in the code..."
+                    script {
+                        sh '''#!/usr/bin/env bash
+                        CHANGED_FILES=$(git diff --name-only HEAD~1..HEAD)
+                        DOCKER_BUILD=false
+                        REPO_UPDATE=false
+                        PIPELINE_UPDATE=false
+
+                        echo "Changed files: $CHANGED_FILES"
+
+                        for file in $CHANGED_FILES; do
+                            if [[ "$file" == *_code.* ]]; then
+                                DOCKER_BUILD=true
+                            elif [[ "$file" == *_repo.yaml ]]; then
+                                REPO_UPDATE=true
+                            elif [[ "$file" == *_pipeline.yaml ]]; then
+                                PIPELINE_UPDATE=true
+                            fi
+                        done
+
+                        echo "Flags set as follows:"
+                        echo "DOCKER_BUILD=$DOCKER_BUILD"
+                        echo "REPO_UPDATE=$REPO_UPDATE"
+                        echo "PIPELINE_UPDATE=$PIPELINE_UPDATE"
+
+                        echo "DOCKER_BUILD=$DOCKER_BUILD" > action_flags.properties
+                        echo "REPO_UPDATE=$REPO_UPDATE" >> action_flags.properties
+                        echo "PIPELINE_UPDATE=$PIPELINE_UPDATE" >> action_flags.properties
+                        '''
+
+                        // Load the flags for further stages
+                        def props = readProperties file: 'action_flags.properties'
+                        env.DOCKER_BUILD = props.DOCKER_BUILD
+                        env.REPO_UPDATE = props.REPO_UPDATE
+                        env.PIPELINE_UPDATE = props.PIPELINE_UPDATE
+                    }
+                    echo "Analysis of changes completed."
+                }
+            }
+
+            stage('Generate Jobs') {
+                agent {
+                    kubernetes {
+                        label 'generate-jobs-agent'
+                        defaultContainer 'jnlp'
+                        yaml """
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    labels:
+        generate-jobs-label: generate-jobs-value
+    spec:
+    containers:
+    - name: jnlp
+        image: jenkins/jnlp-agent-docker
+    - name: kaniko
+        image: gcr.io/kaniko-project/executor:debug
+        command:
+        - sleep
+        args:
+        - 9999999
+    nodeSelector:
+        kubernetes.io/hostname: heydar20.labs.hpecorp.net
+                        """
+                    }
+                }
+                steps {
+                    echo "Generating jobs based on changes..."
+                    script {
+                        // If there's a code change, build an image using Kaniko
+                    if (env.DOCKER_BUILD == 'true') {
+                            container('kaniko') {
+                                def imageName = "${DOCKER_REGISTRY}/${PROJECT_NAME}:latest"
+                                def dockerfileExists = fileExists('Dockerfile')
+
+                                if (!dockerfileExists) {
+                                    echo "Dockerfile not found. Checking if this is a Python project..."
+
+                                    // Detect if it's a Python repository
+                                    def isPythonRepo = sh(script: 'find . -name "*.py" -type f', returnStatus: true) == 0
+                                    if (isPythonRepo) {
+                                        echo "Python files detected. Creating a dummy Dockerfile using the Python baseline Docker image."
+
+                                        writeFile file: 'Dockerfile', text: """
+                                        FROM ${PYTHON_BASELINE_IMAGE}
+                                        COPY . /app
+                                        WORKDIR /app
+                                        CMD ["python3", "-m", "your_python_main_module"]
+                                        """
+
+                                        // Get the name of the first Python file
+                                        def pythonFileName = sh(script: 'find . -name "*.py" -type f', returnStdout: true).trim()
+
+                                        if (!pythonFileName) {
+                                            echo "Failed to extract Python file name. Using a default name."
+                                            pythonFileName = "default"
+                                        }
+
+                                        // Modify the imageName to include the python file name
+                                        imageName = "${DOCKER_REGISTRY}/${PROJECT_NAME}-${pythonFileName}:latest"
+                                    } else {
+                                        echo "This is not a Python repository. You might want to handle other types or fail the build."
+                                        return // Exit or handle other types.
+                                    }
+                                }
+
+                                echo "Building image with Kaniko using ${imageName}..."
+                                sh """
+                                    /kaniko/executor --context "`pwd`" --dockerfile Dockerfile --destination ${imageName} --skip-tls-verify
+                                """
+                                echo "Image built and pushed successfully."
+                            }
+                        }
+                        // .
+    
+                        // If a repo update is detected, deploy the Pachyderm repositories
+                        if (env.REPO_UPDATE == 'true') {
+                            echo "Detected repository update. Deploying Pachyderm repositories..."
+                            
+                            sh """
+                                for repoFile in *_repo.yaml; do
+                                    pachctl create repo -f $repoFile
+                                done
+                            """
+                            echo "Pachyderm repositories deployed successfully."
+                        }
+                        
+                        // If a pipeline update is detected, deploy the Pachyderm pipelines
+                        if (env.PIPELINE_UPDATE == 'true') {
+                            echo "Detected pipeline update. Deploying Pachyderm pipelines..."
+                            
+                            sh """
+                                for pipelineFile in *_pipeline.yaml; do
+                                    pachctl create pipeline -f $pipelineFile
+                                done
+                            """
+                            echo "Pachyderm pipelines deployed successfully."
+                        }
+                    }
+                    echo "Jobs generation based on changes completed."
+                }
+            }
+        }
+    }
