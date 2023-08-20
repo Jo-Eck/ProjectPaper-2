@@ -4,3 +4,9 @@
 [submodule "project/Arkouda/arkouda-contrib"]
 	path = project/Arkouda/arkouda-contrib
 	url = git@github.com:Bears-R-Us/arkouda-contrib.git
+[submodule "project/Kubernetes_Setup/ci_cd/test"]
+	path = project/Kubernetes_Setup/ci_cd/test
+	url = http://heydar20.labs.hpecorp.net:30070/gitea_admin/test.git
+[submodule "project/Kubernetes_Setup/ci_cd/jenkins/Pachykouda-Jenkins-Pipeline"]
+	path = project/Kubernetes_Setup/ci_cd/jenkins/Pachykouda-Jenkins-Pipeline
+	url = git@github.hpe.com:jon-eckerth/Pachykouda-Jenkins-Pipeline.git

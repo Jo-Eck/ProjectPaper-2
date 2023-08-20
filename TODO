@@ -1,4 +1,13 @@
 # Things to polish before handoff
 
-- [ ] Change Architecture diagram to use frogejo instead of gitlab
-- [ ] Write documentation for the subsecitons
+- [X] Change Architecture diagram to use frogejo instead of gitlab
+- [ ] Write documentation for the subsections 
+- [ ] Make jenkins send the success of the build to the forgejo
+ 
+
+
+# Future Work
+
+- [ ] distributed object storage
+- [ ] dynacmic volume provisioning
+- [ ] 
