@@ -13,14 +13,6 @@ ENV ARKOUDA_DISTRO_NAME=${ARKOUDA_DISTRO_NAME}
 ARG ARKOUDA_BRANCH_NAME=${ARKOUDA_BRANCH_NAME}
 ENV ARKOUDA_BRANCH_NAME=${ARKOUDA_BRANCH_NAME}
 
-ENV HTTP_PROXY="http://proxy.its.hpecorp.net:80"
-ENV HTTPS_PROXY="http://proxy.its.hpecorp.net:80"
-ENV NO_PROXY=""
-ENV http_proxy="http://proxy.its.hpecorp.net:80"
-ENV https_proxy="http://proxy.its.hpecorp.net:80"
-ENV no_proxy=""
-
-
 # Install dependencies
 RUN sudo apt-get update && sudo apt upgrade -y && \
     sudo apt-get install unzip libcurl4-openssl-dev -y
