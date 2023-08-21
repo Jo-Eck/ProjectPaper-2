@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arkouda-locale
+spec:
+  replicas: {{ .Values.server.numLocales }}
+  selector:
+    matchLabels:
+      app: arkouda-locale
+  template:
+    metadata:
+      labels:
+        app: arkouda-locale
+        name: arkouda-locale
+    spec:
+      containers:
+        - name: arkouda-locale
+          image: {{ .Values.imageRepository }}/arkouda-udp-server:{{ .Values.releaseVersion }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          command: [ "sh", "/opt/arkouda/start-arkouda-locale.sh" ]
+          ports:
+          - containerPort: 22
+          volumeMounts:
+          - name: ssl
+            mountPath: "/etc/ssl/arkouda"
+          - name: ssh
+            mountPath: "/home/ubuntu/ssh-keys"
+          {{- if eq .Values.external.persistence.enabled true }}
+          - name: locale
+            mountPath: {{ .Values.external.persistence.path }}
+          {{- end }}
+          env:
+            - name: MY_IP
+              valueFrom:
+                fieldRef: 
+                  fieldPath: status.podIP
+            - name: NUM_LOCALES
+              value: {{ .Values.server.numLocales | quote }}
+            - name: MEMTRACK
+              value: {{ .Values.server.memTrack | quote }}
+            - name: CHPL_RT_NUM_THREADS_PER_LOCALE
+              value: {{ .Values.server.threadsPerLocale | quote }} 
+      volumes:
+        - name: ssl
+          secret:
+            secretName: {{ .Values.secrets.tls }}
+        - name: ssh
+          secret:
+            secretName: {{ .Values.secrets.ssh }}
+        {{- if eq .Values.external.persistence.enabled true }}
+        - name: locale
+          hostPath:
+            path: {{ .Values.external.persistence.hostPath }}
+        {{- end }}  
