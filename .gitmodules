@@ -4,3 +4,6 @@
 [submodule "project/Arkouda/arkouda-contrib"]
 	path = project/Arkouda/arkouda-contrib
 	url = git@github.com:Bears-R-Us/arkouda-contrib.git
+[submodule "project/Kymera/arkouda-contrib-temp"]
+	path = project/Kymera/arkouda-contrib-temp
+	url = git@github.com:Bears-R-Us/arkouda-contrib.git
