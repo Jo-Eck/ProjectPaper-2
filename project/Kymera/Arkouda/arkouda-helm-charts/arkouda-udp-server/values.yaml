@@ -1,34 +1,34 @@
-# Default values for arkouda-udp-server chart
+# Default values for udp-arkouda-server chart
 
 resources:
   limits:
-    cpu: 2000m
-    memory: 4096Mi
+    cpu: 1000m
+    memory: 1024Mi
   requests:
-    cpu: 2000m
-    memory: 2048Mi
+    cpu: 1000m
+    memory: 1024Mi
 
 ######################## Pod Settings ########################
 
 imageRepository: bearsrus
-releaseVersion: v2023.06.20
+releaseVersion: v2023.05.05
 imagePullPolicy: IfNotPresent
 
 ################ Arkouda Driver Configuration ################
 
 server: 
-  totalNumLocales: # totalNumLocales = number of arkouda-udp-locale pods + 1 (arkouda-udp-server pod)
+  numLocales: 1 # total number of Arkouda locales = number of arkouda-udp-locale pods + 1
   authenticate: false # whether to require token authentication
   verbose: true # enable verbose logging
   threadsPerLocale: # number of cpu cores to be used per locale
   memMax: # maximum bytes of RAM to be used per locale
-  memTrack: true # needs to be true to enable memory metrics and memory use forecasting
+  memTrack: true
   logLevel: LogLevel.DEBUG
   service:
-    type: ClusterIP # k8s service type, usually ClusterIP, NodePort, or LoadBalancer
+    type: NodePort # k8s service type, usually ClusterIP, NodePort, or LoadBalancer
     port: # k8s service port Arkouda is listening on, defaults to 5555
-    nodeport: # if service type is Nodeport
-    name: # k8s service name
+    nodeport: 40000 # if service type is Nodeport
+    name: arkouda-server # k8s service name
   metrics:
     collectMetrics: false # whether to collect metrics and make them available via  k8s service
     service:
@@ -40,22 +40,22 @@ locale:
   podMethod: GET_POD_IPS
 external:
   persistence:
-    enabled: false
+    enabled: true
     path: /arkouda-files # pod directory path, must match arkouda-udp-locale
-    hostPath: # host machine path, must match arkouda-udp-locale
-  k8sHost: # result of kubectl cluster-info command
-  namespace: # namespace Arkouda will register service
+    hostPath: /mnt/arkouda # host machine path, must match arkouda-udp-locale
+  k8sHost: https://10.93.246.87:6443
+  namespace: arkouda # namespace Arkouda will register service
   service: 
-    name: # k8s service name Arkouda will register
+    name: arkouda-server # k8s service name Arkouda will register
     port: # k8s service port Arkouda will register, defaults to 5555
 metricsExporter:
   imageRepository: bearsrus
-  releaseVersion: v2023.06.20 # prometheus-arkouda-exporter release version
+  releaseVersion: v2023.05.05 # prometheus-arkouda-exporter release version
   imagePullPolicy: IfNotPresent
   service:
     name: # prometheus-arkouda-exporter service name
     port: 5080 # prometheus-arkouda-exporter service port, defaults to 5080
   pollingIntervalSeconds: 5
 secrets:
-  tls: # name of tls secret used to access Kubernetes API
-  ssh: # name of ssh secret used to launch Arkouda locales
+  tls: arkouda-tls # name of tls secret used to access Kubernetes API
+  ssh: arkouda-ssh # name of ssh secret used to launch Arkouda locales
