@@ -4,3 +4,4 @@ Pygments==2.16.1
 smmap==5.0.0
 gitignore-parser==0.1.6
 python-pachyderm==7.6.0
+pyyaml==5.4.1

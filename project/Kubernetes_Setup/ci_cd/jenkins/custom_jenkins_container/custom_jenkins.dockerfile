@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
+    tree \
     gnupg \
     software-properties-common \
     python3-pip \
