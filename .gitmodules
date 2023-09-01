@@ -1,5 +1,5 @@
 [submodule "project/Kubernetes_Setup/ci_cd/jenkins/Pachykouda-Jenkins-Pipeline"]
 	path = project/Kubernetes_Setup/ci_cd/jenkins/Pachykouda-Jenkins-Pipeline
 [submodule "hasp_tc2024"]
-	path = hasp_tc2024
+	path = Techcon-Submission
 	url = git@github.hpe.com:harumi-kuno/hasp_tc2024.git
