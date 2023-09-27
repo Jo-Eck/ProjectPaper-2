@@ -1,0 +1,21 @@
+[Unit]
+Description=Minio
+Documentation=https://docs.minio.io
+Wants=network-online.target
+After=network-online.target
+AssertFileIsExecutable=/usr/local/bin/minio
+
+[Service]
+WorkingDirectory=/usr/local/
+
+User=minio-user
+Group=minio-user
+
+ExecStart=/usr/local/bin/minio server /mnt/pachyderm/minio --console-address :9001
+
+Restart=always
+RestartSec=3
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target
