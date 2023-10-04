@@ -7,6 +7,7 @@ which serve as the basis for the research questions which will guide this projec
 result in solutions and further questions which are listed in the contributions section and discussed in the conclusion.
 
 \section{Motivation}
+
 The proliferation of "Big Data" has led to the need to compute, analyse, and visualize ever-increasing amounts of datasets,
 which themselves are getting more and more complex, has led to an ever increasing demand for more efficient and quicker ways to process data.
 
@@ -25,14 +26,69 @@ as the \ac{ML} and \ac{AI} community is adopting the tools and techniques of bot
 But this convergence of the two is not without its problems, being developed in two coexisting and separate communities, the tools and techniques of both communities are not always compatible with each other,
 the goal of this project is to find a way to bridge this gap and to find a way to combine the best of both worlds.
 
+\newpage
+
 \section{Problem Statement}
 
+The following key problems have emerged from the convergence of High Performance Computing (HPC) and Cloud Computing (CC) communities, especially in the context of Machine Learning (ML) and Artificial Intelligence (AI) research:
+
+\begin{itemize}
+
+    \item \textbf{Workload Resilience and Fault Tolerance in \ac{HPC}:} 
+        \ac{HPC} systems often lack mechanisms to recover from task failures within
+        larger jobs, running for an extended time.
+        When a component task fails, it can invalidate the entire
+        computation, requiring a restart from scratch.
+        This need for resilient failover and verification strategies as well as the need to avoid
+        computational wastage is a key challenge for \ac{HPC} systems, especially with every increasing system sizes and complexity.
+        \footcite{egwutuohaSurveyFaultTolerance2013}
+
+    \item \textbf{Environment/Package Management in \ac{HPC}:} 
+        \ac{HPC} systems are notorious for their complex package management systems.
+        As having a shared infrastructure between many users each with their own specific needs and requirements of different versions of packages, libaries and software,
+        all the while sharing a common environment.
+        Many solutions to this problem have been developed, each with their own advantages and disadvantages.
+        \footcite{duboisWhyJohnnyCan2003} \footcite{bzeznikNixHPCPackage2017} \footcite{gamblinSpackPackageManager2015} \footcite{hosteEasyBuildBuildingSoftware2012}
+
+    \item \textbf{Portability Issues with \ac{HPC}:}
+        Tieing in with the previous point, \ac{HPC} systems are often designed to be optimized for specific hardware as well as having a very specific software stack.
+        This makes the portability of applications between different \ac{HPC} systems very difficult and often infeasible.
+        This lack of portability contrasts sharply with the more platform-agnostic nature of \ac{CC} environments, where the containerization of applications has become the norm for ensuring portability.
+
+    \item \textbf{Scalability and Flexibility in \ac{HPC}:}
+        Due to its direct access to the hardware and very specific hardware needs, \ac{HPC} systems are often hard to dynamically scale and inflexible. 
+        while \ac{CC} systems are designed to be easily scalable and flexible and are often designed to be hardware agnostic and abstract away the underlying hardware.
+        This becomes especially relevant in the context of heterogeneous hardware, where the hardware is not uniform and consists of different types of hardware,
+        which is becoming more and more common in the context of ML and AI research.
+      
+    \item \textbf{Lack of Interconnected Problem Solving in \ac{CC}:} 
+        The workloads traditionally deployed on \ac{CC} systems are often independent of each other, like load balancing, web hosting, etc. 
+        This is in stark contrast to the interconnected nature of \ac{HPC} workloads, where each part of the input data is dependent on the other parts of the input data,
+        such that all nodes of the system need to be able to communicate with each other.
+
+    \item \textbf{Provenance and Reproducibility:}
+        Another need that is becoming more and more important in the context of ML and AI research is the need for provenance and reproducibility of results.
+        Being able to tell which data was used to train the model, is of ever increasing importance as the influence the resulting models have on our lives increases as well as the data used to train the model.
+        This is especially important since it is crucial to ensure that the data is not biased, outdated, or otherwise flawed, which could lead to incorrect predictions, decisions, or recommendations. 
+        in addition various data sources, from images to text, may have copyright restrictions that, when overlooked, can lead to significant legal complications.
+
+    \item \textbf{Versioning Limitations:} 
+        The dynamic nature of ML and AI research necessitates robust versioning solutions for both data and computational processes.
+        Both \ac{HPC} and \ac{CC} solutions often fall short in providing holistic versioning capabilities that cater to evolving research needs.
+
+        
+\end{itemize}
 
 \section{Research Questions}
 
+To address the aforementioned problems, to bridge the gap between the two paradigms and to combine the best of both worlds, an integration of the two paradigms is needed.
+This was accomplished by integrating a \ac{HPC} framework called 'Arkouda' into a container based \ac{CC} workflow management tool called 'Pachyderm'\footcite{pachydermPachyderm} and integrating both with the supporting infrastructure the \ac{CC} system enables us to use.
+This process of integration and prototyping as well as the explanation of the underlying concepts and technologies will be the focus of this project.
+
 \begin{itemize}
-    \item \textbf{RQ1:} \textit{platzhalter}
-    \item \textbf{RQ2:} \textit{platzhalter}
+    \item \textbf{RQ1:} \textit{How can a high-performance computing framework be effectively integrated into a container-based workflow management tool?}
+    \item \textbf{RQ2:} \textit{To what extent does the use of a container-based workflow management tool affect the performance of the high-performance computing framework?}
+    \item \textbf{RQ3:} \textit{What are the opportunities for improving the integration of high-performance computing frameworks with container-based workflow management tools?}
 \end{itemize}
 
 \section{Contributions}
