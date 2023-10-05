@@ -52,7 +52,7 @@ The following key problems have emerged from the convergence of High Performance
 
     \item \textbf{Portability Issues with \ac{HPC}:}
         Tieing in with the previous point, \ac{HPC} systems are often designed to be optimized for specific hardware as well as having a very specific software stack.
-        This makes the portability of applications between different \ac{HPC} systems very difficult and often infeasible.
+        This makes the portability of applications between different \ac{HPC} systems very difficult and often infeasible. \footcite[p. 50]{canonCasePortabilityReproducibility2019}
         This lack of portability contrasts sharply with the more platform-agnostic nature of \ac{CC} environments, where the containerization of applications has become the norm for ensuring portability.
 
     \item \textbf{Scalability and Flexibility in \ac{HPC}:}
@@ -73,9 +73,11 @@ The following key problems have emerged from the convergence of High Performance
         in addition various data sources, from images to text, may have copyright restrictions that, when overlooked, can lead to significant legal complications.
 
     \item \textbf{Versioning Limitations:} 
-        The dynamic nature of ML and AI research necessitates robust versioning solutions for both data and computational processes.
-        Both \ac{HPC} and \ac{CC} solutions often fall short in providing holistic versioning capabilities that cater to evolving research needs.
-
+        The dynamic nature of ML and AI research necessitates robust versioning solutions for data, configurations and code.
+        While \ac{CC} has developed many solutions to this problem over the years, making them their own subsection of the ecosystem,
+        namely \ac{CI/CD} tools for the testing and deployment of applications aswell as \ac{IaC} tools for the deployment of infrastructure.
+        While many solutions have been developed for the one-off deployment of \ac{HPC} systems, the dynamic nature of \ac{CC} systems necessitates a more robust solution to this problem, 
+        from which the \ac{HPC} community could benefit aswell. 
         
 \end{itemize}
 
