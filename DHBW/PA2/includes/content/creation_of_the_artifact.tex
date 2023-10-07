@@ -8,6 +8,9 @@ all the while being contained by business requirements and time constraints, the
 At first the initial goal was simply to create a \ac{PoC} of a realistic workflow engine using the "Arkouda" project,
 in order to present the Customer with a easily graspable example of its capabilities.
 
+While we are approaching the problem from the perspective of the \ac{HPC} community, the intended enduser of this tool are the data scientists and \ac{SME}s 
+that are working with the \ac{HPC} systems, and therefore the tool needs to be designed and selected with the fact in mind that the enduser will most likely not be knowledgeable in the field of \ac{HPC} or the underlying infrastructure.
+
 In the first iteration of the project a preselector of possible Workflow management tools was presented from the business side,
 with the option to increase the scope if the presented tools were not sufficient.
 
@@ -21,23 +24,23 @@ The initial choice of tools was:
 
 \begin{itemize}
     \item \textbf{Pachyderm:} A \ac{k8s} based Workflow manager, written in go which was recently aquired by \ac{HPE}.
-    \item \textbf{Argo:} A \ac{k8s} based Workflow manager , written in go, which is a \ac{CNCF} project.
+    \item \textbf{Argo:} A \ac{k8s} based Workflow manager , written in go, which is a \ac{CNCF} project \footcite{ArgoprojArgoworkflows2023}.
     \item \textbf{\ac{CLASP}:}  An in-house developed workflow manager, written in Java, utilizing Serverlet to execute workflows\footcite{sayersCloudApplicationServices2015}.
-    \item \textbf{Snaplogic:} A commercial workflow manager,
+    \item \textbf{Snaplogic:} A commercial low-code/no-code workflow manager with a focus on data integration and data engineering\footcite{IPaaSSolutionEnterprise}.
 \end{itemize}
 
 But given that it was possible to select projects outside of the initial selection, the following projects also need to be considered:
 
 
 \begin{itemize}
-    \item \textbf{Airflow:} A Python-based workflow manager under the \ac{CNCF} umbrella, known for its easy-to-use interface and extensibility.
-    \item \textbf{Kubeflow:} A \ac{k8s}-native platform for deploying, monitoring, and running ML workflows and experiments, also a \ac{CNCF} project, streamlining \ac{ML} operations alongside other Kubernetes resources.
-    \item \textbf{Knative:} An open-source ac{k8s}-based platform to build, deploy, and manage modern serverless workloads, simplifying the process of building cloud-native applications.
-    \item \textbf{Luigi:} An open-source Python module created by Spotify to build complex pipelines of batch jobs, handling dependency resolution, workflow management, and visualization seamlessly.
+    \item \textbf{Airflow:} A Python-based workflow manager under the \ac{CNCF} umbrella, known for its easy-to-use interface and extensibility\footcite{hainesWorkflowOrchestrationApache2022}.
+    \item \textbf{Kubeflow:} A \ac{k8s}-native platform for deploying, monitoring, and running ML workflows and experiments, also a \ac{CNCF} project, streamlining \ac{ML} operations alongside other Kubernetes resources \footcite{Kubeflow}.
+    \item \textbf{Knative:} An open-source \ac{k8s}-based platform to build, deploy, and manage modern serverless workloads, simplifying the process of building cloud-native applications \footcite{HomeKnative}.
+    \item \textbf{Luigi:} An open-source Python module created by Spotify to build complex pipelines of batch jobs, handling dependency resolution, workflow management, and visualization seamlessly \footcite{LuigiDocWorkflows}.
     \item \textbf{\ac{CWL}:} An open-standard for describing analysis workflows and tools in a way that makes them portable and scalable across a variety of software and hardware environments, from workstations to cluster, cloud, and high-performance computing environments.
 \end{itemize}
     
-% ADD where this selection was taken from!!
+% Why these tools??
 
 \subsubsection{Selection Criteria}
 
@@ -46,13 +49,39 @@ Due to this extensive list of diverse tools, a set of criteria was established t
 
 \begin{itemize}
     \item \textbf{Ease of use:} 
+        As the inteded are not primarily \ac{HPC} experts, the tool needs to be easy to use and understand,
+        and should not require the enduser to have a deep understanding of the underlying infrastructure.
+        While we can expect that the administration of the infrastructure will be done by adequately trained personnel, 
+        the enduser should be spared having to adapt to the underlying infrastructure as much as possible.
+
     \item \textbf{Extensibility:}
-    \item \textbf{Community and Support:}
+        One significant constraint of the project is the restricted number of available work-hours.
+        Given that the project's environment predominantly centers around HPC (High Performance Computing) workloads,
+        it's essential for the tool to be easily expandable without requiring extensive modifications to the underlying system.
+        Idealy this property would be transfered to the enduser, allowing them to easily extend the developed tool further to their needs.
+
+    \item \textbf{Community, Support and  Documentation:}
+        It is not enough that the software technically permits extensibility, the software also needs to be adequately documented and a support framework needs to be in place.
+        Be it a community of users or a dedicated support team, the enduser and the developers need to be able to rely on the software being maintained and updated aswell as being able to find expert help in case of problems.
+
     \item \textbf{Maturity:}
-    \item \textbf{Integration with \ac{HPC} systems:}
+        With the boom of \ac{AI} and \ac{ML} in recent years \footcite{24TopAI}, the number of tools and frameworks has exploded, and while this is a good thing it also means that a lot of these tools are still paving their way and are developing rapidly.
+        While this is not necessarily a bad thing, it does mean that the tool might not be ready for production use and might not be able to provide the stability and reliability that is required for a production environment or are lacking in documentation and support.      
+
     \item \textbf{Strategic alignment with \ac{HPE}:}
+        As this project is being developed within the context of \ac{HPE}, it is important to consider the strategic alignment of the tool with \ac{HPE}.
+        \ac{HPE} has is a large company with a diverse portfolio of products and services, and this project intersects with many different parts of the company.
+        Therefore it is important to consider the strategic alignment of the tool with \ac{HPE} and its products and services.
+
     \item \textbf{License:}
+        While this \ac{PoC} is not a commercial product in itself but rather an exploration of the problem space and a demonstration of what a final commercial product  might be like,
+        it is important to consider the licenses of the tools that are being used.
+        Having to strip out a tool later on because of licensing issues would be a significant setback and therefore needs to be considered.
+
     \item \textbf{Cost:}
+        Time is not the only constraint of this project, as the project is being developed within the context of \ac{HPE} it is important to consider the cost of the tools that are being used.
+        
+
 \end{itemize}
 
 \newpage
@@ -76,6 +105,18 @@ Due to this extensive list of diverse tools, a set of criteria was established t
 
 \section{Implementation of the Artifact}
 
+This section will describe the iterative process of implementing the larger artifact and is broken up into 3 subsections.
+While these steps where happening concurrently, they each address a different aspect of the project and therefore underwent their own iterative processes.
+
+...
+
+\subsection{Infrastructure}
+
+\subsubsection*{REEE}
+
+\subsection{Usability Impovements}
+
+\subsection{Solving tightly coupled problems} 
 
 
 \newpage
