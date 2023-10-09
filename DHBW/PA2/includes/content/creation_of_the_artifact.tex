@@ -81,22 +81,35 @@ Due to this extensive list of diverse tools, a set of criteria was established t
     \item \textbf{Cost:}
         Time is not the only constraint of this project, as the project is being developed within the context of \ac{HPE} it is important to consider the cost of the tools that are being used.
         
-
 \end{itemize}
+
+\subsubsection{Evaluation}
+
+The following table shows the evaluation of the tools based on the selection criteria:
+
+\begin{table}
+ 
+
+    
+\end{table}
 
 \newpage
 
 \section{Design of the Artifact}
+ 
+As can be seen in figure \ref{abb:pachykouda_three_aspects}, the artifact is composed of 3 main components, 
+the \textbf{Central Workflow Engine} which is responsible for the orchestration of the workflows (center),
+the \textbf{\ac{HPC} Cluster} which is responsible for the execution of \ac{TCPP} workloads (left)
+and the \textbf{Usability and Support Services} which aim at improving the usability and accessability for the enduser (right).
 
-
-
+All this is build on top of the \textbf{Heydar Cluster} which has been specifically set up for this project and is described in more detail in section \ref{heydar_cluster}.
 
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=16cm]{graphics/pachykouda.png}
-    \caption[pachykouda high level diagramm]{Pachykouda high level infrastructure diagramm \footcite{eckerthHASPHPCApplications}}
-    \label{abb:Logo2cmBreit}
+    \includegraphics[width=16cm]{graphics/pachykouda_three_aspects.png}
+    \caption[Pachykouda high level diagramm showing three main aspects]{Pachykouda high level infrastructure diagramm}
+    \label{abb:pachykouda_three_aspects}
 \end{figure}
 
 
@@ -108,15 +121,18 @@ Due to this extensive list of diverse tools, a set of criteria was established t
 This section will describe the iterative process of implementing the larger artifact and is broken up into 3 subsections.
 While these steps where happening concurrently, they each address a different aspect of the project and therefore underwent their own iterative processes.
 
-...
 
 \subsection{Infrastructure}
 
-\subsubsection*{REEE}
+\subsubsection{Minikube}
+
+\subsubsection{Heydar Cluster}
+\label{heydar_cluster}
+
 
 \subsection{Usability Impovements}
 
-\subsection{Solving tightly coupled problems} 
+\subsection{\ac{TCPP} Workloads } 
 
 
 \newpage
