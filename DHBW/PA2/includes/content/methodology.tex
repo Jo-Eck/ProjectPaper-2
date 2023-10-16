@@ -39,8 +39,9 @@ The alternative with the highest score is therefore the optimal choice.
     \centering
     \Large
     \[ A_{i}^{WSM-score} = \sum_{j=1}^{n} w_{j} a_{ij} \quad \ for \ i = 1, 2, 3, \dots, m. \]
-    \caption{Formula for calculating the \ac*{WSM} score \footcite*{WeightedSumModel2022}} 
+    \caption{Formula for calculating the \ac*{WSM} score\protect\footnotemark} 
 \end{figure}
+\footnotetext{\cite{WeightedSumModel2022}}
 
 Where:
 \begin{itemize}
@@ -58,7 +59,7 @@ direct mathematical approach to rank alternatives based on their weighted sum
 scores, the \ac{SMART} methodology offers a more comprehensive approach to
 multi-criteria decision-making. While \ac{WSM} is primarily concerned with simple
 weighted arithmetic sums, the \ac{SMART} method dives deeper, ensuring that diverse
-performance values—both quantitative and qualitative—are harmonized and placed
+performance values—both quantitative and qualitative are harmonized and placed
 on a common scale.
 
 The \ac{SMART} method, grounded in \ac{MAUT}, provides a
@@ -82,8 +83,10 @@ The computational formula integral to the \ac{SMART} method is:
     \centering
     \Large
     \[ x_j = \frac{\sum_{i=1}^{m} w_i a_{ij}}{\sum_{i=1}^{m} w_i}, \quad j = 1, \ldots, n. \]
-    \caption{Formula for calculating the \ac*{SMART} score \footcite*{fulopIntroductionDecisionMaking2005}} 
+    \caption{Formula for calculating the \ac*{SMART} score\protect\footnotemark} 
 \end{figure}
+
+\footnotetext{Taken from \cite[p. 6]{fulopIntroductionDecisionMaking2005}}
 
 Where:
 \begin{itemize}
@@ -95,3 +98,35 @@ Where:
 This method's emphasis on utility functions ensures a more nuanced and adaptable
 approach to decision-making compared to models like WSM, making it suitable for
 complex scenarios where criteria and alternatives are diverse in nature \footcite[p. 6]{fulopIntroductionDecisionMaking2005}.
+
+\subsection{SMART Exploiting Ranks}
+
+The \ac{SMART-ER} method is a variant of the \ac{SMART} method that attempts to alleviate the largest issue \footcitetext[p. 26]{barfodMulticriteriaDecisionAnalysis2014} of the original \ac{SMART} method, 
+namely the problem of a somewhat arbitrary ranking of the options if no numerical values can be derived.
+
+This method addresses the issue by letting the decision maker simply ranking the different criteria in relation to each other and then normalizing the weights\footcite[p. 296]{robertsWeightApproximationsMultiattribute2002a}.
+They propose the different weighting curves.
+
+\begin{figure}[h]
+    \centering
+    \[ w_{i}(ROC) = \frac{1}{n} \sum_{j=1}^{n} \frac{1}{j}, \quad i = 1, \ldots, n. \]
+    \caption{Formula for the \ac{ROC} weights}
+\end{figure}
+
+The \ac{ROC} takes the centroid of the rank order and uses the reciprocal of the rank as the weight.
+
+\begin{figure}[h]
+    \centering
+    \[ w_{i}(\ RS\ ) = \frac{n + 1 - i}{n(n + 1)/2}, \quad i = 1, \ldots, n. \]
+    \caption{Formula for the \ac{RS} weights}
+\end{figure}
+
+The \ac{RS} uses linear curve where weights are normalized by dividing them by the sum of all weights.
+
+\begin{figure}[h]
+    \centering
+    \[ w_i(RR) = \left( \frac{\frac{1}{i}}{\sum_{j=1}^{n} \frac{1}{j}} \right) , \ rank\ i = 1, \ldots, n, \ option\ j = 1, \ldots, n \]
+    \caption{Formula for the \ac{RR} weights}
+\end{figure}
+
+The \ac{RR} emphasizes the most important criteria by using the reciprocal of the rank as the weight, then normalizing each weight by the sum of all reciprocals.
