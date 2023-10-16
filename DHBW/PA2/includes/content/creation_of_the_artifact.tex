@@ -11,7 +11,7 @@ in order to present the Customer with a easily graspable example of its capabili
 While we are approaching the problem from the perspective of the \ac{HPC} community, the intended enduser of this tool are the data scientists and \ac{SME}s 
 that are working with the \ac{HPC} systems, and therefore the tool needs to be designed and selected with the fact in mind that the enduser will most likely not be knowledgeable in the field of \ac{HPC} or the underlying infrastructure.
 
-In the first iteration of the project a preselector of possible Workflow management tools was presented from the business side,
+In the first iteration of the project a preselection of possible Workflow management tools was given from the business side,
 with the option to increase the scope if the presented tools were not sufficient.
 
 Therefore the goals of the first iteration of this project was twofold, first to determine which, if any, of the presented tools were suitable for the task at hand,
@@ -20,7 +20,9 @@ and to determine what would make an adequate \ac{PoC} for the customer.
 \section{Selection of Workflow Management Tools}
 
 As described in the previous section, the first iteration of this project was to determine which, if any, of the presented tools were suitable for the task at hand.
-The initial choice of tools was:
+The following section will describe the process of selecting the tools and the criteria that were used to evaluate them.
+Because the time frame does not allow for a full integration and testing of all the presented tools in depth we will be using a decision making framework to evaluate the tools,
+as described in the Methodologies \Ref{decision_making} to determine which tools will be most suitable for an initial \ac{PoC} and will serve as a good starting point for the project and future iterations.
 
 \begin{itemize}
     \item \textbf{Pachyderm:} A \ac{k8s} based Workflow manager, written in go which was recently aquired by \ac{HPE}.
@@ -36,20 +38,21 @@ But given that it was possible to select projects outside of the initial selecti
     \item \textbf{Airflow:} A Python-based workflow manager under the \ac{CNCF} umbrella, known for its easy-to-use interface and extensibility\footcite{hainesWorkflowOrchestrationApache2022}.
     \item \textbf{Kubeflow:} A \ac{k8s}-native platform for deploying, monitoring, and running ML workflows and experiments, also a \ac{CNCF} project, streamlining \ac{ML} operations alongside other Kubernetes resources \footcite{Kubeflow}.
     \item \textbf{Knative:} An open-source \ac{k8s}-based platform to build, deploy, and manage modern serverless workloads, simplifying the process of building cloud-native applications \footcite{HomeKnative}.
-    \item \textbf{Luigi:} An open-source Python module created by Spotify to build complex pipelines of batch jobs, handling dependency resolution, workflow management, and visualization seamlessly \footcite{LuigiDocWorkflows}.
+    \item \textbf{Luigi:} An open-source Python module created by Spotify to build complex pipelines of batch jobs, handling dependency resolution, workflow management, and visualization seamlessly \footcite{SpotifyLuigi2023}.
     \item \textbf{\ac{CWL}:} An open-standard for describing analysis workflows and tools in a way that makes them portable and scalable across a variety of software and hardware environments, from workstations to cluster, cloud, and high-performance computing environments.
 \end{itemize}
     
 % Why these tools??
 
+\newpage
 \subsubsection{Selection Criteria}
 
 Due to this extensive list of diverse tools, a set of criteria was established to determine which tool would be the most suitable for the task at hand.
-% How should i justify the selection criteria??
+The following list of criteria was established to evaluate the tools:
 
 \begin{itemize}
     \item \textbf{Ease of use:} 
-        As the inteded are not primarily \ac{HPC} experts, the tool needs to be easy to use and understand,
+        As the inted endusers of the tool are not primarily \ac{HPC} experts, the tool needs to be easy to use and understand,
         and should not require the enduser to have a deep understanding of the underlying infrastructure.
         While we can expect that the administration of the infrastructure will be done by adequately trained personnel, 
         the enduser should be spared having to adapt to the underlying infrastructure as much as possible.
@@ -62,7 +65,7 @@ Due to this extensive list of diverse tools, a set of criteria was established t
 
     \item \textbf{Community, Support and  Documentation:}
         It is not enough that the software technically permits extensibility, the software also needs to be adequately documented and a support framework needs to be in place.
-        Be it a community of users or a dedicated support team, the enduser and the developers need to be able to rely on the software being maintained and updated aswell as being able to find expert help in case of problems.
+        Be it a community of users or a dedicated support team, the enduser and the developers need to be able to rely on the software being maintained and updated as well as being able to find expert help in case of problems.
 
     \item \textbf{Maturity:}
         With the boom of \ac{AI} and \ac{ML} in recent years \footcite{24TopAI}, the number of tools and frameworks has exploded, and while this is a good thing it also means that a lot of these tools are still paving their way and are developing rapidly.
@@ -83,17 +86,74 @@ Due to this extensive list of diverse tools, a set of criteria was established t
         
 \end{itemize}
 
-\subsubsection{Evaluation}
+\subsubsection{Weigting of the Criteria}
 
-The following table shows the evaluation of the tools based on the selection criteria:
+An integral part of the \ac{SMART} methodology is the weighting of the criteria, as described in section \ref{decision_making}.
+The following table shows the weighting of the criteria that was used to evaluate the tools:
 
-\begin{table}
- 
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{|l|l|} \hline
+        \textbf{Criteria}                       & \textbf{Weight}       \\ \hline
+        Ease of use                             & TBD                   \\ \hline
+        Extensibility                           & TBD                   \\ \hline
+        Community, Support and  Documentation   & TBD                   \\ \hline
+        Maturity                                & TBD                   \\ \hline
+        Strategic alignment with \ac{HPE}       & TBD                   \\ \hline
+        License                                 & TBD                   \\ \hline
+        Cost                                    & TBD                   \\ \hline
 
-    
+    \end{tabular}
+    \caption{Weighting of the criteria}
+    \label{tab:weighting_of_the_criteria}
 \end{table}
 
-\newpage
+!TODO!
+Justify the weighting of the criteria
+....
+
+\subsubsection{Evaluation of the Tools}
+
+The following table shows the evaluation of the tools which where suggested by the business, based on the criteria and the weighting of the criteria:
+
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|} \hline
+        \textbf{Criteria}                                          & \textbf{Pachyderm}    & \textbf{Argo}         & \textbf{\ac{CLASP}}   & \textbf{Snaplogic}     \\ \hline
+        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Community, Support \& Docs                                 & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        License                                                    & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+
+    \end{tabular}
+    \caption{Evaluation of the suggested tools}
+    \label{tab:evaluation_of_the_suggested_tools}
+\end{table}
+
+The following table shows the evaluation of the tools which where chosen for their relevance to the problem space, based on the criteria and the weighting of the criteria:
+
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|} \hline
+        \textbf{Criteria}                                          & \textbf{Airflow}      & \textbf{Kubeflow}     & \textbf{Knative}      & \textbf{Luigi}        & \textbf{CWL}          \\ \hline
+        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Community, Support \& Docs                                 & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        License                                                    & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+
+    \end{tabular}
+    \caption{Evaluation of the additional tools}
+    \label{tab:evaluation_of_the_additional_tools}
+\end{table}
+
+
+
 
 \section{Design of the Artifact}
  
