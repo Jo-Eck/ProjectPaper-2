@@ -61,7 +61,7 @@ The following list of criteria was established to evaluate the tools:
         One significant constraint of the project is the restricted number of available work-hours.
         Given that the project's environment predominantly centers around HPC (High Performance Computing) workloads,
         it's essential for the tool to be easily expandable without requiring extensive modifications to the underlying system.
-        Idealy this property would be transfered to the enduser, allowing them to easily extend the developed tool further to their needs.
+        Ideally this property would be transferred to the enduser, allowing them to easily extend the developed tool further to their needs.
 
     \item \textbf{Community, Support and  Documentation:}
         It is not enough that the software technically permits extensibility, the software also needs to be adequately documented and a support framework needs to be in place.
@@ -83,34 +83,46 @@ The following list of criteria was established to evaluate the tools:
 
     \item \textbf{Cost:}
         Time is not the only constraint of this project, as the project is being developed within the context of \ac{HPE} it is important to consider the cost of the tools that are being used.
-        
+
 \end{itemize}
 
 \subsubsection{Weigting of the Criteria}
 
 An integral part of the \ac{SMART} methodology is the weighting of the criteria, as described in section \ref{decision_making}.
-The following table shows the weighting of the criteria that was used to evaluate the tools:
+In order to rank the criteria themselves, as they are quite hard to quantify, 
+We will be using the weigting methodology as described in the \ac{SMART-ER} methodology \ref{acro:SMART-ER}.
+
+The first step of which is the ranking of the criteria from most important to least important.
+
+\begin{enumerate}
+    \item \textbf{ Extensibility } As this is first and foremost a prototyping project, the actual development it at least for the first couple steps of the highest importance. 
+    \item \textbf{ Community, Support \& Docs } This also applies for the external support available to the development team as if they are stuck, no developed can proceed, no matter the other factors.
+    \item \textbf{ License } This criterion has to weighted carefully, as a highly restrictive license might be a dealbreaker, but a license that is too permissive might conflict with the strategic alignment with \ac{HPE}.
+    \item \textbf{ Strategic alignment with \ac{HPE} } As this is developed by and for \ac{HPE} their requirements need to be consider aswell.
+    \item \textbf{ Ease of Use } While the ease of use is important as this should eventually become a product, for now the central aspect is to create a \ac{PoC} therefore the usability is a priority, but not the highest.
+    \item \textbf{ Cost } As this is a \ac{PoC} and not a commercial product, the cost is not the highest priority as this will be of small scale and therefore the cost will be negligible in most cases.
+    \item \textbf{ Maturity } While the maturity of the tool is important, as this is a \ac{PoC} and not a commercial product, if the maturity of the tool does not impact the extensibility of the tool or the development process, it is not the highest priority.
+\end{enumerate}
+
+
 
 \begin{table}[htb]
     \centering
     \begin{tabular}{|l|l|} \hline
         \textbf{Criteria}                       & \textbf{Weight}       \\ \hline
-        Ease of use                             & TBD                   \\ \hline
-        Extensibility                           & TBD                   \\ \hline
-        Community, Support and  Documentation   & TBD                   \\ \hline
-        Maturity                                & TBD                   \\ \hline
-        Strategic alignment with \ac{HPE}       & TBD                   \\ \hline
-        License                                 & TBD                   \\ \hline
-        Cost                                    & TBD                   \\ \hline
+        Extensibility                           & 0.3704                \\ \hline
+        Community, Support and  Documentation   & 0.2276                \\ \hline
+        License                                 & 0.1561                \\ \hline
+        Strategic alignment with \ac{HPE}       & 0.1085                \\ \hline
+        Ease of use                             & 0.0728                \\ \hline
+        Maturity                                & 0.0442                \\ \hline
+        Cost                                    & 0.0204                \\ \hline
 
     \end{tabular}
     \caption{Weighting of the criteria}
     \label{tab:weighting_of_the_criteria}
 \end{table}
 
-!TODO!
-Justify the weighting of the criteria
-....
 
 \subsubsection{Evaluation of the Tools}
 
