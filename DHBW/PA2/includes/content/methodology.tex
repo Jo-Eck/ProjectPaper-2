@@ -23,26 +23,45 @@ Argumentation why this project is centrally a Prototyping project:
 
 As previously described, the methodology of Prototyping benefits from a very tight loop of iterations between the different phases of the project.
 While this is highly effective in producing a good end result, it can also take many iterations and a lot of experimentation until an adequate tool or solution has been found.
-Given the constraints of a limited time frame for this project, it becomes crucial to use this time judiciously. Rapid and precise decision-making becomes imperative, especially when there's insufficient time for exploration.
+Given the constraints of a limited time frame for this project, it becomes crucial to use this time as efficiently as possible.
+Sometimes, when the time does not permit a thorough exploration of 
 
-To ensure that the decisions made are the most optimal within the constraints of the available information, adopting a systematic, replicable, and transparent decision-making process becomes essential. Over the years, various frameworks have been crafted to guide decision-making, particularly when information is complex and multi-dimensional.
+To ensure that the decisions made are the most optimal within the constraints of the available information, adopting a systematic, replicable, and transparent decision-making process becomes essential. Over the years, various frameworks have been crafted to guide decision-making, 
+particularly when information is complex and multi-dimensional.
 
 \subsection{Weighted Sum Model}
-Evangelos Triantaphyllou suggests that the \ac{WSM} holds a prime position in real-world decision-making applications \footcite[p. 1]{triantaphyllouIntroductionMultiCriteriaDecision2000}. The WSM method, by design, mandates the assignment of specific weights to each criterion based on its relevance. Subsequent to this, every alternative is evaluated based on these weighted criteria, resulting in a cumulative score. The alternative brandishing the highest score is naturally favored as the optimal choice.
+Evangelos Triantaphyllou suggests that the \ac{WSM} is in practice the most used and most relevant decision-making framework \footcite[p. 1]{triantaphyllouIntroductionMultiCriteriaDecision2000}.
+The \ac{WSM} method, by design, mandates the assignment of specific weights to each criterion based on its relevance. Subsequent to this, every alternative is evaluated based on these weighted criteria, resulting in a cumulative score.
+The alternative with the highest score is therefore the optimal choice.
 
-This method, despite its simplicity and direct approach, isn't without limitations. One notable drawback is its dependence on dimensionless scales. For the weights to properly reflect the criteria's importance, the scores need to be on a common, dimensionless scale, a detail not always feasible or convenient in practice.
+
+\begin{figure}[h]
+    \centering
+    \Large
+    \[ A_{i}^{WSM-score} = \sum_{j=1}^{n} w_{j} a_{ij} \quad \ for \ i = 1, 2, 3, \dots, m. \]
+    \caption{Formula for calculating the \ac*{WSM} score \footcite*{WeightedSumModel2022}} 
+\end{figure}
+
+Where:
+\begin{itemize}
+    \item !TODO! add explanations of variables
+\end{itemize}
+
+This method, despite its simplicity and direct approach, isn't without limitations.
+One notable drawback is its dependence on dimensionless scales.
+For the weights to properly reflect the criteria's importance, the scores need to be on a common, dimensionless scale, a detail not always feasible or convenient in practice.
 
 \subsection{Simple Multi-Attribute Rating Technique}
 
-In contrast to the Weighted Sum Model (WSM), which predominantly utilizes a
+In contrast to the \ac{WSM} , which predominantly utilizes a
 direct mathematical approach to rank alternatives based on their weighted sum
 scores, the \ac{SMART} methodology offers a more comprehensive approach to
-multi-criteria decision-making. While WSM is primarily concerned with simple
-weighted arithmetic sums, the SMART method dives deeper, ensuring that diverse
+multi-criteria decision-making. While \ac{WSM} is primarily concerned with simple
+weighted arithmetic sums, the \ac{SMART} method dives deeper, ensuring that diverse
 performance values—both quantitative and qualitative—are harmonized and placed
 on a common scale.
 
-The SMART method, grounded in Multi-attribute Utility Theory (MAUT), provides a
+The \ac{SMART} method, grounded in \ac{MAUT}, provides a
 structured framework that encompasses more than just the weighting of criteria.
 It involves:
 
@@ -53,18 +72,24 @@ identified criteria, culminating in a score. \item Aggregation of these
 individual scores via their associated weights, yielding a total score for every
 alternative. \end{enumerate}
 
-By adhering to the SMART framework, alternatives can be sequenced based on
+By adhering to the \ac{SMART} framework, alternatives can be sequenced based on
 their aggregated weighted scores. This systematic approach equips
 decision-makers to choose solutions that align closely with their objectives.
-The computational formula integral to the SMART method is:
+The computational formula integral to the \ac{SMART} method is:
 
-\[ x_j = \frac{\sum_{i=1}^{m} w_i a_{ij}}{\sum_{i=1}^{m} w_i}, \quad j = 1, \ldots, n. \]
+
+\begin{figure}[h]
+    \centering
+    \Large
+    \[ x_j = \frac{\sum_{i=1}^{m} w_i a_{ij}}{\sum_{i=1}^{m} w_i}, \quad j = 1, \ldots, n. \]
+    \caption{Formula for calculating the \ac*{SMART} score \footcite*{fulopIntroductionDecisionMaking2005}} 
+\end{figure}
 
 Where:
 \begin{itemize}
-    \item \( x_j \) epitomizes the aggregate score of an alternative.
-    \item \( a_{ij} \) signifies the score awarded to an alternative concerning a designated criterion.
-    \item \( w_i \) represents the weight ascribed to that specific criterion.
+    \item \( x_j \) !TODO!
+    \item \( a_{ij} \)  !TODO!
+    \item \( w_i \) !TODO!
 \end{itemize}
 
 This method's emphasis on utility functions ensures a more nuanced and adaptable
