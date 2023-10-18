@@ -2,6 +2,7 @@
 \label{creation_of_the_artifact}
 
 \section{Initial Goals}
+\label{artefact_inital_goals}
 
 As this project was first and foremost a project, designed to interactively explore the problemspace from the perspective of the \ac{HPC} community, 
 all the while being contained by business requirements and time constraints, the initial goals of this project were very broad and open ended. 
@@ -17,9 +18,34 @@ with the option to increase the scope if the presented tools were not sufficient
 Therefore the goals of the first iteration of this project was twofold, first to determine which, if any, of the presented tools were suitable for the task at hand,
 and to determine what would make an adequate \ac{PoC} for the customer.
 
+The following iterations are split into the tree main aspects of the project and will be discussed in their own subsections.
+While these steps where happening concurrently, they each address a different aspect of the project and therefore underwent their own iterative processes.
+
+
+\newpage 
+
+
+\section{Overall Structure}
+ 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=16cm]{graphics/pachykouda_three_aspects.png}
+    \caption[Pachykouda high level diagram showing three main aspects]{Pachykouda high level infrastructure diagramm}
+    \label{abb:pachykouda_three_aspects}
+\end{figure}
+
+
+As can be seen in figure \ref{abb:pachykouda_three_aspects}, the artifact is composed of 3 main components, 
+the \textbf{Central Workflow Engine} which is responsible for the orchestration of the workflows (center) and interfaces directly with the underlying infrastructure,
+the \textbf{\ac{HPC} Framework} which is responsible for the execution of \ac{TCPP} workloads (left)
+and the \textbf{Supplementary Services} which aim at improving the usability and accessability for the enduser (right).
+
+All this is build ontop of a hardware agnostic \ac{k8s} cluster, which is responsible for the orchestration of the different components and the underlying infrastructure.
+
+\newpage
 \section{Selection of Workflow Management Tools}
 
-As described in the previous section, the first iteration of this project was to determine which, if any, of the presented tools were suitable for the task at hand.
+As described in section \ref{artefact_inital_goals}, the first iteration of this project was to determine which, if any, of the presented tools were suitable for the task at hand.
 The following section will describe the process of selecting the tools and the criteria that were used to evaluate them.
 Because the time frame does not allow for a full integration and testing of all the presented tools in depth we will be using a decision making framework to evaluate the tools,
 as described in the Methodologies \Ref{decision_making} to determine which tools will be most suitable for an initial \ac{PoC} and will serve as a good starting point for the project and future iterations.
@@ -42,9 +68,6 @@ But given that it was possible to select projects outside of the initial selecti
     \item \textbf{\ac{CWL}:} An open-standard for describing analysis workflows and tools in a way that makes them portable and scalable across a variety of software and hardware environments, from workstations to cluster, cloud, and high-performance computing environments.
 \end{itemize}
     
-% Why these tools??
-
-\newpage
 \subsubsection{Selection Criteria}
 
 Due to this extensive list of diverse tools, a set of criteria was established to determine which tool would be the most suitable for the task at hand.
@@ -90,7 +113,7 @@ The following list of criteria was established to evaluate the tools:
 
 An integral part of the \ac{SMART} methodology is the weighting of the criteria, as described in section \ref{decision_making}.
 In order to rank the criteria themselves, as they are quite hard to quantify, 
-We will be using the weigting methodology as described in the \ac{SMART-ER} methodology \ref{acro:SMART-ER}.
+We will be using the weighing methodology as described in the \ac{SMART-ER} methodology \ref{acro:SMART-ER}.
 
 The first step of which is the ranking of the criteria from most important to least important.
 
@@ -104,29 +127,32 @@ The first step of which is the ranking of the criteria from most important to le
     \item \textbf{ Maturity } While the maturity of the tool is important, as this is a \ac{PoC} and not a commercial product, if the maturity of the tool does not impact the extensibility of the tool or the development process, it is not the highest priority.
 \end{enumerate}
 
-
+As all these criteria are quite important, the weighting function selected for the criteria is the \ac{RS} function, as described in section \ref{smart_er}, 
+as it does not rank the criteria too harshly.
+The lookup tables for the weighting function can be found in the appendix \ref{appendix:smart-er-lookup-tables}.
 
 \begin{table}[htb]
     \centering
     \begin{tabular}{|l|l|} \hline
         \textbf{Criteria}                       & \textbf{Weight}       \\ \hline
-        Extensibility                           & 0.3704                \\ \hline
-        Community, Support and  Documentation   & 0.2276                \\ \hline
-        License                                 & 0.1561                \\ \hline
-        Strategic alignment with \ac{HPE}       & 0.1085                \\ \hline
-        Ease of use                             & 0.0728                \\ \hline
-        Maturity                                & 0.0442                \\ \hline
-        Cost                                    & 0.0204                \\ \hline
+        Extensibility                           &  0.2500               \\ \hline
+        Community, Support and  Documentation   &  0.2143               \\ \hline
+        License                                 &  0.1786               \\ \hline
+        Strategic alignment with \ac{HPE}       &  0.1429               \\ \hline
+        Ease of use                             &  0.1071               \\ \hline
+        Maturity                                &  0.0714               \\ \hline
+        Cost                                    &  0.0357               \\ \hline
 
     \end{tabular}
     \caption{Weighting of the criteria}
     \label{tab:weighting_of_the_criteria}
 \end{table}
 
-
 \subsubsection{Evaluation of the Tools}
 
-The following table shows the evaluation of the tools which where suggested by the business, based on the criteria and the weighting of the criteria:
+Now that we have established the criteria aswell as their weighing, we can beginn to evaluate the tools based on the criteria.
+Here we will be using a mix of Methodologies, as some of these criteria can simply be indexed via analogous values, while others are of a more non specific nature.
+The discussion of which values will be used on which weighing scale for the tools comparison will be done for each category independently. 
 
 \begin{table}[htb]
     \centering
@@ -164,28 +190,9 @@ The following table shows the evaluation of the tools which where chosen for the
     \label{tab:evaluation_of_the_additional_tools}
 \end{table}
 
+\subsubsection{Conculsion of the Selection Process}
 
-
-
-\section{Design of the Artifact}
- 
-As can be seen in figure \ref{abb:pachykouda_three_aspects}, the artifact is composed of 3 main components, 
-the \textbf{Central Workflow Engine} which is responsible for the orchestration of the workflows (center),
-the \textbf{\ac{HPC} Cluster} which is responsible for the execution of \ac{TCPP} workloads (left)
-and the \textbf{Usability and Support Services} which aim at improving the usability and accessability for the enduser (right).
-
-All this is build on top of the \textbf{Heydar Cluster} which has been specifically set up for this project and is described in more detail in section \ref{heydar_cluster}.
-
-
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=16cm]{graphics/pachykouda_three_aspects.png}
-    \caption[Pachykouda high level diagramm showing three main aspects]{Pachykouda high level infrastructure diagramm}
-    \label{abb:pachykouda_three_aspects}
-\end{figure}
-
-
-\newpage
+\blindtext[1]
 
 
 \section{Implementation of the Artifact}
@@ -194,20 +201,52 @@ This section will describe the iterative process of implementing the larger arti
 While these steps where happening concurrently, they each address a different aspect of the project and therefore underwent their own iterative processes.
 
 
+
 \subsection{Infrastructure}
 
-\subsubsection{Minikube}
 
-\subsubsection{Heydar Cluster}
+\subsubsection{First iteration - Minikube}
+As the decision of the Workflow management tool was made, it was obvious that a dedicated \ac{k8s} infrastructure was needed to run the tool\footcite{PachydermDocsOnPrem}.
+The Pachyderm documentation gave two recommendations for setting up an initial development environment, preferably Docker Desktop or alternatively Minikube \footcite{PachydermDocsLocal}.
+Due to the exclusive license of Docker-Desktop\footcite{DockerTermsService2022},
+which prevents large companies free usage of the product\footcite{DockerFAQsDocker2021} the choice fell on Minikube for an initial test setup.
+
+In addition to the underlying \ac{k8s} Pachyderm also needs an external S3 Storage Bucket for its \ac{PFS} for which we used MinIO,
+a self hostable S3 compliant object storage\footcite{incMinIOMinIOKubernetes}, which was also based on recommendations by the Pachyderm documentation.
+
+The persistent storage requirements for the Pachyderm itself was fulfilled by manually creating two \ac{PV}'s on the hosts local harddrive.
+Using the Helm packagemanager\footcite{HelmDocsHome} for \ac{k8s} the at that point newest version 2.6.4 was installed from the official Artifacthub repository\footcite{ArtifacthubPachyderm}.
+
+The hostsystem of this iteration was a single ProLiant DL385 Gen10 Plus running Ubuntu 22.04.3 LTS x86\_64.
+The detailed instructions to the setup for this specific system at during that point in time,
+can be found in the projects repository \footcite{eckerthInstallationInstructionsMinikube}
+
+
+\subsubsection*{Learnings from the first iteration}
+
+The shortcomings of this naive first iteration became apparent very quickly, 
+while the infrastructure setup for that iteration was quite quick and easy.
+
+The first and foremost issue where the limitations imposed by Minikubes reliance on an Internal \ac{VM},
+during testing the inability to on the fly increase the resources of the \ac{VM} became a significant bottleneck.
+At some point during the testing of \ref{tcpp_hpc_workloads} the \ac{VM} was so overloaded that the installation was irreparably damaged which was seen as a sign to move on to the next iteration.
+
+Another more subtle issue was the discrepancy between the experience a small scale \ac{k8s} installation within Minikube and a large scale \ac{k8s} cluster like the one that would be used in later steps of the project.
+Therefore it was decided that a more realistic \ac{k8s} cluster would be needed for the next iteration, which became the Heydar cluster.
+
+\subsubsection{Second iteration - Heydar Cluster}
 \label{heydar_cluster}
 
 
-\subsection{Usability Impovements}
 
-\subsection{\ac{TCPP} Workloads } 
+\subsection{\ac{TCPP} HPC Workloads} 
+\label{tcpp_hpc_workloads}
+
+\subsection{Supplementary Services}
 
 
-\newpage
+
+\newpage    
 
 
 \section{Evaluation of the Artifact}
