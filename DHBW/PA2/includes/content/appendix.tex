@@ -1,10 +1,44 @@
-\phantomsection
-\addcontentsline{toc}{chapter}{Appendix}
-\spezialkopfzeile{Appendix}
-
-
 \chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix}
+\section*{Appendix Index}
+\vspace{-8em}
 
-\section*{SMART-ER lookup tables}
-\label{appendix:smart-er-lookup-tables}
+% Adjust indentations before \listofanhang
+\abstaendeanhangverzeichnis
+
+\listofanhang
+\clearpage
+\spezialkopfzeile{Appendix} 
+
+\lstset{
+  language=TeX, % define keywords to highlight
+  morekeywords={Appendix, anhangteil, anhan},
+  breaklines=true,  % Enable line wrapping within the listing
+  breakatwhitespace=true, % Breaks only at white space
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}, % Optional - for having a symbol at the point where text breaks
+  basicstyle=\footnotesize\ttfamily, % for setting the font size/style for the code
+  tabsize=2, % sets default tabsize
+}
+
+
+
+\anhang{Minikube installation instructions}
+\label{appendix:minikube_installation_instructions}
+\lstinputlisting{../quellen/minikube_installation_instructions.md}
+
+
+
+\anhang{Kubernetes setup scripts}
+
+\anhangteil{Ansible setup script}
+\label{appendix:ansible_setup_script}
+\lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/join_cluster.yaml}
+
+\anhangteil{Bash setup script}
+\label{appendix:bash_setup_script}
+\lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/setup.sh}
+
+\anhangteil{Bash verification script}
+\label{appendix:bash_verification_script}
+\lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/double_check.sh}
 

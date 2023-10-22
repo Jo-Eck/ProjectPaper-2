@@ -300,7 +300,8 @@ TSWLatexianTemp*
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
 
-DHBW/quellen/
+DHBW/quellen/dhbw_quellen
+DHBW/quellen/firmen_quellen
 project/CLASP_Code/
 project/Arkouda/chapel-1.22.0
 project/Arkouda/tls
