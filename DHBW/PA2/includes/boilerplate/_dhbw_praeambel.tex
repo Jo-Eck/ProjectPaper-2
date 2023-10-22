@@ -56,7 +56,7 @@
   \refstepcounter{anhcnt}
   \setcounter{anhteilcnt}{0}
   \section*{Appendix \theanhcnt: #1}
-  \addcontentsline{app}{section}{\protect\numberline{Anhang \theanhcnt}#1}\par
+  \addcontentsline{app}{section}{\protect\numberline{Appendix \theanhcnt}#1}\par
 }
 
 \newcounter{anhteilcnt}
@@ -67,10 +67,10 @@
 \newcommand{\anhangteil}[1]{%
 	\refstepcounter{anhteilcnt}
 	\subsection*{Anhang~\arabic{anhcnt}/\arabic{anhteilcnt}: #1}
-	\addcontentsline{app}{subsection}{\protect\numberline{Anhang \theanhcnt/\arabic{anhteilcnt}}#1}\par
+	\addcontentsline{app}{subsection}{\protect\numberline{Appendix \theanhcnt/\arabic{anhteilcnt}}#1}\par
 }
 
-\renewcommand{\theanhteilcnt}{Anhang \theanhcnt/\arabic{anhteilcnt}}
+\renewcommand{\theanhteilcnt}{Appendix \theanhcnt/\arabic{anhteilcnt}}
 
 % vgl. S. 4 Paket-Beschreibung tocloft 	
 % Einrückungen für Anhangverzeichnis

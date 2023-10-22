@@ -1,0 +1,47 @@
+---
+- hosts: heydar_nodes
+  become: yes
+  tasks:
+    - name: Setting up environment variables
+      lineinfile:
+        path: /etc/environment
+        line: "{{ item }}"
+      with_items:
+        - "https_proxy=http://proxy.its.hpecorp.net:80"
+        - "HTTP_PROXY=http://proxy.its.hpecorp.net:80"
+        - "http_proxy=http://proxy.its.hpecorp.net:80"
+        - "NO_PROXY=localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/16,10.93.246.68/28"
+
+    - name: Update and install necessary packages
+      apt:
+        name: "{{ packages }}"
+        update_cache: yes
+      vars:
+        packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+
+    - name: Add Kubernetes apt-key
+      shell: |
+        curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --yes --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+        apt-get update -y
+        apt-get install -y kubelet kubeadm kubectl containerd
+        apt-mark hold kubelet kubeadm kubectl
+
+    - name: Enable necessary kernel modules and sysctl parameters
+      shell: |
+        modprobe br_netfilter
+        echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+        echo '1' > /proc/sys/net/ipv4/ip_forward
+        sysctl -p
+
+    - name: Disable swap
+      shell: |
+        swapoff -a
+        sed -i -e '/ swap / s/^/#/' -e '/\/swap.img/ s/^/#/' /etc/fstab # comments out swap in fstab
+
+    - name: Join the Kubernetes cluster
+      shell: |
+        kubeadm join 10.93.246.87:6443 --token 0v7aoq.65ib2v0g70a6em49 --discovery-token-ca-cert-hash sha256:9cb5e62dd86cd7e94718c866575cd023c98cc89f2849dad3d25dfd75b13d1b72
