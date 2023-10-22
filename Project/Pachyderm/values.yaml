@@ -192,7 +192,7 @@ enterpriseServer:
   image:
     repository: "pachyderm/pachd"
     pullPolicy: "IfNotPresent"
-    # tag defaults to the chart’s specified appVersion.
+    # tag defaults to the charts specified appVersion.
     tag: ""
 
 ingress:
@@ -408,7 +408,7 @@ pachd:
   image:
     repository: "pachyderm/pachd"
     pullPolicy: "IfNotPresent"
-    # tag defaults to the chart’s specified appVersion.
+    # tag defaults to the charts specified appVersion.
     # This sets the worker image tag as well (they should be kept in lock step)
     tag: ""
   logLevel: "info"
@@ -558,7 +558,7 @@ pachd:
       # and token, it implements the functionality of the
       # --credentials argument to pachctl deploy.
       id: ""
-      # logOptions sets various log options in Pachyderm’s internal S3
+      # logOptions sets various log options in Pachyderms internal S3
       # client.  Comma-separated list containing zero or more of:
       # 'Debug', 'Signing', 'HTTPBody', 'RequestRetries',
       # 'RequestErrors', 'EventStreamBody', or 'all'
@@ -609,20 +609,6 @@ pachd:
       #
       #  helm install pachd -f my-values.yaml --set-file storage.google.cred=creds.json pachyderm/pachyderm
       cred: ""
-      # Example:
-      # cred: |
-      #  {
-      #    "type": "service_account",
-      #    "project_id": "…",
-      #    "private_key_id": "…",
-      #    "private_key": "-----BEGIN PRIVATE KEY-----\n…\n-----END PRIVATE KEY-----\n",
-      #    "client_email": "…@….iam.gserviceaccount.com",
-      #    "client_id": "…",
-      #    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-      #    "token_uri": "https://oauth2.googleapis.com/token",
-      #    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-      #    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/…%40….iam.gserviceaccount.com"
-      #  }
     local:
       # hostPath indicates the path on the host where the PFS metadata
       # will be stored.  It must end in /.  It is analogous to the
@@ -635,13 +621,13 @@ pachd:
       secret: ""
     minio:
       # minio bucket name
-      bucket: "ree"
+      bucket: ""
       # the minio endpoint. Should only be the hostname:port, no http/https.
       endpoint: "10.93.246.87:9000"
       # the username/id with readwrite access to the bucket.
-      id: "7YEfYU48zHp1g4rKclkj"
+      id: ""
       # the secret/password of the user with readwrite access to the bucket.
-      secret: "LDbsSvLvd3Zpha4z9lVw9hI3mW5XVk3eEHqFjYez"
+      secret: ""
       # enable https for minio with "true" defaults to "false"
       secure: "false"
       # Enable S3v2 support by setting signature to "1". This feature is being deprecated
@@ -820,7 +806,7 @@ postgresql:
     tolerations: []
 
 cloudsqlAuthProxy:
-  # connectionName may be found by running `gcloud sql instances describe INSTANCE_NAME --project PROJECT_ID`
+  # connectionName may be found by running gcloud sql instances describe INSTANCE_NAME --project PROJECT_ID
   connectionName: ""
   serviceAccount: ""
   iamLogin: false
