@@ -1,0 +1,95 @@
+
+\section{Implementation of the Artifact}
+
+This section will describe the iterative process of implementing the larger artifact and is broken up into 3 subsections.
+While these steps where happening concurrently, they each address a different aspect of the project and therefore underwent their own iterative processes.
+
+
+
+\subsection{Infrastructure}
+
+
+\subsubsection{First iteration - Minikube}
+As the decision of the Workflow management tool was made, it was obvious that a dedicated \ac{k8s} infrastructure was needed to run the tool\footcite{PachydermDocsOnPrem}.
+The Pachyderm documentation gave two recommendations for setting up an initial development environment, preferably Docker Desktop or alternatively Minikube \footcite{PachydermDocsLocal}.
+Due to the exclusive license of Docker-Desktop\footcite{DockerTermsService2022},
+which prevents large companies free usage of the product\footcite{DockerFAQsDocker2021} the choice fell on Minikube for an initial test setup.
+
+In addition to the underlying \ac{k8s} Pachyderm also needs an external S3 Storage Bucket for its \ac{PFS} for which we used MinIO,
+a self hostable S3 compliant object storage\footcite{incMinIOMinIOKubernetes}, which was also based on recommendations by the Pachyderm documentation.
+
+The persistent storage requirements for the Pachyderm itself was fulfilled by manually creating two \ac{PV}'s on the hosts local harddrive.
+Using the Helm packagemanager\footcite{HelmDocsHome} for \ac{k8s} the at that point newest version 2.6.4 was installed from the official Artifacthub repository\footcite{ArtifacthubPachyderm}.
+
+The hostsystem of this iteration was a single ProLiant DL385 Gen10 Plus running Ubuntu 22.04.3 LTS x86\_64.
+During the setup every step was diligently noted and put into a repository\footcite{eckerthInstallationInstructionsMinikube}, alongside the needed scripts. 
+The instructions can be found in the appendix at \ref{appendix:minikube_installation_instructions}.
+
+
+\subsubsection*{Learnings from the first iteration}
+
+The shortcomings of this naive first iteration became apparent very quickly, 
+which was to be expected, as the goal of this iteration was to create a minimal working example to get a better understanding of the toolings and the underlying infrastructure.
+
+The first and foremost issue where the limitations imposed by Minikubes reliance on an Internal \ac{VM},
+during testing the inability to on the fly increase the resources of the \ac{VM} became a significant bottleneck.
+At some point during the testing of \ref{tcpp_hpc_workloads} the \ac{VM} was so overloaded that the installation was irreparably damaged which was seen as a sign to move on to the next iteration.
+
+Another more subtle issue was the discrepancy between the experience a small scale \ac{k8s} installation within Minikube and a large scale \ac{k8s} cluster like the one that would be used in later steps of the project.
+Therefore it was decided that a more realistic \ac{k8s} cluster would be needed for the next iteration, which became the Heydar cluster.
+
+\subsubsection{Second iteration - Heydar Cluster}
+\label{heydar_cluster}
+
+Improving upon the shortcomings of the first iteration, the second iteration was based in the attempt to create a more realistic \ac{k8s} cluster.
+To achieve this 20 ProLiant DL360 Gen9 Servers, running Ubuntu 22.04.3 LTS x86\_64 where used to create a bare metal \ac{k8s} cluster,
+using kubeadm as it provides deep integration with the underlying infrastructure\footcite{CreatingClusterKubeadm}.
+
+But a bare metal cluster also comes with its own set of challenges, as the cluster needs to be provisioned and configured manually.
+In order to automate this process, the Ansible automation tool was used to set up all the nodes in praralel and to ensure that the all the nodes are in the same state.
+Ansible is a declarative tool which allows for the automation of the provisioning and configuration of the cluster\footcite{Ansible2023}, by specifying the desired state of the cluster in a playbook and then applying it to the cluster.
+The Ansible playbook used for the setup of the cluster can be found at \ref{appendix:ansible_setup_script}.
+
+Which unknowingly caused conflict between the Ansible playbook and the maintenance scripts of the cluster as the Heydar machines.
+As \ac{k8s} needs very specific configurations on the underlying infrastructure like the deactivation of swap space\footcite{InstallingKubeadm}.
+
+This was resolved by consulting with the maintainer of the cluster and adjusting the Ansible playbook as well as the maintenance config for the cluster nodes accordingly, 
+after we had identified the issue.
+
+
+One important aspect of a production like cluster is the networking, as \ac{k8s} does not natively manage communication on a cluster level,
+but instead relies on so called \ac{CNI}s to manage and abstract the underlying network infrastructure \footcite{ClusterNetworking}.
+
+Here we where spoiled for choice once again, as there are a multitude of different \ac{CNI}s available, each with their own advantages and disadvantages.
+The Kubernetes documentation provides a non exhaustive list of 17 different \ac{CNI}s\footcite{KubernetesCNIPlugins}, which all fulfill this essential task in different ways.
+As the needs regarding the network plugin where not very specific at this point, the choice fell on Calico, as surface level research showed that it was a popular choice for bare metal clusters\footcite{ExploreNetworkPlugins},
+provided security and enterprise support as well having a wide range of features\footcite{mehndirattaComparingKubernetesContainer}.
+But Calico proved to be more difficult to setup than expected, after consulting with a college who set up a different cluster with Calico,
+it was decided to use Flannel as a \ac{CNI} instead.
+Flannel turned out to be much easier to setup and configure, as it is a very lightweight \ac{CNI} which is designed for bare metal clusters\footcite{Flannel2023}, 
+and foregoes the more advanced security features of Calico. 
+
+The Flannel configuration used for the cluster can be found at \ref{appendix:flannel_config} it is closely based on the example configuration provided by the Flannel documentation\footcite{FlannelInstallConfig}.
+
+\subsubsection*{Learnings from the second iteration}
+
+The second iteration was a significant improvement over the first iteration, as it provided a much more realistic environment for the development of the artifact.
+But it also came with its own set of challenges, as the bare metal cluster needed to be provisioned and configured manually, which was a significant time investment.
+
+What became apparent very quickly was that the solution for the provisioning of the \ac{PV} was no where near scalable,
+as it relies on the local harddrive of the host machine and therefore must host the container on the same machine as the \ac{PV} which defeats the purpose of a multi node cluster in the first place.
+Therefore a more scalable solution needs to be implemented for the next iteration.
+A possible solution could be the use of distributed storage solutions like Ceph\footcite{CephIoHome} or GlusterFS\footcite{Gluster}  in combination with the Rook project \footcite{Rook}. 
+which will need to be explored in future iterations.
+
+
+As described in section XXX a service hosting \ac{FAM} will be needed in future iterations aswell.
+
+\subsection{\ac{TCPP} HPC Workloads} 
+\label{tcpp_hpc_workloads}
+
+\subsection{Supplementary Services}
+
+
+
+\newpage    
