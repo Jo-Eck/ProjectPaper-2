@@ -103,6 +103,22 @@ To evaluate the criteria we will employ a 3 bucket system, where tools with an a
 %     \label{tab:evaluation_of_the_additional_tools}
 % \end{table}
 
+%% ============================== Diagrams =====================================
+
+\newpage
+\anhang{Diagrams}
+
+\anhangteil{Pipeline Communication Swim Lane Diagram}
+\label{appendix:pipeline_communication_sld}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=17cm]{graphics/pipeline_communication_sld.png}
+  \caption[Swimlane Diagram of the communication between the user and Pachyderm]{Swimlane Diagram of the communication between the user and Pachyderm}
+  \label{abb:pipeline_communication_sld}
+\end{figure}
+\footnotetext{Taken from: \cite{IntroPipelines2023}}
+
 
 
 %% ================================ Code =======================================
@@ -112,12 +128,14 @@ To evaluate the criteria we will employ a 3 bucket system, where tools with an a
 \label{appendix:minikube_installation_instructions}
 \lstinputlisting{../quellen/minikube_installation_instructions.md}
 
+\newpage
 \anhang{Kubernetes setup scripts}
 
 \anhangteil{Ansible setup script}
 \label{appendix:ansible_setup_script}
 \lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/join_cluster.yaml}
 
+\newpage
 \anhangteil{Flannel configuration}
 \label{appendix:flannel_config}
 \lstinputlisting{../../Project/Kubernetes_Setup/kube-flannel.yml}
@@ -126,6 +144,7 @@ To evaluate the criteria we will employ a 3 bucket system, where tools with an a
 % \label{appendix:bash_setup_script}
 % \lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/setup.sh}
 
+\newpage
 \anhangteil{Bash verification script}
 \label{appendix:bash_verification_script}
 \lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/double_check.sh}
