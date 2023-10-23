@@ -33,7 +33,7 @@ which was to be expected, as the goal of this iteration was to create a minimal 
 
 The first and foremost issue where the limitations imposed by Minikubes reliance on an Internal \ac{VM},
 during testing the inability to on the fly increase the resources of the \ac{VM} became a significant bottleneck.
-At some point during the testing of \ref{tcpp_hpc_workloads} the \ac{VM} was so overloaded that the installation was irreparably damaged which was seen as a sign to move on to the next iteration.
+At some point during the testing of \ref{tcp_hpc_workloads} the \ac{VM} was so overloaded that the installation was irreparably damaged which was seen as a sign to move on to the next iteration.
 
 Another more subtle issue was the discrepancy between the experience a small scale \ac{k8s} installation within Minikube and a large scale \ac{k8s} cluster like the one that would be used in later steps of the project.
 Therefore it was decided that a more realistic \ac{k8s} cluster would be needed for the next iteration, which became the Heydar cluster.
@@ -85,11 +85,76 @@ which will need to be explored in future iterations.
 
 As described in section XXX a service hosting \ac{FAM} will be needed in future iterations aswell.
 
-\subsection{\ac{TCPP} HPC Workloads} 
-\label{tcpp_hpc_workloads}
+\subsection{Tightly Coupled HPC Workloads} 
+\label{tcp_hpc_workloads}
 
-\subsection{Supplementary Services}
+As described in section \ref{state_of_the_art_tcp} \ac{TCP} problems are a large part of the \ac{HPC} world,  but seem to lack native support in Pachyderm.
+Pachyderm as it exists as of writing this thesis, is centralized around \ac{LCP} problems, as it is designed to work with large amounts of data but with each so called "datum" being independent of each other.
+This is a very good fit for \ac{LCP} problems, and ties into their concepts of data lineage, versioning and providence.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=14cm]{graphics/datum_distribution_amongst workers.png}
+    \caption[Pachykouda datum distribution amongst workers]{Pachykouda datum distribution amongst workers \footnotemark}
+    \label{abb:datum_distribution_amongst workers}
+\end{figure}
+\footnotetext{Taken from: \cite{IntroPipelines2023}}
+
+
+Diagram \ref{abb:datum_distribution_amongst workers} shows Pachyderms approach to distribute their datums amongst workers, given an already defined pipeline.
+Once Data files are added to the input repository, Pachyderm will determine Based on a glob pattern wether the files are relevant datums for the pipeline.
+If the newly added data fits the pattern each of the files will be supplied to its own instantiation of a worker, all originating from the same image, which will then process the data concurrently and independently of each other.
+After the worker has finished its task, the resulting datums are then collected in their own repository of data.
+A more detailed swim lane diagram of this process can be found in the appendix at \ref{appendix:pipeline_communication_sld}.
+
+This approach is very well suited for \ac{LCP} problems, as the datums are independent of each other and can be processed in parallel without any issues.
+But it is not well suited for Large \ac{TCP} problems, if the computation of the data can not be split into distinct independent datum files, or the computation is reliant on the intercommunication of the datums.
+If the datasets are small enough, this does not really present a problem as one can simply take all the data into a single workernode and process it there.
+But as a single worker node can only utilize the resources of a single physical compute node, this does not scale well with the size of the dataset and defeats the purpose of a distributed system in the first place.
+
+So our goal for this section is a way to find a way to enable pachyderm to pool the entire resources of the cluster, in oder to solve a \ac{TCP} problem.
+
+\subsubsection{First iteration - PachyKouda}
+
+As a first attempt to address this issue, it was decided that the integration of a \ac{TCP} framework into Pachyderm on the container level would be the best approach.
+So the first iteration is based on the idea of a Pachyderm conforming client container, which is able to interface with an external \ac{TCP} framework,
+which can handle the reception of the data, the distribution of the data amongst the workers and the collection of the results to reintegrate them into the \ac{PFS}.
+
+The first iteration of this idea was called PachyKouda, as it was based on the Arkouda \ac{TCP} framework\footcite{ArkoudaGituhbRepository2023},
+which itself is a python binding for the Chapel programming language \footcite{ChapellangChapelProductive}. 
+
+For that step an Arkouda worker was installed bare metal on the headnode of the Heydar cluster, in order to verify the feasibility of the idea,
+with the goal of moving the worker into the cluster in the next iteration.
+
+The client container was based on the official \ac{UDP}-based build by the Arkouda team \footcite{ArkoudacontribArkoudadockerMain}.
+The container was then modified to be able to communicate with the Arkouda worker on the headnode of the cluster, it can now send data to the worker and receive the results.
+
+\subsubsection*{Learnings from the first iteration}
 
 
 
-\newpage    
+% \subsubsection{Second iteration - Kymera}
+
+% \begin{figure}[htb]
+%     \centering
+%     \includegraphics[width=16cm]{graphics/PachyKouda.png}
+%     \caption[Arkouda workers on \ac{k8s}]{Arkouda workers on \ac{k8s}}
+%     \label{abb:arkouda_workers_on_k8s}
+% \end{figure}
+
+
+
+% \subsubsection*{Learnings from the second iteration}
+
+% \subsubsection{Third iteration - \ac{FAM}} 
+
+% \subsection{Supplementary Services}
+
+% \subsubsection{Docker Registry}
+
+% \subsubsection{Jenkins CI/CD Pipeline}
+
+% \subsubsection{}
+
+
+% \newpage    
