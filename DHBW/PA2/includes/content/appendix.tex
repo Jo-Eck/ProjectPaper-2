@@ -29,10 +29,54 @@
 
 \anhangteil{Community, Support \& Docs}
 
+This section describes how much external support is given, as this support can come in many different shapes and forms we will be especially focusing on three different aspects and combine them into one score.
+First, we are looking at the community size, as a large community is a good indicator for the maturity of the project and the amount of support available.
+As a proxy for this, we will look at two central metrics, the amount of stars on Github and the amount of questions on Stackoverflow.
+
+\begin{table}[h!]
+    \centering 
+    \caption{Comparison of project popularity}
+    \label{tab:table1} 
+    \begin{tabular}{lcc} 
+      \textbf{Project} & \textbf{GitHub Stars} & \textbf{Stack Overflow Questions}\\ 
+      Pachyderm  & 6,000   & 6\\
+      Argo       & 14,500  & 136\\
+      Clasp      & 0       & 0\\
+      Snaplogic  & 0       & 57\\
+      Airflow    & 32,200  & 10,218\\
+      Kubeflow   & 13,100  & 434\\
+      Knative    & 4,100   & 204\\
+      Luigi      & 16,900  & 346\\
+      CWL        & 1,400   & 6\\
+   \end{tabular}
+
+
+\end{table}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=12cm]{graphics/Stars_stackoverflow_comparison.png}
+    \caption[Stars and Stackoverflow Questions Comparison]{Stars and Stackoverflow Questions Comparison}
+    \label{abb:stars_stackoverflow_comparison}
+\end{figure}
+
+To quantify the support and community engagement around these projects, we introduce a composite score that normalizes and combines the GitHub stars and Stack Overflow questions metrics. This score is calculated using the following methodology:
+
+Each project is represented as a point \(P_i = (x_i, y_i)\) in a two-dimensional space, with \(x_i\) and \(y_i\) being the number of GitHub stars and Stack Overflow questions, respectively, for the \(i\)-th project. The composite score \(S_i\) for each project is computed by normalizing these values to a 0-10 scale and then averaging them:
+
+\[
+S_i = \frac{1}{2} \left( \frac{x_i - \min(x)}{\max(x) - \min(x)} \times 10 + \frac{y_i - \min(y)}{\max(y) - \min(y)} \times 10 \right) \quad \ for\ \quad i = 1, 2, ..., n
+\]
+
+Here, \(\min(x)\), \(\max(x)\), \(\min(y)\), and \(\max(y)\) represent the minimum and maximum values of GitHub stars and Stack Overflow questions across all projects, respectively. The final scores \(S_i\) provide a balanced metric for comparing the projects' popularity and community engagement, taking both aspects into account on the same scale.
+
+
+
+
 \anhangteil{License}
 
 As discussed in section \ref{crit:license} the tools in consideration should not be to restrictive.
-To evaluate the criteria we will employ a 3 bucket system, where tools with an acceptable license get a value of 1, tools where the licensing is ideal get a 2, and tools which have a not acceptable license get weighted with 0.
+To evaluate the criteria we will employ a 4 bucket system, where tools with a permmisive license get a value of 7.5 , tools where the licensing is ideal get a 10, and tools which have a not acceptable license get weighted with 0.
 
 \begin{itemize}
     \item \textbf{Pachyderm} 
@@ -44,7 +88,7 @@ To evaluate the criteria we will employ a 3 bucket system, where tools with an a
     Giving us a free hand to modify without needing to worry.
 
     \item \textbf{Argo} is licensed under the Apache License 2.0. \footcite{ArgocdLICENSEMaster}
-    Apache 2.0 is quite a standard license for this kind of product, as it enables  [ .... ]
+    Apache 2.0 is quite a standard license permissive license for this kind of product, as it enables  [ TO DO ]
     \item \textbf{\ac{CLASP}} is not a published software and therefore not under any specific license.
     But similar considerations as the ones of Pachyderm apply here aswell, as it is an internal project the \ac{IP} also completely belongs to \ac{HPE}
 
@@ -68,40 +112,40 @@ To evaluate the criteria we will employ a 3 bucket system, where tools with an a
 
 
 
-% \begin{table}[htb]
-%     \centering
-%     \begin{tabular}{|l|l|l|l|l|} \hline
-%         \textbf{Criteria}                                          & \textbf{Pachyderm}    & \textbf{Argo}         & \textbf{\ac{CLASP}}   & \textbf{Snaplogic}     \\ \hline
-%         Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-%         Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-%         Community, Support \& Docs                                 & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-%         Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-%         Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-%         License                                                    & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-%         Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|} \hline
+        \textbf{Criteria}                                          & \textbf{Pachyderm}    & \textbf{Argo}         & \textbf{\ac{CLASP}}   & \textbf{Snaplogic}     \\ \hline
+        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Community, Support \& Docs                                 & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        License                                                    & 10                    & 5                     & 10                    & 0                      \\ \hline
+        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
 
-%     \end{tabular}
-%     \caption{Evaluation of the suggested tools}
-%     \label{tab:evaluation_of_the_suggested_tools}
-% \end{table}
+    \end{tabular}
+    \caption{Evaluation of the suggested tools}
+    \label{tab:evaluation_of_the_suggested_tools}
+\end{table}
 
 
-% \begin{table}[htb]
-%     \centering
-%     \begin{tabular}{|l|l|l|l|l|l|} \hline
-%         \textbf{Criteria}                                          & \textbf{Airflow}      & \textbf{Kubeflow}     & \textbf{Knative}      & \textbf{Luigi}        & \textbf{CWL}          \\ \hline
-%         Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-%         Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-%         Community, Support \& Docs                                 & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-%         Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-%         Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-%         License                                                    & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-%         Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|} \hline
+        \textbf{Criteria}                                          & \textbf{Airflow}      & \textbf{Kubeflow}     & \textbf{Knative}      & \textbf{Luigi}        & \textbf{CWL}          \\ \hline
+        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Community, Support \& Docs                                 & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        License                                                    & 5                     & 5                     & 5                     & 5                     & 5                     \\ \hline
+        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
 
-%     \end{tabular}
-%     \caption{Evaluation of the additional tools}
-%     \label{tab:evaluation_of_the_additional_tools}
-% \end{table}
+    \end{tabular}
+    \caption{Evaluation of the additional tools}
+    \label{tab:evaluation_of_the_additional_tools}
+\end{table}
 
 %% ============================== Diagrams =====================================
 
@@ -119,7 +163,7 @@ To evaluate the criteria we will employ a 3 bucket system, where tools with an a
 \end{figure}
 \footnotetext{Taken from: \cite{IntroPipelines2023}}
 
-
+\newpage
 
 %% ================================ Code =======================================
 
@@ -148,3 +192,8 @@ To evaluate the criteria we will employ a 3 bucket system, where tools with an a
 \anhangteil{Bash verification script}
 \label{appendix:bash_verification_script}
 \lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/double_check.sh}
+
+\newpage
+\anhangteil{Arkouda Setup}
+\label{appendix:arkouda_setup}
+\lstinputlisting{../../Project/Kymera/README.md}
