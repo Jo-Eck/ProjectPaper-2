@@ -131,20 +131,41 @@ The container was then modified to be able to communicate with the Arkouda worke
 
 \subsubsection*{Learnings from the first iteration}
 
+The first iteration was a total success, as it proved the feasibility of being able to use a client container to forward the data processing to an external Arkouda worker.
+As described earlier, the goal of the next iteration is to move the Arkouda worker into the cluster, in order to be able to utilize the full resources of the cluster.
+
+\subsubsection{Second iteration - Kymera}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=16cm]{graphics/PachyKouda.png}
+    \caption[Arkouda workers on \ac{k8s}]{Arkouda workers on the Heydar cluster}
+    \label{abb:arkouda_workers_on_k8s}
+\end{figure}
+
+Diagram \ref{abb:arkouda_workers_on_k8s} above shows a high level overview of how the workers interface with the client container in the workflow.
+The Arkouda container which is part of the workflow is still the same as in the first iteration, but now instead of interfacing with an external worker it 
+is interfacing with a worker swarm hosted across the cluster.
+
+The Swarm is split into two parts, one central Arkouda server, facilitating the communication between the client container and the workers and the workers also called locales themselves.
+The locales and the server are based on the helm charts provided by the Arkouda-Contrip repo\footcite{BearsRUsArkoudacontribArkoudahelmcharts},
+
+A detailed walk through the setup of the \ac{RBAC}, Secrets and deployments for the Heydar Cluster can be found in the appendix at \ref{appendix:arkouda_setup} which in turn is based on the official
+Arkouda documentation\footcite{ArkoudacontribArkoudadockerMain}.
+
+\subsubsection*{Learnings from the second iteration}
+As Arkouda does not currently provide multi tenancy of their Server, meaning that they can only be connected a single client at a time, 
+so if multiple pipelines need to solve a \ac{TCP} at the same time, they would not be able to share the same worker swarm.
 
 
-% \subsubsection{Second iteration - Kymera}
-
-% \begin{figure}[htb]
-%     \centering
-%     \includegraphics[width=16cm]{graphics/PachyKouda.png}
-%     \caption[Arkouda workers on \ac{k8s}]{Arkouda workers on \ac{k8s}}
-%     \label{abb:arkouda_workers_on_k8s}
-% \end{figure}
 
 
 
-% \subsubsection*{Learnings from the second iteration}
+\section*{Third iteration - \ac{FAM}}
+% # THIS WIill be a table
+
+% \begin{table}[htb]
+    
 
 % \subsubsection{Third iteration - \ac{FAM}} 
 
