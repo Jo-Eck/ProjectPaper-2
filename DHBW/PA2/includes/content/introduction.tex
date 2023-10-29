@@ -75,7 +75,7 @@ The following key problems have emerged from the convergence of High Performance
     \item \textbf{Versioning Limitations:} 
         The dynamic nature of ML and AI research necessitates robust versioning solutions for data, configurations and code.
         While \ac{CC} has developed many solutions to this problem over the years, making them their own subsection of the ecosystem,
-        namely \ac{CI/CD} tools for the testing and deployment of applications aswell as \ac{IaC} tools for the deployment of infrastructure.
+        namely \ac{CI/CD} tools for the testing and deployment of appachydermPachydermplications aswell as \ac{IaC} tools for the deployment of infrastructure.
         While many solutions have been developed for the one-off deployment of \ac{HPC} systems, the dynamic nature of \ac{CC} systems necessitates a more robust solution to this problem, 
         from which the \ac{HPC} community could benefit aswell. 
         
@@ -84,8 +84,10 @@ The following key problems have emerged from the convergence of High Performance
 \section{Research Questions}
 
 To address the aforementioned problems, to bridge the gap between the two paradigms and to combine the best of both worlds, an integration of the two paradigms is needed.
-This was accomplished by integrating a \ac{HPC} framework called 'Arkouda \footcite{merrillArkoudaInteractiveData2019}' into a container based \ac{CC} workflow management tool called 'Pachyderm'\footcite{pachydermPachyderm} and integrating both with the supporting infrastructure the \ac{CC} system enables us to use.
+This was accomplished by integrating a \ac{HPC} framework called 'Arkouda \footcite{merrillArkoudaInteractiveData2019}' into a container based \ac{CC} workflow management tool called 'Pachyderm'\footcite{HomePagePachyderm} and integrating both with the supporting infrastructure the \ac{CC} system enables us to use.
 This process of integration and prototyping as well as the explanation of the underlying concepts and technologies will be the focus of this project.
+
+\newpage
 
 \begin{itemize}
     \item \textbf{RQ1:} \textit{
@@ -96,13 +98,12 @@ This process of integration and prototyping as well as the explanation of the un
     }
 \end{itemize}
 
-\newpage
 
 \section{Contributions}
 
 In order to address the problems stated above, find answers to the research questions and to bridge the gap between the two paradigms, the following contributions were made:
 \begin{itemize}
     \item \textbf{C1:} \textit{ An analysis of the problem space and existing solution, within the constraints of time, resources and businesses needs.}
-    \item \textbf{C2:} \textit{ A prototype implementation combining the 'Arkouda' framework with the \ac{k8s} based workflow orchestrator 'Pachyderm'}
+    \item \textbf{C2:} \textit{ A prototype implementation combining the 'Arkouda' framework with the \ac{k8s} based workflow orchestrator 'Pachyderm' running on the Heydar Cluster}
     \item \textbf{C3:} \textit{ Further integrations of tools from both sides of the spectrum, addressing many of aforementioned pain-points}
 \end{itemize}
