@@ -90,7 +90,6 @@ Here, \(\min(x)\), \(\max(x)\), \(\min(y)\), and \(\max(y)\) represent the minim
     \label{tab:results}
 \end{table}
 
-
 \anhangteil{License}
 
 As discussed in section \ref{crit:license} the tools in consideration should not be to restrictive.
@@ -125,8 +124,7 @@ Now we will evaluate the licenses of the tools in question, and assign them a sc
     But in our case this is of no concern, as the startup behind the Pachyderm softwarem, including its \ac{IP} was aquired by \ac{HPE}.
     Giving us a free hand to modify without needing to worry.
 
-    \item \textbf{Argo} 
-    Argo's adoption of the Apache License 2.0 \footcite{ArgocdLICENSEMaster} aligns with common practices for open-source projects, affording users considerable freedom. This permissive license simplifies the use, modification, and redistribution of the software, an aspect that's particularly beneficial for collaborative development or integration into proprietary software. Given our requirements and operational context, this offers us the flexibility needed for adaptation and potential enhancements without stringent restrictions, streamlining any developmental efforts we undertake with Argo.
+    \item \textbf{Argo}Argo's adoption of the Apache License 2.0 \footcite{ArgocdLICENSEMaster} aligns with common practices for open-source projects, affording users considerable freedom. This permissive license simplifies the use, modification, and redistribution of the software, an aspect that's particularly beneficial for collaborative development or integration into proprietary software. Given our requirements and operational context, this offers us the flexibility needed for adaptation and potential enhancements without stringent restrictions, streamlining any developmental efforts we undertake with Argo.
     \item \textbf{\ac{CLASP}} is not a published software and therefore not under any specific license.
     But similar considerations as the ones of Pachyderm apply here aswell, as it is an internal project the \ac{IP} also completely belongs to \ac{HPE}
 
@@ -148,50 +146,18 @@ Now we will evaluate the licenses of the tools in question, and assign them a sc
 
 \anhangteil{Cost}
 
+This section aims to compare the relative cost of the products in relation to each other.
+We previously factored in the enterprise features, so when enterprise support is available and applicable we will take this into consideration.
+Here we have three categories of products first those which are completely free and without any enterprise support, secondly those which are free but offer enterprise support and lastly those which operate on a subscription basis.
 
 
-\begin{table}[htb]
-    \centering
-    \begin{tabular}{|l|l|l|l|l|} \hline
-        \textbf{Criteria}                                          & \textbf{Pachyderm}    & \textbf{Argo}         & \textbf{\ac{CLASP}}   & \textbf{Snaplogic}     \\ \hline
-        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-        Community, Support \& Docs                                 & 10                   & 2.32                   & 2.5                   & 5.03                   \\ \hline
-        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-        Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-        License                                                    & 10                    & 7.5                     & 10                    & 0                      \\ \hline
-        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-
-    \end{tabular}
-    \caption{Evaluation of the suggested tools}
-    \label{tab:evaluation_of_the_suggested_tools}
-\end{table}
-
-
-
-\begin{table}[htb]
-    \centering
-    \begin{tabular}{|l|l|l|l|l|l|} \hline
-        \textbf{Criteria}                                          & \textbf{Airflow}      & \textbf{Kubeflow}     & \textbf{Knative}      & \textbf{Luigi}        & \textbf{CWL}          \\ \hline
-        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-        Community, Support \& Docs                                 & 10                    & 2.25                  & 0.74                  & 2.29                  & 0.22                  \\ \hline
-        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-        Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-        License                                                    & 7.5                     & 7.5                     & 7.5                     & 7.5                     & 7.5                     \\ \hline
-        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-
-    \end{tabular}
-    \caption{Evaluation of the additional tools}
-    \label{tab:evaluation_of_the_additional_tools}
-\end{table}
 
 %% ============================== Diagrams =====================================
 
 \newpage
 \anhang{Diagrams}
 
-\anhangteil{Lookup table weigting funcitons}
+\anhangteil{Lookup table weighing functions}
 \anhangteil{Pipeline Communication Swim Lane Diagram}
 
 \begin{figure}[htb]
@@ -225,7 +191,7 @@ Now we will evaluate the licenses of the tools in question, and assign them a sc
 \begin{figure}[htb]
   \centering
   \includegraphics[width=14cm]{graphics/pipeline_communication_sld.png}
-  \caption[Swimlane Diagram of the communication between the user and Pachyderm]{Swimlane Diagram of the communication between the user and Pachyderm\footnotemark}
+  \caption[Swim lane Diagram of the communication between the user and Pachyderm]{Swim lane Diagram of the communication between the user and Pachyderm\footnotemark}
   \label{abb:pipeline_communication_sld}
 \end{figure}
 \footnotetext{Taken from: \cite{IntroPipelines2023}}

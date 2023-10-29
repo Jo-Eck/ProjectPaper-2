@@ -12,7 +12,19 @@
 \section{High Performance Computing Frameworks}
 
 
-   \subsection{Embarrassingly Parallel Problems}
+\subsection{Loosely Coupled Problems}
 
-   \subsection{Tightly Coupled Problems}
+\ac{LCP} also known in the industry as "embarrassingly parallel" \footcite{smtn} problems are problems that can be broken up into smaller independent tasks that can be executed in parallel.
 
+
+tools like Mapreduce and Spark
+
+
+
+\subsection{Tightly Coupled Problems}
+\label{state_of_the_art_tcp}
+In contrast to \ac{LCP} problems, \ac{TCP} problems are problems that can not be broken up into smaller independent tasks that can be executed in parallel,
+instead of working independently, each atomic task needs to communicate at least with one other task.
+A good example of a \ac{TCP} problem are the n-body problems, where the position of each body is dependent on the position of all other bodies.
+
+Message Passing Interface (MPI) vs Shared Memory (OpenMP) or Partioned Global Address Space (PGAS) \footcite{smtn}  
