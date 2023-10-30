@@ -54,7 +54,7 @@ after we had identified the issue.
 One important aspect of a production like cluster is the networking, as \ac{k8s} does not natively manage communication on a cluster level,
 but instead relies on so called \ac{CNI}s to manage and abstract the underlying network infrastructure \footcite{ClusterNetworking}.
 
-Here we where spoiled for choice once again, as there are a multitude of different \ac{CNI}s available, each with their own advantages and disadvantages.
+Here we are spoiled for choice once again, as there are a multitude of different \ac{CNI}s available, each with their own advantages and disadvantages.
 The Kubernetes documentation provides a non-exhaustive list of 17 different \ac{CNI}s\footcite{KubernetesCNIPlugins}, which all fulfill this essential task in different ways.
 As the needs regarding the network plugin where not very specific at this point, the choice fell on Calico, as surface level research showed that it was a popular choice for bare metal clusters\footcite{ExploreNetworkPlugins},
 provided security and enterprise support as well having a wide range of features\footcite{mehndirattaComparingKubernetesContainer}.
@@ -70,11 +70,11 @@ The Flannel configuration used for the cluster can be found at \ref{appendix:fla
 The second iteration was a significant improvement over the first iteration, as it provided a much more realistic environment for the development of the artifact.
 But it also came with its own set of challenges, as the bare metal cluster needed to be provisioned and configured manually, which was a significant time investment.
 
-What became apparent very quickly was that the solution for the provisioning of the \ac{PV} was no where near scalable,
-as it relies on the local harddrive of the host machine and therefore must host the container on the same machine as the \ac{PV} which defeats the purpose of a multi node cluster in the first place.
-Therefore a more scalable solution needs to be implemented for the next iteration.
+What became apparent very quickly was that the solution for the provisioning of the \ac{PV} was nowhere near scalable,
+as it relies on the local hard drive of the host machine and therefore must host the container on the same machine as the \ac{PV} which defeats the purpose of a multi node cluster in the first place.
+Therefore, a more scalable solution needs to be implemented for the next iteration.
 A possible solution could be the use of distributed storage solutions like Ceph\footcite{CephIoHome} or GlusterFS\footcite{Gluster}  in combination with the Rook project \footcite{Rook}. 
-which will need to be explored in future iterations.
+Which will need to be explored in future iterations.
 
 
-As described in section \ref{third_iteration_fam} a service hosting \ac{FAM} will be needed in future iterations aswell.
+As described in section \ref{third_iteration_fam} a service hosting \ac{FAM} will be needed in future iterations as well.

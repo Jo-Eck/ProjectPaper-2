@@ -23,10 +23,10 @@ A more detailed swim lane diagram of this process can be found in the appendix a
 
 This approach is very well suited for \ac{LCP} problems, as the datums are independent of each other and can be processed in parallel without any issues.
 But it is not well suited for Large \ac{TCP} problems, if the computation of the data can not be split into distinct independent datum files, or the computation is reliant on the intercommunication of the datums.
-If the datasets are small enough, this does not really present a problem as one can simply take all the data into a single workernode and process it there.
+If the datasets are small enough, this does not really present a problem as one can simply take all the data into a single worker node and process it there.
 But as a single worker node can only utilize the resources of a single physical compute node, this does not scale well with the size of the dataset and defeats the purpose of a distributed system in the first place.
 
-So our goal for this section is a way to find a way to enable pachyderm to pool the entire resources of the cluster, in oder to solve a \ac{TCP} problem.
+So our goal for this section is a way to find a way to enable pachyderm to pool the entire resources of the cluster, in order to solve a \ac{TCP} problem.
 
 \subsubsection{First iteration - PachyKouda}
 
@@ -37,11 +37,11 @@ which can handle the reception of the data, the distribution of the data amongst
 The first iteration of this idea was called PachyKouda, as it was based on the Arkouda \ac{TCP} framework\footcite{ArkoudaGituhbRepository2023},
 which itself is a python binding for the Chapel programming language \footcite{ChapellangChapelProductive}. 
 
-For that step an Arkouda worker was installed bare metal on the headnode of the Heydar cluster, in order to verify the feasibility of the idea,
+For that step an Arkouda worker was installed bare metal on the head node of the Heydar cluster, in order to verify the feasibility of the idea,
 with the goal of moving the worker into the cluster in the next iteration.
 
 The client container was based on the official \ac{UDP}-based build by the Arkouda team \footcite{ArkoudacontribArkoudadockerMain}.
-The container was then modified to be able to communicate with the Arkouda worker on the headnode of the cluster, it can now send data to the worker and receive the results.
+The container was then modified to be able to communicate with the Arkouda worker on the head node of the cluster, it can now send data to the worker and receive the results.
 
 \subsubsection*{Learnings from the first iteration}
 
@@ -70,13 +70,13 @@ Arkouda documentation\footcite{ArkoudacontribArkoudadockerMain}.
 \subsubsection*{Learnings from the second iteration}
 As Arkouda does not currently provide multi tenancy of their Server, meaning that they can only be connected a single client at a time, 
 so if multiple pipelines need to solve a \ac{TCP} at the same time, they would not be able to share the same worker swarm.
-Instead they would need to spawn their own worker swarm.
+Instead, they would need to spawn their own worker swarm.
 
-Another issue is that there are currently going trough the standard Pod to pod communication configuration of flannel, which means that the entire traffic between the client container and the Arkouda server 
-as well as the traffic between the workers is all happening over emulated overlay network which enables the containers on the different nodes to communicate with each other as if they where on the same network, no matter of the actuall infrastructure below it.
+Another issue is that there are currently going through the standard Pod to pod communication configuration of flannel, which means that the entire traffic between the client container and the Arkouda server 
+as well as the traffic between the workers is all happening over emulated overlay network which enables the containers on the different nodes to communicate with each other as if they where on the same network, no matter of the actually infrastructure below it.
 The communication protocol of the Arkouda servers is \ac{UDP} based \ac{GASNet}, which provides the \ac{RDMA} needed for the Arkouda framework to work, but this incurs a significant overhead in the form of the encapsulation of the \ac{UDP} packets into \ac{TCP} packets.
 
-Also the containers are currently not compatible with the OpenFAM project \footcite{keetonOpenFAMAPIProgramming2019}, which is being developed as an integration to Arkouda and Chapel by the Hewlett Packard Systems Architecture Lab \footcite{byrneCouplingChapelPoweredHPC2023},
+Also, the containers are currently not compatible with the OpenFAM project \footcite{keetonOpenFAMAPIProgramming2019}, which is being developed as an integration to Arkouda and Chapel by the Hewlett Packard Systems Architecture Lab \footcite{byrneCouplingChapelPoweredHPC2023},
 it extends the Arkouda framework with the ability to use \ac{FAM} as banks of \ac{RDMA} enabled memory, which can be accessed by the Arkouda workers.
 This would proof to be a significant improvement as it has the potential to reduce the overall overhead of the communication\Footcite{chouOptimizingPostCopyLive2019} amongst the workers as well as to the server, by cutting down the overall amount of network traffic.
 
@@ -85,8 +85,8 @@ The pachyderm platform itself might also benefit from the integration of \ac{FAM
 \section*{Third iteration - \ac{FAM}}
 \label{third_iteration_fam}
 While significant efforts have already been made to successfully integrate Arkouda and \ac{FAM}, these have so far been focussing on bare metal installations, for that reason, in order to integrate the \ac{FAM} enabled Arkouda working from within a containerized environment the tools would need to be 
-customly recompiled matching the new environment. 
-Therefore we needed to:
+custom recompiled matching the new environment. 
+Therefore, we needed to:
 
 \begin{enumerate}
     \item Compile OpenFAM in the Container

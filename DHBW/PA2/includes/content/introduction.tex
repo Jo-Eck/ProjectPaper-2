@@ -8,8 +8,8 @@ result in solutions and further questions which are listed in the contributions 
 
 \section{Motivation}
 
-The proliferation of "Big Data" has led to the need to compute, analyse, and visualize ever-increasing amounts of datasets,
-which themselves are getting more and more complex, has led to an ever increasing demand for more efficient and quicker ways to process data.
+The proliferation of "Big Data" has led to the need to compute, analyze, and visualize ever-increasing amounts of datasets,
+which themselves are getting more and more complex, has led to an ever-increasing demand for more efficient and quicker ways to process data.
 
 Both the \ac{HPC} and the \ac{CC} community have been working on solutions to distribute and parallelize computations for decades, 
 both with their own approaches and solutions to their respective problems.
@@ -17,7 +17,7 @@ both with their own approaches and solutions to their respective problems.
 While the \ac{HPC} community has been putting a lot of effort into developing new and extremely efficient ways to parallelize computations,
 the \ac{CC} community has been focusing on improving the flexibility, scalability and resilience of their solutions as well as improving the ease of use for their developers and users. 
 
-Both used to be very distinct and separate communities due to their very different usecases, while the \ac{HPC} community was mostly concerned with scientific computing and simulations of physical phenomena,
+Both used to be very distinct and separate communities due to their very different use cases, while the \ac{HPC} community was mostly concerned with scientific computing and simulations of physical phenomena,
 the \ac{CC} community is mostly concerned with providing a reliable and easily up and down scalable infrastructure for the industry and businesses.
 
 Now with the advent of \ac{ML} and \ac{AI} the two communities are starting to converge, 
@@ -29,6 +29,7 @@ the goal of this project is to find a way to bridge this gap and to find a way t
 \newpage
 
 \section{Problem Statement}
+\label{ProblemStatement}
 
 The following key problems have emerged from the convergence of High Performance Computing (HPC) and Cloud Computing (CC) communities, especially in the context of Machine Learning (ML) and Artificial Intelligence (AI) research:
 
@@ -57,34 +58,34 @@ The following key problems have emerged from the convergence of High Performance
 
     \item \textbf{Scalability and Flexibility in \ac{HPC}:}
         Due to its direct access to the hardware and very specific hardware needs, \ac{HPC} systems are often hard to dynamically scale and inflexible. 
-        while \ac{CC} systems are designed to be easily scalable and flexible and are often designed to be hardware agnostic and abstract away the underlying hardware.
+        while \ac{CC} systems are designed to be easily scalable and flexible and are often designed to be hardware-agnostic and abstract away the underlying hardware.
         This becomes especially relevant in the context of heterogeneous hardware, where the hardware is not uniform and consists of different types of hardware,
         which is becoming more and more common in the context of ML and AI research.
       
-    \item \textbf{Lack of Interconnected Problem Solving in \ac{CC}:} 
+    \item \textbf{Lack of Interconnected Problem-Solving in \ac{CC}:} 
         The workloads traditionally deployed on \ac{CC} systems are often independent of each other, like load balancing, web hosting, etc. 
         This is in stark contrast to the interconnected nature of \ac{HPC} workloads, where each part of the input data is dependent on the other parts of the input data,
         such that all nodes of the system need to be able to communicate with each other.
 
     \item \textbf{Provenance and Reproducibility:}
         Another need that is becoming more and more important in the context of ML and AI research is the need for provenance and reproducibility of results.
-        Being able to tell which data was used to train the model, is of ever increasing importance as the influence the resulting models have on our lives increases as well as the data used to train the model.
+        Being able to tell which data was used to train the model, is of ever-increasing importance as the influence the resulting models have on our lives increases as well as the data used to train the model.
         This is especially important since it is crucial to ensure that the data is not biased, outdated, or otherwise flawed, which could lead to incorrect predictions, decisions, or recommendations. 
         in addition various data sources, from images to text, may have copyright restrictions that, when overlooked, can lead to significant legal complications.
 
     \item \textbf{Versioning Limitations:} 
         The dynamic nature of ML and AI research necessitates robust versioning solutions for data, configurations and code.
         While \ac{CC} has developed many solutions to this problem over the years, making them their own subsection of the ecosystem,
-        namely \ac{CI/CD} tools for the testing and deployment of appachydermPachydermplications aswell as \ac{IaC} tools for the deployment of infrastructure.
+        namely \ac{CI/CD} tools for the testing and deployment of applications as well as \ac{IaC} tools for the deployment of infrastructure.
         While many solutions have been developed for the one-off deployment of \ac{HPC} systems, the dynamic nature of \ac{CC} systems necessitates a more robust solution to this problem, 
-        from which the \ac{HPC} community could benefit aswell. 
+        from which the \ac{HPC} community could benefit as well. 
         
 \end{itemize}
 
 \section{Research Questions}
 
 To address the aforementioned problems, to bridge the gap between the two paradigms and to combine the best of both worlds, an integration of the two paradigms is needed.
-This was accomplished by integrating a \ac{HPC} framework called 'Arkouda \footcite{merrillArkoudaInteractiveData2019}' into a container based \ac{CC} workflow management tool called 'Pachyderm'\footcite{HomePagePachyderm} and integrating both with the supporting infrastructure the \ac{CC} system enables us to use.
+This was accomplished by integrating a \ac{HPC} framework called Arkouda \footcite{merrillArkoudaInteractiveData2019} into a container based \ac{CC} workflow management tool called 'Pachyderm'\footcite{HomePagePachyderm} and integrating both with the supporting infrastructure the \ac{CC} system enables us to use.
 This process of integration and prototyping as well as the explanation of the underlying concepts and technologies will be the focus of this project.
 
 \newpage
