@@ -53,7 +53,7 @@ This section assesses the level of external support provided for each project. T
 \begin{figure}[htb]
     \centering
     \includegraphics[width=12cm]{graphics/Stars_stackoverflow_comparison.png}
-    \caption[Stars and Stackoverflow Questions Comparison]{Stars and Stack Overflow Questions Comparison}
+    \caption[Stars and Stack overflow Questions Comparison]{Stars and Stack Overflow Questions Comparison}
     \label{abb:stars_stackoverflow_comparison}
 \end{figure}
 
@@ -92,7 +92,7 @@ Here, \(\min(x)\), \(\max(x)\), \(\min(y)\), and \(\max(y)\) represent the minim
 
 \anhangteil{License}
 
-As discussed in section \ref{crit:license} the tools in consideration should not be to restrictive.
+As discussed in section \ref{crit:license} the tools in consideration should not be too restrictive.
 To evaluate the criteria we will employ a 4 bucket system: 
 \begin{itemize}
     \item \textbf{Ideal Situation (Score: 10):} 
@@ -121,15 +121,15 @@ Now we will evaluate the licenses of the tools in question, and assign them a sc
     Which means that while the core functionalities are published as the "COMMUNITY EDITION" with a permissive source-available License (Apache License 2.0) \footcite{PachydermLICENSEMaster}.
     Functionality like \ac{SSO} or the ability to create more than 16 pipelines are part of a different distribution under a Commercial License.
 
-    But in our case this is of no concern, as the startup behind the Pachyderm softwarem, including its \ac{IP} was aquired by \ac{HPE}.
+    But in our case this is of no concern, as the startup behind the Pachyderm software, including its \ac{IP} was acquired by \ac{HPE}.
     Giving us a free hand to modify without needing to worry.
 
     \item \textbf{Argo}Argo's adoption of the Apache License 2.0 \footcite{ArgocdLICENSEMaster} aligns with common practices for open-source projects, affording users considerable freedom. This permissive license simplifies the use, modification, and redistribution of the software, an aspect that's particularly beneficial for collaborative development or integration into proprietary software. Given our requirements and operational context, this offers us the flexibility needed for adaptation and potential enhancements without stringent restrictions, streamlining any developmental efforts we undertake with Argo.
     \item \textbf{\ac{CLASP}} is not a published software and therefore not under any specific license.
-    But similar considerations as the ones of Pachyderm apply here aswell, as it is an internal project the \ac{IP} also completely belongs to \ac{HPE}
+    But similar considerations as the ones of Pachyderm apply here as well, as it is an internal project the \ac{IP} also completely belongs to \ac{HPE}
 
     \item \textbf{Snaplogic} is an entirely commercial product which does not provide insight into nor the right to modify their Software \footcite{SnapLogicMasterSubscription}.
-    But as they might agree this is not a total knockout criterion for this entire project, but in regards to the licensing it will be weighted with 0.
+    But as they might agree this is not a total knockout criterion for this entire project, but in regard to the licensing it will be weighted with 0.
     \item \textbf{Airflow} is licensed under the Apache License 2.0. \footcite{LicenseAirflowDocumentation}
     \item \textbf{Kubeflow} is licensed under the Apache License 2.0. \footcite{KubeflowLICENSEMaster}
     \item \textbf{Knative} is licensed under the Apache License 2.0. \footcite{KnativeDocsLICENSE}
@@ -230,3 +230,9 @@ Here we have three categories of products first those which are completely free 
 \anhangteil{Arkouda Setup}
 \label{appendix:arkouda_setup}
 \lstinputlisting{../../Project/Kymera/README.md}
+
+\newpage
+\anhangteil{Docker Registry Deployment}
+\label{appendix:docker_registry_config}
+\lstinputlisting{../../Project/Kubernetes_Setup/registry/registry.yaml}
+

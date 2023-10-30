@@ -2,17 +2,17 @@
 
 As described in section \ref{artefact_inital_goals}, the first iteration of this project was to determine which, if any, of the presented tools were suitable for the task at hand.
 The following section will describe the process of selecting the tools and the criteria that were used to evaluate them.
-Because the time frame does not allow for a full integration and testing of all the presented tools in depth we will be using a decision making framework to evaluate the tools,
+Because the time frame does not allow for a full integration and testing of all the presented tools in depth we will be using a decision-making framework to evaluate the tools,
 as described in the Methodologies \Ref{decision_making} to determine which tools will be most suitable for an initial \ac{PoC} and will serve as a good starting point for the project and future iterations.
 
 \begin{itemize}
-    \item \textbf{Pachyderm:} A \ac{k8s} based Workflow manager, written in go which was recently aquired by \ac{HPE}.
-    \item \textbf{Argo:} A \ac{k8s} based Workflow manager , written in go, which is a \ac{CNCF} project \footcite{ArgoprojArgoworkflows2023}.
+    \item \textbf{Pachyderm:} A \ac{k8s} based Workflow manager, written in go which was recently acquired by \ac{HPE}.
+    \item \textbf{Argo:} A \ac{k8s} based Workflow manager, written in go, which is a \ac{CNCF} project \footcite{ArgoprojArgoworkflows2023}.
     \item \textbf{\ac{CLASP}:}  An in-house developed workflow manager, written in Java, utilizing Serverlet to execute workflows\footcite{sayersCloudApplicationServices2015}.
     \item \textbf{Snaplogic:} A commercial low-code/no-code workflow manager with a focus on data integration and data engineering\footcite{IPaaSSolutionEnterprise}.
 \end{itemize}
 
-But given that it was possible to select projects outside of the initial selection, the following projects also need to be considered:
+But given that it was possible to select projects outside the initial selection, the following projects also need to be considered:
 
 
 \begin{itemize}
@@ -30,20 +30,20 @@ The following list of criteria was established to evaluate the tools:
 
 \begin{itemize}
     \item \textbf{Ease of use:} 
-        As the inted endusers of the tool are not primarily \ac{HPC} experts, the tool needs to be easy to use and understand,
-        and should not require the enduser to have a deep understanding of the underlying infrastructure.
+        As the hinted end users of the tool are not primarily \ac{HPC} experts, the tool needs to be easy to use and understand,
+        and should not require the end user to have a deep understanding of the underlying infrastructure.
         While we can expect that the administration of the infrastructure will be done by adequately trained personnel, 
-        the enduser should be spared having to adapt to the underlying infrastructure as much as possible.
+        the end users should be spared having to adapt to the underlying infrastructure as much as possible.
 
     \item \textbf{Extensibility:}
         One significant constraint of the project is the restricted number of available work-hours.
         Given that the project's environment predominantly centers around HPC (High Performance Computing) workloads,
         it's essential for the tool to be easily expandable without requiring extensive modifications to the underlying system.
-        Ideally this property would be transferred to the enduser, allowing them to easily extend the developed tool further to their needs.
+        Ideally this property would be transferred to the end users, allowing them to easily extend the developed tool further to their needs.
 
     \item \textbf{Community, Support and  Documentation:}
-        It is not enough that the software technically permits extensibility, the software also needs to be adequately documented and a support framework needs to be in place.
-        Be it a community of users or a dedicated support team, the enduser and the developers need to be able to rely on the software being maintained and updated as well as being able to find expert help in case of problems.
+        It is not enough that the software technically permits extensibility, the software also needs to be adequately documented, and a support framework needs to be in place.
+        Be it a community of users or a dedicated support team, the end users and the developers need to be able to rely on the software being maintained and updated as well as being able to find expert help in case of problems.
 
     \item \textbf{Maturity:}
         With the boom of \ac{AI} and \ac{ML} in recent years \footcite{24TopAI}, the number of tools and frameworks has exploded, and while this is a good thing it also means that a lot of these tools are still paving their way and are developing rapidly.
@@ -51,8 +51,8 @@ The following list of criteria was established to evaluate the tools:
 
     \item \textbf{Strategic alignment with \ac{HPE}:}
         As this project is being developed within the context of \ac{HPE}, it is important to consider the strategic alignment of the tool with \ac{HPE}.
-        \ac{HPE} has is a large company with a diverse portfolio of products and services, and this project intersects with many different parts of the company.
-        Therefore it is important to consider the strategic alignment of the tool with \ac{HPE} and its products and services.
+        \ac{HPE} has is a large company with a diverse portfolio of products and services, and this project intersects with many parts of the company.
+        Therefore, it is important to consider the strategic alignment of the tool with \ac{HPE} and its products and services.
 
     \item \textbf{License:}
         \label{crit:license}
@@ -65,7 +65,7 @@ The following list of criteria was established to evaluate the tools:
 
 \end{itemize}
 
-\subsubsection{Weigting of the Criteria}
+\subsubsection{Weighing of the Criteria}
 
 An integral part of the \ac{SMART} methodology is the weighting of the criteria, as described in section \ref{decision_making}.
 In order to rank the criteria themselves, as they are quite hard to quantify, 
@@ -76,8 +76,8 @@ The first step of which is the ranking of the criteria from most important to le
 \begin{enumerate}
     \item \textbf{ Extensibility } As this is first and foremost a prototyping project, the actual development it at least for the first couple steps of the highest importance. 
     \item \textbf{ Community, Support \& Docs } This also applies for the external support available to the development team as if they are stuck, no developed can proceed, no matter the other factors.
-    \item \textbf{ License } This criterion has to weighted carefully, as a highly restrictive license might be a dealbreaker, but a license that is too permissive might conflict with the strategic alignment with \ac{HPE}.
-    \item \textbf{ Strategic alignment with \ac{HPE} } As this is developed by and for \ac{HPE} their requirements need to be consider aswell.
+    \item \textbf{ License } This criterion has to weighted carefully, as a highly restrictive license might be a deal-breaker, but a license that is too permissive might conflict with the strategic alignment with \ac{HPE}.
+    \item \textbf{ Strategic alignment with \ac{HPE} } As this is developed by and for \ac{HPE} their requirements need to be considered as well.
     \item \textbf{ Ease of Use } While the ease of use is important as this should eventually become a product, for now the central aspect is to create a \ac{PoC} therefore the usability is a priority, but not the highest.
     \item \textbf{ Cost } As this is a \ac{PoC} and not a commercial product, the cost is not the highest priority as this will be of small scale and therefore the cost will be negligible in most cases.
     \item \textbf{ Maturity } While the maturity of the tool is important, as this is a \ac{PoC} and not a commercial product, if the maturity of the tool does not impact the extensibility of the tool or the development process, it is not the highest priority.
@@ -106,9 +106,9 @@ The lookup tables for the weighting function can be found in the appendix \ref{a
 
 \subsubsection{Evaluation of the Tools}
 
-Now that we have established the criteria aswell as their weighing, we can beginn to evaluate the tools based on the criteria.
-Here we will be using a mix of Methodologies, as some of these criteria can simply be indexed via analogous values, while others are of a more non specific nature.
-The discussion of which values will be used on which weighing scale for the tools comparison can be found in the apendix under 
+Now that we have established the criteria as well as their weighing, we can begin to evaluate the tools based on the criteria.
+Here we will be using a mix of Methodologies, as some of these criteria can simply be indexed via analogous values, while others are of a more non-specific nature.
+The discussion of which values will be used on which weighing scale for the tools' comparison can be found in the appendix under 
 
 \begin{table}[htb]
     \centering
@@ -138,7 +138,7 @@ The following table shows the evaluation of the tools which where chosen for the
         Community, Support \& Docs                                 & 10                    & 2.25                  & 0.74                  & 2.29                  & 0.22                  \\ \hline
         Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
         Strategic alignment                                        & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-        License                                                    & 7.5                     & 7.5                     & 7.5                     & 7.5                     & 7.5                     \\ \hline
+        License                                                    & 7.5                   & 7.5                   & 7.5                   & 7.5                   & 7.5                   \\ \hline
         Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
 
     \end{tabular}
@@ -146,7 +146,7 @@ The following table shows the evaluation of the tools which where chosen for the
     \label{tab:evaluation_of_the_additional_tools}
 \end{table}
 
-\subsubsection{Conculsion of the Selection Process}
+\subsubsection{Conclusion of the Selection Process}
 
 \textcolor{red}{TODO: Write conclusion of the selection process}
 
