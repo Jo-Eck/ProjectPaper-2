@@ -295,8 +295,8 @@ gitea:
   admin:
     # existingSecret: gitea-admin-secret
     existingSecret:
-    username: gitea_admin
-    password: r8sA8CPHD9!bt6d
+    username: NoName
+    password: NoPassword
     email: "gitea@local.domain"
 
   ## @param gitea.metrics.enabled Enable Forgejo metrics
@@ -468,9 +468,9 @@ postgresql:
   global:
     postgresql:
       auth:
-        password: gitea
-        database: gitea
-        username: gitea
+        password: NoPassword
+        database: NoDB
+        username: NoUSer
       service:
         ports:
           postgresql: 5432
