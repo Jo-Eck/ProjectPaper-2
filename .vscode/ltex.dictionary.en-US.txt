@@ -8,3 +8,4 @@ Artifacthub
 kubeadm
 Serverlet
 datums
+github-like

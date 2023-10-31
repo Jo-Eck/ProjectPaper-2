@@ -247,17 +247,17 @@ controller:
 
   # List of plugins to be install during Jenkins controller start
   installPlugins:
-    - kubernetes:3937.vd7b_82db_e347b_
-    - workflow-aggregator:596.v8c21c963d92d
-    - job-dsl:1.84
-    - gitea:1.4.5
-    - docker-workflow:1.26
-    - git:5.1.0
-    - pipeline-utility-steps:2.16.0
-    - envinject-api:1.199.v3ce31253ed13
-    - configuration-as-code:1647.ve39ca_b_829b_42
-    - github-api:1.314-431.v78d72a_3fe4c3
-    - generic-webhook-trigger:1.86.5
+    - kubernetes
+    - workflow-aggregator
+    - job-dsl
+    - gitea
+    - docker-workflow
+    - git
+    - pipeline-utility-steps
+    - envinject-api
+    - configuration-as-code
+    - github-api
+    - generic-webhook-trigger
 
   # Set to false to download the minimum required version of all dependencies.
   installLatestPlugins: true
