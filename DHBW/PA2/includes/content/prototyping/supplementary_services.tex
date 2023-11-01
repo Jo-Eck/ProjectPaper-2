@@ -25,9 +25,9 @@ The deployment config is based on the official docker registry helm chart\footci
 
 \subsubsection{Frogejo Catalogue}
 
-As this should be the \ac{POC} of an end user tool, we should also look into usability features and based on previous experience of the team,
+As this should be the \ac{PoC} of an end user tool, we should also look into usability features and based on previous experience of the team,
 the need for a catalogue of previously developed pipelines and processing code was identified.
-The idea was to create something similar to the Clasp catalogue\footcite{sayersCLoudApplicationServices2015} but for the Pachyderm ecosystem.
+The idea was to create something similar to the \ac{CLASP} catalogue\footcite{sayersCLoudApplicationServices2015} but for the Pachyderm ecosystem.
 Meaning that users can share, search and deploy workflows from a central catalog, without having to worry about the underlying infrastructure.
 
 Having \ac{HPC} software in a completely contained and version system directly addresses many of the original problem statements,
@@ -37,18 +37,55 @@ To start of we, installed a simple github-like interface for the catalogue, call
 being maintained by the \ac{NPO} Codeberg e.V.\footcite{codebergCodebergOrg}.
 The installation was done using their official helm chart\footcite{Forgejo13Forgejo} and can be found at \ref{appendix:frogejo_config}.
 
-\subsubsection{Jenkins CI/CD Pipeline}
+\subsubsection{Jenkins}
 
 Now that we have a place to hold and version the code files and a place to hold the resulting docker images, we need a way to build and deploy them automatically.
 For that purpose an installation of Jenkins was added to the Cluster. Jenkins is a \ac{FOSS} \ac{CI/CD} tool, which is widely used in industry \footcite{JenkinsMarketShare}.
-It enables us to automatically build and deploy docker images whenever code is pushed to the Frogejo catalogue, as well as automatically deploying pipeline scripts to Pachyderm.
+It enables us to execute arbitrary code in an controlled environment based on triggers or schedules.
+We will be using it to automatically build and deploy docker images whenever code is pushed to the Frogejo catalogue, as well as automatically deploying pipeline scripts to Pachyderm.
 
 By using this we ensure that the code and the docker images are always in sync and that the user does not have to worry about building and deploying the images manually or interacting with the underlying Cluster.
 We also extend the factor of provenance which was so far limited to the data itself, to the containers code and pipeline spec as well, now having total oversight into which input begets what output.
-
 This was achieved in multiple steps as this turned out to be quite an involved process.
-First of was of course the general installation of the project into the Cluster based on the image provided by Jenkins \footcite{JenkinsJenkinsJenkinsci}.
-And its integration into the Kubernetes cluster, as we want it to be able to spawn its own worker pods within the cluster to handle the building of the containers and pushing of the pipelines, 
-the description of how to set up the permissions in the 1, as well as the \ac{CaC} file for the Jenkins installation can be found at \ref{appendix:jenkins_config}.
 
-        
+First of was of course the general installation of the project into the cluster based on the image provided by Jenkins \footcite{JenkinsJenkinsJenkinsci}.
+Then we have to integrate Jenkins into the the Kubernetes cluster as well, as we want it to be able to spawn its own worker pods within the cluster to handle the building of the containers and pushing of the pipelines.
+Also an integration with the Frogejo catalogue was needed, so that Jenkins would be informed about new commits to the catalogue and could start the building process.
+
+The installation instructions, \ac{RBAC} and the configuration of the Jenkins installation can be found at \ref{appendix:cicd_installation_instructions}.
+
+\subsubsection{CI/CD Pipeline}
+
+Now that we have a Jenkins installation which is able to spawn its own worker pods on the cluster and have set up System wide Webhooks for the Forgejo catalogue,
+which will inform Jenkins about every new commit to any repository on the catalogue we will need to develop a pipeline which will tell Jenkins what to do if a new commit is detected.
+
+As the Pachyderm team say themselves, "\textit{[...] users with limited experience with containerization, cloud computing, and distributed systems may find it challenging to use Pachyderm effectively.}" \footcite{PachydermTargetAudience2023}
+Unfortunate many \acp{SME} are more focused on their domain specific knowledge and usually only have a limited understanding of the underlying infrastructure, an effect which has already been noticed in classical \ac{HPC} \footcite{shenoiHPCEducationDomain2019}, 
+which is likely more pronounced in a field which has only recently started to gain traction in the wider scientific community.
+
+Therefore providing an way to deploy code and pipelines while minimizing the interaction with the underlying infrastructure is a key feature of this part of the prototype.
+The goal is to create a pipeline which can take a regular software project form the Forgejo catalogue, make reasonable assumptions about the project structure and build the required docker images and deploy the pipeline to Pachyderm.
+
+As completely functional Pachyderm project, consisting of a $N$ processing steps requires the following components:
+
+\begin{itemize}
+    \item $N$ code files, one for each processing step
+    \item $N$ Dockerfiles, one for each processing step
+    \item $N$ pipeline specifications, one for each processing step
+    \item At least one description file for the data repository(s)
+    \item If needed supporting files, which should be included in one ore more image, but should not get their own.
+\end{itemize}
+
+But as we want to minimize the interaction with the underlying infrastructure, we want to minimize the amount of input the user has to provide, without restricting the knowing users.
+In order to achieve this the pipeline first detects the existence of the above components.
+We then try to make a reasonable assumption about the structure of the project and the relation between the components, considering: directory structure, naming conventions and static code analysis.
+The pipeline will then try to fill in gaps in the project structure, like missing Dockerfile by using default values and insights gained form the previous steps.
+The pipeline itself is written in a mix of Groovy, Python and bash, the Code and a flowchart describing the process can be found in the appendix at \ref{appendix:cicd_pipeline}.
+
+There was also a custom container image created, extending official Jenkins worker image\footcite{JenkinsJenkinsDocker}, enabling us to build docker images from within a running container in the cluster by using a dedicated kaniko 
+sidecar container \footcite{KanikoBuildImages2023} which enables us to build docker images without having to run Docker in Docker, which is not recommended \footcite{UsingDockerinDockerYour}.
+The image also contains the necessary tools to interact with the Pahcyderm API and to run the python scripts which are used to analyze the project structure and do the code generation, it can be found at \ref{appendix:jenkins_dockerfile}.
+
+While this pipeline is currently working as intended, it is still missing many edgcases and does need further development to be able to handle more thant the most basic projects.
+Even though its development was cut short it does show the potential of this approach and how it could be used to make the Pachyderm ecosystem more accessible to users which are not as familiar with the underlying infrastructure, 
+while still allowing more experienced users to interact with the system directly.

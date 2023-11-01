@@ -1,6 +1,6 @@
 # Setting up the GitOps CI/CD
 
-This part is concerned wit setting up both the Version Control System Forgejo and the CI/CD system Jenkins. \
+This part is concerned with setting up both the Version Control System Forgejo and the CI/CD system Jenkins. \
 While Forgeo is a fork of Gitea, it is still sparcely documented and thus we will not setup the runner system of Forgejo, but instead use Jenkins for CI/CD.
 
 
@@ -135,7 +135,7 @@ helm install -n forgejo forgejo oci://codeberg.org/forgejo-contrib/forgejo -f ./
 
 ## Configuring
 
-In order to connect both jenkins and forgeo we will have to adjust some configurations.
+In order to connect both Jenkins and Forgeo we will have to adjust some configurations.
 
 1. As we want Jenkins to be able to be able spawn pods on the cluster, we will need to give it the needed permissions.
 For this one can use the service_account.yaml file in the jenkins folder.
@@ -143,8 +143,6 @@ For this one can use the service_account.yaml file in the jenkins folder.
 ```bash
 kubectl -n jenkins apply -f ./jenkins/service_account.yaml
 ```
-
-
 
 2. We add the following config map to Forgejo in order to allow it to send webhooks to out jenkins host.
 
