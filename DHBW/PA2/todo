@@ -2,8 +2,9 @@
 
 - [X] Methodik der Wirtschaftsinfo an Dominic
 - ~~ [ ~ ] Github-Sync fuer HPE ~~
-- [ ] "objektive" beliehheitskriterien, github stars, fragen stackoverflow
-- [ ] k.o. criterien, SSO
+- [X] "objektive" beliehheitskriterien, github stars, fragen stackoverflow
+- [ ] ~~ k.o. criterien, SSO ~~
+- [ ] Rewrite the installation readme for jenkins and Forgejo
 
 ## Themen zu Besprechung
 
