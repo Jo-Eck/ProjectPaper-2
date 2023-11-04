@@ -3,6 +3,33 @@
  
 \section{Summary}
 
+By way of this project paper we have assessed and described the state of the art for current technologies in the areas of 
+containerized software, container orchestration and how those tie in with Software defined infrastructure.
+We have done the same for the state of the art in the solution of complex problems found in the field of and  solved with \ac{HPC},
+namely the two larger classes of problems, \ac{LCP} and \ac{TCP} problems, and what strategies are usually empoyed to solve those problems.
+
+We have then addressed the problems identified by the problem statement with the statement of an initial goal, 
+and structured an intervention to solve those problems by way of the creation of a prototype.
+Before the iterative process of prototyping could begin we had to make a non-trivial decision on the choice of a container orchestrator/ workflow manager.
+For which we defined, discussed and weighted the selection criteria, and then evaluated the available options against those criteria and 
+We found our best fit through the employment of the \ac{SMART-ER} method, which was the \ac{k8s}-based orchestrator named Pachyderm.
+
+The iterative process of prototyping was split into three main areas of focus, the infrastructure, the solution to \acp{TCP} and the integration of a complete 
+\ac{CI/CD} pipeline. Each of these areas was given at least two iterations and the results of each iteration were documented, evaluated and recomendations for
+future iterations were made.
+
+The final results of the prototype were then evaluated against the initial goal and the problems identified in the problem statement,
+and the resulting artifact was found to be a valid form of intervention to solve the problems identified in the problem statement,
+while still being limited in scope and applicability, as was to be expected from a non production prototype. 
+
 
 \section{Outlook}
+
+% The prototype created in this project paper is a valid intervention to solve the problems identified in the problem statement,
+% but still proves to have great potential for future work.
+% As the time was limited and mostly spend on the furthering of the project, many avenues of high interest are still open for exploration.
+
+% The two main areas of focus for future work are 
+% the optimization of the communication stack on every level of abstraction,
+% the expansion of usability functions relating to the Catalogue as these will bring the most immediate value to potential users
 
