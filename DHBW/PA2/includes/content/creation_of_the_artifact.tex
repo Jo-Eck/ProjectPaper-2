@@ -50,3 +50,42 @@ All this is build on top of a hardware-agnostic \ac{k8s} cluster, which is respo
 \section{Evaluation of the Artifact}
 
 
+The original problems described in \ref{ProblemStatement} where seven-fold, and where addressed in the following way:
+
+\begin{itemize}
+    \item \textbf{Workload Resilience and Fault Tolerance in HPC:}
+    A problem which is typically addressed by the \ac{HPC} community by using a combination of checkpointing and job scheduling\footcite{jinOptimizingHPCFaultTolerant2010}
+    Is now being directly address via the inclusion of pachyderm.
+    Because Pachyderm isolates each of the processes into their own container, and tracks each of the steps induvidually
+    it can easily restart a failed step, or even a failed job, without having to restart the entire workflow.
+    While this only works for the standard \ac{LCP} workloads, its provenance features reduce the data loss, should a \ac{TCP} workload fail.
+    \item \textbf{Environment/Package Management in HPC:} 
+    Replacing the classical \ac{HPC} package management solutions with a containerized approach,
+    simplifies the deployment of code from the users' perspective massively, as they have almost complete control of the environment their code 
+    is going to run in, all the while giving the administrators the ease of mind that the code is not going to interfere with the rest of the system.
+    \item \textbf{Probability issues with HPC:}
+    Same goes for the probability issues, as the containerized approach allows for a much more fine-grained control of the environment,
+    users can rapidly iterate and test their code on their local machines, before deploying it to the \ac{HPC} system.
+    \item \textbf{Scalability issues with HPC:}
+    Scalability is one of the main features of \ac{k8s}, and therefore of Pachyderm a cluster can easily be scaled up or down, depending on the current workload.
+    Many cloud providers even offer hosted \ac{k8s} clusters, which can be scaled up or down on demand, and therefore allow for a very flexible approach to the problem.
+    While in classical \ac{HPC} systems, the cluster is usually fixed in size, and therefore the user has to wait for the next available slot.
+    \item \textbf{Interconnected Problem-Solving in \ac{CC}}
+    This one was one of the problems which was not directly address by pachyderm or Kubernetes directly,
+    in order to solve this problem, Arkouda was containerized and made usable for Pachyderm workloads.
+    As of right now, the layers of network abstractions and the lack of OpenFAM support have a negative impact on the performance of the \ac{TCP} workloads,
+    but successfully proofs the concept of interconnected problem-solving on a \ac{CC} system.
+    \item \textbf{Provenance and Versioning:}
+    Combining the advantages the Pachyderm File System with the completely \ac{CI/CD} based approach to the deployment of the workflows,
+    allows a tracking of each and every part that goes into each and every step of the workflows.
+\end{itemize}
+
+
+While this project does not present a complete solution to all the problems, it does present a viable path forward for a more modern approach to \ac{HPC}.
+The combination of \ac{HPC} and Pachyderm allows for a much more flexible approach to the problem and with future work and low level driver support and usability 
+features like the Jenkins Pipeline, as well as a well maintained ecosystem of pipeline steps which can be used to build more complex workflows and reutilize existing code
+developed by fellow researchers, this approach could be a significant improvement over the current state of the art.
+
+Unfortunately the time was cut short before the project could be fully completed and therefore some goals like the integration of OpenFAM, the switch to a low abstraction \ac{CNI} and especially 
+multi parameter performance testing could not be completed in time, it is apparent that the integration of these would bring the project much closer to the performance  of the classical \ac{HPC} systems,
+while still maintaining the flexibility and ease of use of the containerized approach, and therefore should be considered for future work.
