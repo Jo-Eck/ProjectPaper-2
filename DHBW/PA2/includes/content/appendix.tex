@@ -64,9 +64,7 @@ Each project is represented as a point \(P_i = (x_i, y_i)\) in a two-dimensional
 
 Additionally, we acknowledge that some commercial tools, as well as certain open-source projects, offer enterprise support, reducing the reliance on the community for assistance. Similarly, projects developed in-house often have access to the original development team for support. Therefore, we will apply a flat bonus of 5 points to the scores of projects offering enterprise support and a flat bonus of 2.5 points to projects developed in-house.
 
-\[
-S_i = \frac{1}{2} \left( \frac{x_i - \min(x)}{\max(x) - \min(x)} \times 10 + \frac{y_i - \min(y)}{\max(y) - \min(y)} \times 10 \right) + B_i
-\]
+\[S_i = \frac{1}{2} \left( \frac{x_i - \min(x)}{\max(x) - \min(x)} \times 10 + \frac{y_i - \min(y)}{\max(y) - \min(y)} \times 10 \right) + B_i \]
 
 Here, \(\min(x)\), \(\max(x)\), \(\min(y)\), and \(\max(y)\) represent the minimum and maximum values of GitHub stars and Stack Overflow questions across all projects, respectively. The final scores \(S_i\), along with the respective bonuses \(B_i\), provide a comprehensive metric for comparing project popularity, community engagement, and the availability of additional support options, all on the same scale.
 
@@ -150,15 +148,14 @@ The eight years since the development of \ac{CLASP} in 2015 \footcite{sayersCLou
 While some of these tools might have been used in other projects, been contributed to by \ac{HPE} employees or are supported on the Ezmeral platform, they are not part 
 of the core product portfolio and therefore not of strategic importance.
 
-One thing that would have to be considered is the way one would make onself dependant of the company, as \ac{HPE} would have to enter into negotiations with the company behind Snaplogic, 
-this state of dependancy an the need to find a compromise would be a strategic disadvantage.
+One thing that would have to be considered is the way one would make oneself dependant of the company, as \ac{HPE} would have to enter into negotiations with the company behind Snaplogic, 
+this state of dependency an the need to find a compromise would be a strategic disadvantage.
 
 Therefore the following scores have been assigned:
 
 \begin{table}[htb]
   \centering
-  \caption{Comparison of Project Popularity}
-  \label{tab:table1} 
+  \caption{Strategic Alignment Scores}
   \begin{tabular}{|l|c|} 
     \textbf{Project} & \textbf{Strategic Alignment} \\
     Pachyderm  & 10   \\
@@ -180,8 +177,37 @@ Therefore the following scores have been assigned:
 
 This section aims to compare the relative cost of the products in relation to each other.
 We previously factored in the enterprise features, so when enterprise support is available and applicable we will take this into consideration.
-Here we have three categories of products first those which are completely free and without any enterprise support, secondly those which are free but offer enterprise support and lastly those which operate on a subscription basis.
+Here we have three categories of products first those which are completely free and without any enterprise support,
+secondly those which are free but offer enterprise support and lastly those which operate on a subscription basis.
+To address various cost models, we classify the tools into the following categories:
 
+\begin{enumerate}
+  \item \textbf{Open-source and Community-Supported Tools (No Cost):} Free tools, typically open-source, relying on a community for maintenance.
+  \item \textbf{Open-source with Optional Enterprise Support (Variable Cost):} Open-source with paid enterprise support offering advanced features and support.
+  \item \textbf{Commercial Products (Subscription-Based Cost):} Tools that require ongoing payment for use depending on the level of service and feature access.
+\end{enumerate}
+
+
+\begin{table}[htb]
+  \centering
+  \caption{Hypothetical Scores Based on Cost}
+  \label{tab:cost_scores}
+  \begin{tabular}{|l|c|}
+    \hline
+    \textbf{Project} & \textbf{Cost Score} \\
+    \hline
+    Airflow        &  10 \\
+    Pachyderm      &   6  \\
+    Snaplogic      &   3  \\
+    Luigi          &  10 \\
+    CLASP          &  10 \\ 
+    Argo           &  10 \\
+    Kubeflow       &  10 \\
+    Knative        &  10 \\
+    CWL            &  10 \\
+    \hline
+  \end{tabular}
+\end{table}
 
 
 %% ============================== Diagrams =====================================
@@ -239,47 +265,3 @@ Here we have three categories of products first those which are completely free 
 \anhang{CI/CD installation instructions}
 \label{appendix:cicd_installation_instructions}
 \lstinputlisting{../../Project/Kubernetes_Setup/ci_cd/README.md}
-
-%% ================================ Code =======================================
-
-% \newpage
-% \anhang{Kubernetes setup scripts}
-
-% \anhangteil{Ansible setup script}
-% \label{appendix:ansible_setup_script}
-% \lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/join_cluster.yaml}
-
-% \newpage
-% \anhangteil{Flannel configuration}
-% \label{appendix:flannel_config}
-% \lstinputlisting{../../Project/Kubernetes_Setup/kube-flannel.yml}
-
-% % \anhangteil{Bash setup script}
-% % \label{appendix:bash_setup_script}
-% % \lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/setup.sh}
-
-% \newpage
-% \anhangteil{Bash verification script}
-% \label{appendix:bash_verification_script}
-% \lstinputlisting{../../Project/Kubernetes_Setup/kluster/setup_scripts/double_check.sh}
-
-% \newpage
-% \anhangteil{Arkouda Setup}
-% \label{appendix:arkouda_setup}
-% \lstinputlisting{../../Project/Kymera/README.md}
-
-% \newpage
-% \anhangteil{Docker Registry Deployment}
-% \label{appendix:docker_registry_config}
-% \lstinputlisting{../../Project/Kubernetes_Setup/registry/registry.yaml}
-
-% \newpage
-% \anhangteil{Frogejo Deployment}
-% \label {appendix:frogejo_config}
-% \lstinputlisting{../../Project/Kubernetes_Setup/ci_cd/forgejo/values.yaml}
-% \lstinputlisting{../../Project/Kubernetes_Setup/ci_cd/forgejo/config_map_ini.yaml}
-
-% \newpage
-% \anhangteil{Jenkins Dockerfile}
-% \label{appendix:jenkins_dockerfile}
-% \lstinputlisting{../../Project/Kubernetes_Setup/ci_cd/jenkins/custom_jenkins_container/custom_jenkins.dockerfile}
