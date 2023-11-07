@@ -39,6 +39,7 @@ This section assesses the level of external support provided for each project. T
       \textbf{Project} & \textbf{GitHub Stars} & \textbf{Stack Overflow Questions} \\ 
       Pachyderm  & 6,000   & 6          \\ 
       Argo       & 14,500  & 136        \\ 
+      Argo       & 14,500  & 136        \\ 
       Clasp      & 0       & 0          \\ 
       Snaplogic  & 0       & 57         \\ 
       Airflow    & 32,200  & 10,218     \\ 
@@ -139,6 +140,37 @@ Now we will evaluate the licenses of the tools in question, and assign them a sc
 \end{itemize}
 
 \anhangteil{Strategic alignment}
+
+When considering the strategic alignment within the context of \ac{HPE} the goal is to ensure that the tool can be used in combination with or as extension to the Products \ac{HPE} is offering.
+Tools that have been developed by the company in the first place or have been acquired by \ac{HPE} must be of a high strategic value to the company, as otherwise they would not have been developed or acquired in the first place.
+
+This is especially true for Pachyderm, as it has been acquired in 2023 \footcite{HewlettPackardEnterprise} as part of their realignment towards hybrid cloud provider.
+The eight years since the development of \ac{CLASP} in 2015 \footcite{sayersCLoudApplicationServices2015} the priorities of somewhat shifted, its concept is still relevant and was originally developed by the labs to fill a strategic gap.
+
+While some of these tools might have been used in other projects, been contributed to by \ac{HPE} employees or are supported on the Ezmeral platform, they are not part 
+of the core product portfolio and therefore not of strategic importance.
+
+One thing that would have to be considered is the way one would make onself dependant of the company, as \ac{HPE} would have to enter into negotiations with the company behind Snaplogic, 
+this state of dependancy an the need to find a compromise would be a strategic disadvantage.
+
+Therefore the following scores have been assigned:
+
+\begin{table}[htb]
+  \centering
+  \caption{Comparison of Project Popularity}
+  \label{tab:table1} 
+  \begin{tabular}{|l|c|} 
+    \textbf{Project} & \textbf{Strategic Alignment} \\
+    Pachyderm  & 10   \\
+    \ac{CLASP}       & 7.5  \\
+    Snaplogic      & 0          \\
+    Airflow      & 2.5          \\
+    Kubeflow      & 2.5          \\
+    Knative      & 2.5          \\
+    Luigi      & 2.5          \\
+    CWL      & 2.5          \\
+  \end{tabular}
+\end{table}
 
 \anhangteil{Ease of Use}
 
