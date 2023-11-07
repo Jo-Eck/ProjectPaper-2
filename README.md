@@ -6,11 +6,18 @@ This repository encompasses both the project and its corresponding paper of my s
 
 **Abstract:**
 
-!UPDATE ABSTRACT!
+This Second project paper presents the development and demonstration of a proof-of-concept for the
+integration of \ac{HPC} programming frameworks in ta a container-base workflow orchestrator the convergence of
+\ac{HPC} and \ac{CC} has revealed novel potential in highly scalable and flexible computing.
 
-*The entire paper explores the challenges and solutions of integrating HPC technologies with modern orchestrators. It's a comprehensive guide for businesses, researchers, and technologists aiming to harness the capabilities of HPC in modern infrastructure.* 
+This project aim to reconcile the different demands of the \ac{HPC} and \ac{CC} communities by demonstrating the integration of
+the \ac{HPC} programming framework Arkouda into the container-based workflow orchestrator Pachyderm, showing the technical feasibility of this approach.
 
-!UPDATE ABSTRACT!
+A prototype implementing this integrated system is constructed and evaluated through prototyping methodologies, with a focus on resilience, scalability, portability, and user-friendliness.
+The prototype is iteratively refined to address \ac{LCP} and \ac{TCP}, with particular attention to the usability of the system for non \ac{CC} experts.
+
+This project paper contributes to the body of knowledge by way of practical example, lessons learned with each iteration, and sheds lith on pathways for future research towards
+a landscape where the seamless and efficient integration of \ac{HPC} workloads in \ac{CC} environments becomes possible
 
 The complete paper can be found here: \
 📜 [Full Paper](DHBW/PA2/studienarbeit.pdf)
@@ -25,9 +32,9 @@ This project was realized in collaboration with the Hewlett Packard Labs and sig
 
 The following sections highlight the key aspects of this project.
 
-- X
-- Y
-- Z
+- The integration of Pachyderm and Arkouda
+- The creation of a CI/CD pipeline using Forgejo, Jenkins, Kaniko
+- Setup of a bare metal 20 node Kubernetes cluster using kubeadm
 
 ## 🙏 Acknowledgements
 
