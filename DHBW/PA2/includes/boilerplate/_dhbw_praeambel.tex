@@ -110,6 +110,16 @@
 % Anpassung der Abstände bei Kapitelüberschriften
 % (betrifft auch Inhalts-, Abbildungs- und Tabellenverzeichnis)
 \renewcommand*\chapterheadstartvskip{\vspace*{-\topskip}}
+
+\makeatletter
+\renewcommand\chapter{\par\vspace{2\baselineskip}% Add two lines of vertical space
+    \thispagestyle{plain}%   % Page style of chapter page
+    \global\@topnum\z@       % Prevents figures from going at top of page.
+    \@afterindentfalse       % No indent in first paragraph
+    \secdef\@chapter\@schapter}
+\makeatother
+
+
 \newcommand{\myBeforeTitleSkip}{1mm}
 \newcommand{\myAfterTitleSkip}{10mm}
 \setlength\cftbeforetoctitleskip{\myBeforeTitleSkip}
