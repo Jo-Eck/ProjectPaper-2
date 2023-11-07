@@ -15,7 +15,7 @@ Both the \ac{HPC} and the \ac{CC} community have been working on solutions to di
 both with their own approaches and solutions to their respective problems.
 
 While the \ac{HPC} community has been putting a lot of effort into developing new and extremely efficient ways to parallelize computations,
-the \ac{CC} community has been focusing on improving the flexibility, scalability and resilience of their solutions as well as improving the ease of use for their developers and users. 
+the \ac{CC} community has been focusing on improving the flexibility, scalability and resilience of their solutions well as enhancing usability for developers and end-users.
 
 Both used to be very distinct and separate communities due to their very different use cases, while the \ac{HPC} community was mostly concerned with scientific computing and simulations of physical phenomena,
 the \ac{CC} community is mostly concerned with providing a reliable and easily up and down scalable infrastructure for the industry and businesses.
@@ -23,7 +23,7 @@ the \ac{CC} community is mostly concerned with providing a reliable and easily u
 Now with the advent of \ac{ML} and \ac{AI} the two communities are starting to converge, 
 as the \ac{ML} and \ac{AI} community is adopting the tools and techniques of both communities to solve their problems as they see fit.
 
-But this convergence of the two is not without its problems, being developed in two coexisting and separate communities, the tools and techniques of both communities are not always compatible with each other,
+But this convergence of the two is not without its problems, being developed in two separate, coexisting communities, the tools and techniques of both communities are not always compatible with each other,
 the goal of this project is to find a way to bridge this gap and to find a way to combine the best of both worlds.
 
 \newpage
@@ -41,7 +41,7 @@ The following key problems have emerged from the convergence of High Performance
         When a component task fails, it can invalidate the entire
         computation, requiring a restart from scratch.
         This need for resilient failover and verification strategies as well as the need to avoid
-        computational wastage is a key challenge for \ac{HPC} systems, especially with every increasing system sizes and complexity.
+        computational wastage is a key challenge for \ac{HPC} systems, especially with ever-increasing system sizes and complexity.
         \footcite{egwutuohaSurveyFaultTolerance2013}
 
     \item \textbf{Environment/Package Management in \ac{HPC}:} 
@@ -97,12 +97,12 @@ This process of integration and prototyping as well as the explanation of the un
     }
 \end{itemize}
 
-
+\newpage
 \section{Contributions}
 
 In order to address the problems stated above, find answers to the research questions and to bridge the gap between the two paradigms, the following contributions were made:
 \begin{itemize}
     \item \textbf{C1:} \textit{ An analysis of the problem space and existing solution, within the constraints of time, resources and businesses needs.}
-    \item \textbf{C2:} \textit{ A prototype implementation combining the 'Arkouda' framework with the \ac{k8s} based workflow orchestrator 'Pachyderm' running on the Heydar Cluster}
+    \item \textbf{C2:} \textit{ A prototype implementation combining the Arkouda framework with the \ac{k8s} based workflow orchestrator 'Pachyderm' running on the Heydar Cluster}
     \item \textbf{C3:} \textit{ Further integrations of tools from both sides of the spectrum, addressing many of aforementioned pain-points}
 \end{itemize}
