@@ -38,24 +38,36 @@ Large scale cloud providers like Amazon Web Services, Microsoft Azure and Google
 These large scale software defined infrastructures are used in tandem and managed by large scale orchestrators like Openshift\footcite{RedHatOpenShift}, Openstack \footcite{OpenSourceCloud} and Kubernetes\footcite{ProductionGradeContainerOrchestration}. 
 The orchestrators interface with the underlying infrastructure and manage the services running on top of it and provide a unified interface for the user to interact with.
 This makes it possible to largely run on any, even heterogeneous, infrastructure, while providing a highly flexible and scalable interface for the user to interact with.
-Makit it especially useful for large scale cloud providers, as it allows them to provide a unified interface for their users, while still being able to use different underlying infrastructure.
+Make it it especially useful for large scale cloud providers, as it allows them to provide a unified interface for their users, while still being able to use different underlying infrastructure.
 
 \section{High Performance Computing Frameworks}
+
+\ac{HPC} is the process of using multiple computing nodes in collaboration to solve a problem, that would be too computationally expensive for a single node to solve in a reasonable amount of time.
+The computational power provided by \ac{HPC} is used in a wide variety of fields, ranging from weather forecasting to computational fluid dynamics and even in the field of machine learning.
+While \ac{HPC} is as diverse as the problems it is used to solve, there are some common patterns that can be found in most \ac{HPC} problems.
+Generally \ac{HPC} problems can be divided into two categories, \ac{LCP} and \ac{TCP} problems, which are discussed in more detail in \ref{state_of_the_art_tcp}.
 
 
 \subsection{Loosely Coupled Problems}
 
-\ac{LCP} also known in the industry as "embarrassingly parallel" \footcite{smtn} problems are problems that can be broken up into smaller independent tasks that can be executed in parallel.
+\ac{LCP} also known in the industry as "embarrassingly parallel" \footcite{brownEngineeringBeowulfstyleCompute2004} problems are problems that can be broken up into small independent tasks that can be executed in parallel.
+Problems like a monte carlo simulation or a matrix multiplication are good examples of \ac{LCP} problems.
 
+From the perspective of the user, \ac{LCP} problems are the easiest to solve by using \ac{HPC}, as they can be solved by simply running the same program multiple times with different input parameters across multiple nodes.
+Seen from the perspective of the \ac{HPC} system, \ac{LCP} problems trivial at best as they do require very little communication between the different nodes.
 
-tools like Mapreduce and Spark
-
+The \ac{CC} community has already seen the need in this aspect and has developed and integrated systems to solve these.
+Containerized versions of MapReduce \footcite{camacho-rodriguezApacheHiveMapReduce2019} or cloud native solutions like Pachyderm \footcite{HomePagePachyderm}
 
 
 \subsection{Tightly Coupled Problems}
 \label{state_of_the_art_tcp}
-In contrast to \ac{LCP} problems, \ac{TCP} problems are problems that can not be broken up into smaller independent tasks that can be executed in parallel,
+In contrast to the highly paralelizable  \ac{LCP} problems, \ac{TCP} problems are problems that can not be broken up into smaller independent tasks that can be executed in parallel,
 instead of working independently, each atomic task needs to communicate at least with one other task.
 A good example of a \ac{TCP} problem are the n-body problems, where the position of each body is dependent on the position of all other bodies.
 
-Message Passing Interface (MPI) vs Shared Memory (OpenMP) or Partioned Global Address Space (PGAS) \footcite{smtn} 
+These kind of problems require a more sufisticated approach, as they need to share state across the multiple computing nodes.
+Sharing the necessary information between the nodes while maintaining performance at scale, has become its own sector in industry and science.
+
+Communication protocols like \ac{MPI}\footcite{snirMPICompleteReference1998}, \ac{OpenSHMEM} \footcite{chapmanIntroducingOpenSHMEMSHMEM2010}
+have been developed to facilitate the communication between nodes and processes, but are still being continuously developed and optimized.
