@@ -35,14 +35,8 @@ The following list of criteria was established to evaluate the tools:
         While we can expect that the administration of the infrastructure will be done by adequately trained personnel, 
         the end users should be spared having to adapt to the underlying infrastructure as much as possible.
 
-    \item \textbf{Extensibility:}
-        One significant constraint of the project is the restricted number of available work-hours.
-        Given that the project's environment predominantly centers around HPC (High Performance Computing) workloads,
-        it's essential for the tool to be easily expandable without requiring extensive modifications to the underlying system.
-        Ideally this property would be transferred to the end users, allowing them to easily extend the developed tool further to their needs.
-
     \item \textbf{Community, Support and  Documentation:}
-        It is not enough that the software technically permits extensibility, the software also needs to be adequately documented, and a support framework needs to be in place.
+        Due to the limited time frame in which this project is being executed, the time to learn the intricacies of a given software is limited an important factor for this is therefore, that software needs to be adequately documented, and a support framework needs to be in place.
         Be it a community of users or a dedicated support team, the end users and the developers need to be able to rely on the software being maintained and updated as well as being able to find expert help in case of problems.
 
     \item \textbf{Maturity:}
@@ -74,7 +68,6 @@ We will be using the weighing methodology as described in the \ac{SMART-ER} meth
 The first step of which is the ranking of the criteria from most important to least important.
 
 \begin{enumerate}
-    \item \textbf{ Extensibility } As this is first and foremost a prototyping project, the actual development it at least for the first couple steps of the highest importance. 
     \item \textbf{ Community, Support \& Docs } This also applies for the external support available to the development team as if they are stuck, no developed can proceed, no matter the other factors.
     \item \textbf{ License } This criterion has to weighted carefully, as a highly restrictive license might be a deal-breaker, but a license that is too permissive might conflict with the strategic alignment with \ac{HPE}.
     \item \textbf{ Strategic alignment with \ac{HPE} } As this is developed by and for \ac{HPE} their requirements need to be considered as well.
@@ -91,14 +84,12 @@ The lookup tables for the weighting function can be found in the appendix \ref{a
     \centering
     \begin{tabular}{|l|l|} \hline
         \textbf{Criteria}                       & \textbf{Weight}       \\ \hline
-        Extensibility                           &  0.2500               \\ \hline
         Community, Support and  Documentation   &  0.2143               \\ \hline
         License                                 &  0.1786               \\ \hline
         Strategic alignment with \ac{HPE}       &  0.1429               \\ \hline
         Ease of use                             &  0.1071               \\ \hline
         Maturity                                &  0.0714               \\ \hline
         Cost                                    &  0.0357               \\ \hline
-
     \end{tabular}
     \caption{Weighting of the criteria}
     \label{tab:weighting_of_the_criteria}
@@ -110,18 +101,17 @@ Now that we have established the criteria as well as their weighing, we can begi
 Here we will be using a mix of Methodologies, as some of these criteria can simply be indexed via analogous values, while others are of a more non-specific nature.
 The discussion of which values will be used on which weighing scale for the tools' comparison can be found in the appendix under 
 
+
 \begin{table}[htb]
     \centering
     \begin{tabular}{|l|l|l|l|l|} \hline
         \textbf{Criteria}                                          & \textbf{Pachyderm}    & \textbf{Argo}         & \textbf{\ac{CLASP}}   & \textbf{Snaplogic}     \\ \hline
         Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
         Community, Support \& Docs                                 & 8.43                   & 2.32                   & 2.5                   & 5.03                   \\ \hline
-        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        Maturity                                                   & 7.86                 & 5.2                   & 2.5                   & 5                   \\ \hline
         Strategic alignment                                        & 10                   & 2.5                   & 7.5                   & 0                    \\ \hline
         License                                                    & 10                    & 7.5                     & 10                    & 0                      \\ \hline
-        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
-
+        Cost                                                       & 6                      & 10                    & 10                    & 3                      \\ \hline
     \end{tabular}
     \caption{Evaluation of the suggested tools}
     \label{tab:evaluation_of_the_suggested_tools}
@@ -134,12 +124,11 @@ The following table shows the evaluation of the tools which where chosen for the
     \begin{tabular}{|l|l|l|l|l|l|} \hline
         \textbf{Criteria}                                          & \textbf{Airflow}      & \textbf{Kubeflow}     & \textbf{Knative}      & \textbf{Luigi}        & \textbf{CWL}          \\ \hline
         Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
-        Extensibility                                              & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
         Community, Support \& Docs                                 & 10                    & 2.25                  & 0.74                  & 2.29                  & 0.22                  \\ \hline
-        Maturity                                                   & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Maturity                                                   & 9.41                  & 5.05                  & 6.43                  & 5.23                  & 3.98                  \\ \hline
         Strategic alignment                                        & 2.5                   & 2.5                   & 2.5                   & 2.5                   & 2.5                   \\ \hline
         License                                                    & 7.5                   & 7.5                   & 7.5                   & 7.5                   & 7.5                   \\ \hline
-        Cost                                                       & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        Cost                                                      & 10                    & 10                    & 10                    & 10                    & 10                    \\ \hline
 
     \end{tabular}
     \caption{Evaluation of the additional tools}
