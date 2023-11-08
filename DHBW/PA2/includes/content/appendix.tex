@@ -25,20 +25,17 @@
 
 \anhang{Discussion of Tool Evaluation and Weighing}
 
-\anhangteil{Extensibility}
-
 \anhangteil{Community, Support \& Docs}
 
 This section assesses the level of external support provided for each project. To evaluate this support, we will focus on three distinct aspects and combine them into a single score. Firstly, we will examine the size of the community, as a substantial community often indicates project maturity and the availability of extensive support. As proxies for community size, we will consider two central metrics: the number of stars on GitHub and the quantity of questions on Stack Overflow.
 
 \begin{table}[htb]
     \centering
-    \caption{Comparison of Project Popularity}
-    \label{tab:table1} 
+    \caption[Community Support Data]{Community Support Data\footnotemark}
+    \label{tab:community_support} 
     \begin{tabular}{|l|c|c|} 
       \textbf{Project} & \textbf{GitHub Stars} & \textbf{Stack Overflow Questions} \\ 
       Pachyderm  & 6,000   & 6          \\ 
-      Argo       & 14,500  & 136        \\ 
       Argo       & 14,500  & 136        \\ 
       Clasp      & 0       & 0          \\ 
       Snaplogic  & 0       & 57         \\ 
@@ -49,7 +46,7 @@ This section assesses the level of external support provided for each project. T
       CWL        & 1,400   & 6          \\ 
    \end{tabular}
 \end{table}
-
+\footnotetext{Data taken from GitHub and Stack Overflow on 08.11.2023}
 
 \begin{figure}[htb]
     \centering
@@ -160,6 +157,7 @@ Therefore the following scores have been assigned:
     \textbf{Project} & \textbf{Strategic Alignment} \\
     Pachyderm  & 10   \\
     \ac{CLASP}       & 7.5  \\
+    Argocd       & 2.5  \\
     Snaplogic      & 0          \\
     Airflow      & 2.5          \\
     Kubeflow      & 2.5          \\
@@ -173,6 +171,78 @@ Therefore the following scores have been assigned:
 
 \anhangteil{Maturity}
 
+The evaluation of the tools is centrally based on their open source repositories, as this is the most accessible and transparent source of information.
+In order to evaluate the maturity of the tools, we will look at the age, the number of commits, the ratio of commits to age, the number of closed issues and the ratio of closed issues to open issues.
+We will then combine these metrics into a single score, which will be used to evaluate the maturity of the tools. Products like Snaplogic, which are not open source,
+as they are a commercial product it is to be expected that they are somewhat mature, as they are already being used in production environments and are used by many companies.
+
+
+\begin{table}[htb]
+  \centering
+  \label{tab:maturity_data}
+  \begin{tabular}{|l|c|c|c|c|c|}
+    \hline
+    \textbf{Project} & \textbf{Age (Days since 08.11.2023)} & \textbf{Commits} &  \textbf{ Open Issues} & \textbf{Closed Issues} \\
+    \hline
+    Pachyderm  & 3352 & 22143 & 889 & 2387  \\
+    Argo      & 2098 & 6047  & 2693 & 4161 \\
+    Airflow    & 3131 & 22026 & 762 & 7467 \\
+    Kubeflow   & 2168 & 2514  & 178 & 3615 \\
+    Knative    & 2113 & 8531  & 202 & 4332 \\
+    Luigi      & 4066 & 4088  & 93  & 879  \\
+    CWL        & 2954 & 4512  & 421 & 358  \\
+    \hline
+ \end{tabular}
+ \caption[Maturity Data]{Maturity Data\footnotemark}
+\end{table}
+\footnotetext{Data taken from GitHub on 08.11.2023}
+
+
+How these values compare to each other in normalized form is shown in the following graphs:
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=6cm]{graphics/Maturity_graph_larger.png}
+    \caption[Maturity Metric comparison (higher rated projects)]{Maturity Metric comparison}
+    \label{abb: maturity_metric_comparison_larger}
+  \end{minipage}%
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=6cm]{graphics/Maturity_graph_smaller.png}
+    \caption[Maturity Metric comparison (lower rated projects)]{Maturity Metric comparison}
+    \label{abb: maturity_metric_comparison_smaller}
+  \end{minipage}
+\end{figure}
+
+
+The combined maturity score for each tool is calculated as follows:
+
+
+\begin{itemize}
+  \item Age (days): Current Date - Created Date
+  \item Commits/Month: Total Commits / (Age in months)
+  \item Open/Closed Issues Ratio: Closed Issues / (Open Issues + Closed Issues)
+  \item Normalized Metrics: Each metric is normalized by dividing by the maximum value among all repositories.
+  \item Combined Maturity Score: Average of normalized metrics, scaled to a 1-10 range as \( 1 + (9 \times \text{average}) \).
+\end{itemize}
+
+\begin{table}[htb]
+  \centering
+  \caption{Maturity Scores}
+  \begin{tabular}{|l|c|} 
+    \textbf{Project} & \textbf{Maturity Score} \\
+    Pachyderm  & 7.86   \\
+    Argo       & 5.2  \\
+    Airflow    & 9.41  \\
+    Kubeflow   & 5.05  \\
+    Knative    & 6.43  \\
+    Luigi      & 5.23  \\
+    CWL        &  3.98 \\
+  \end{tabular}
+\end{table}
+
 \anhangteil{Cost}
 
 This section aims to compare the relative cost of the products in relation to each other.
@@ -183,14 +253,14 @@ To address various cost models, we classify the tools into the following categor
 
 \begin{enumerate}
   \item \textbf{Open-source and Community-Supported Tools (No Cost):} Free tools, typically open-source, relying on a community for maintenance.
-  \item \textbf{Open-source with Optional Enterprise Support (Variable Cost):} Open-source with paid enterprise support offering advanced features and support.
+  \item \textbf{Open-source with Optional Enterprise Support (Variable Cost):} Open-source with paid enterprise support offering advanced features by the developing team.
   \item \textbf{Commercial Products (Subscription-Based Cost):} Tools that require ongoing payment for use depending on the level of service and feature access.
 \end{enumerate}
 
 
 \begin{table}[htb]
   \centering
-  \caption{Hypothetical Scores Based on Cost}
+  \caption{Scores Based on Cost}
   \label{tab:cost_scores}
   \begin{tabular}{|l|c|}
     \hline
@@ -208,6 +278,8 @@ To address various cost models, we classify the tools into the following categor
     \hline
   \end{tabular}
 \end{table}
+
+
 
 
 %% ============================== Diagrams =====================================
