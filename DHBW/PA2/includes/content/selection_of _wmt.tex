@@ -3,21 +3,21 @@
 As described in section \ref{artefact_inital_goals}, the first iteration of this project was to determine which, if any, of the presented tools were suitable for the task at hand.
 The following section will describe the process of selecting the tools and the criteria that were used to evaluate them.
 Because the time frame does not allow for a full integration and testing of all the presented tools in depth we will be using a decision-making framework to evaluate the tools,
-as described in the Methodologies \Ref{decision_making} to determine which tools will be most suitable for an initial \ac{PoC} and will serve as a good starting point for the project and future iterations.
+as described in the Methodologies \Ref{decision_making}, to determine which tools will be most suitable for an initial \ac{PoC} and will serve as a good starting point for the project and future iterations.
 
 \begin{itemize}
-    \item \textbf{Pachyderm:} A \ac{k8s} based Workflow manager, written in go which was recently acquired by \ac{HPE}.
+    \item \textbf{Pachyderm:} A \ac{k8s} based Workflow manager, written in go, which was recently acquired by \ac{HPE}.
     \item \textbf{Argo:} A \ac{k8s} based Workflow manager, written in go, which is a \ac{CNCF} project \footcite{ArgoprojArgoworkflows2023}.
     \item \textbf{\ac{CLASP}:}  An in-house developed workflow manager, written in Java, utilizing Serverlet to execute workflows\footcite{sayersCloudApplicationServices2015}.
     \item \textbf{Snaplogic:} A commercial low-code/no-code workflow manager with a focus on data integration and data engineering\footcite{IPaaSSolutionEnterprise}.
 \end{itemize}
 
-But given that it was possible to select projects outside the initial selection, the following projects also need to be considered:
+Given that it was possible to select projects outside the initial selection, the following projects also need to be considered:
 
 
 \begin{itemize}
     \item \textbf{Airflow:} A Python-based workflow manager under the \ac{CNCF} umbrella, known for its easy-to-use interface and extensibility\footcite{hainesWorkflowOrchestrationApache2022}.
-    \item \textbf{Kubeflow:} A \ac{k8s}-native platform for deploying, monitoring, and running ML workflows and experiments, also a \ac{CNCF} project, streamlining \ac{ML} operations alongside other Kubernetes resources \footcite{Kubeflow}.
+    \item \textbf{Kubeflow:} A \ac{k8s}-native platform for deploying, monitoring, and running ML workflows and experiments.Also \ac{CNCF} project, streamlining \ac{ML} operations alongside other Kubernetes resources \footcite{Kubeflow}.
     \item \textbf{Knative:} An open-source \ac{k8s}-based platform to build, deploy, and manage modern serverless workloads, simplifying the process of building cloud-native applications \footcite{HomeKnative}.
     \item \textbf{Luigi:} An open-source Python module created by Spotify to build complex pipelines of batch jobs, handling dependency resolution, workflow management, and visualization seamlessly \footcite{SpotifyLuigi2023}.
     \item \textbf{\ac{CWL}:} An open-standard for describing analysis workflows and tools in a way that makes them portable and scalable across a variety of software and hardware environments, from workstations to cluster, cloud, and high-performance computing environments.
@@ -40,8 +40,8 @@ The following list of criteria was established to evaluate the tools:
         Be it a community of users or a dedicated support team, the end users and the developers need to be able to rely on the software being maintained and updated as well as being able to find expert help in case of problems.
 
     \item \textbf{Maturity:}
-        With the boom of \ac{AI} and \ac{ML} in recent years \footcite{24TopAI}, the number of tools and frameworks has exploded, and while this is a good thing it also means that a lot of these tools are still paving their way and are developing rapidly.
-        While this is not necessarily a bad thing, it does mean that the tool might not be ready for production use and might not be able to provide the stability and reliability that is required for a production environment or are lacking in documentation and support.      
+        With the boom of \ac{AI} and \ac{ML} in recent years \footcite{24TopAI}, the number of tools and frameworks has exploded, and while this is a good thing it also means that a lot of these tools are still paving their way and continue to develop.
+        While this is not necessarily a bad thing, it does mean that the tool may not be ready for production use and may not have the stability and reliability that is required for a production environment or are lacking in documentation and support.      
 
     \item \textbf{Strategic alignment with \ac{HPE}:}
         As this project is being developed within the context of \ac{HPE}, it is important to consider the strategic alignment of the tool with \ac{HPE}.
@@ -59,16 +59,16 @@ The following list of criteria was established to evaluate the tools:
 
 \end{itemize}
 
-\subsubsection{Weighing of the Criteria}
+\subsubsection{Weighting of the Criteria}
 
 An integral part of the \ac{SMART} methodology is the weighting of the criteria, as described in section \ref{decision_making}.
 In order to rank the criteria themselves, as they are quite hard to quantify, 
-We will be using the weighing methodology as described in the \ac{SMART-ER} methodology \ref{acro:SMART-ER}.
+We will be using the weighting methodology as described in the \ac{SMART-ER} methodology \ref{acro:SMART-ER}.
 
 The first step of which is the ranking of the criteria from most important to least important.
 
 \begin{enumerate}
-    \item \textbf{ Community, Support \& Docs } This also applies for the external support available to the development team as if they are stuck, no developed can proceed, no matter the other factors.
+    \item \textbf{ Community, Support \& Docs } This also applies for the external support available to the development team, as if they are stuck, no development can proceed no matter the other factors. 
     \item \textbf{ License } This criterion has to weighted carefully, as a highly restrictive license might be a deal-breaker, but a license that is too permissive might conflict with the strategic alignment with \ac{HPE}.
     \item \textbf{ Strategic alignment with \ac{HPE} } As this is developed by and for \ac{HPE} their requirements need to be considered as well.
     % \item \textbf{ Ease of Use } While the ease of use is important as this should eventually become a product, for now the central aspect is to create a \ac{PoC} therefore the usability is a priority, but not the highest.
@@ -98,7 +98,7 @@ The lookup tables for the weighting function can be found in the appendix \ref{a
 \subsubsection{Evaluation of the Tools}
 
 Now that we have established the criteria as well as their weighing, we can begin to evaluate the tools based on the criteria.
-Here we will be using a mix of Methodologies, as some of these criteria can simply be indexed via analogous values, while others are of a more non-specific nature.
+Here we will be using a mix of methodologies, as some of these criteria can simply be indexed via analogous values, while others are of a more non-specific nature.
 The discussion of which values will be used on which weighing scale for the tools' comparison can be found in the appendix in the sections 1 - 5 \ref{tool_eval}
 
 
@@ -117,7 +117,7 @@ The discussion of which values will be used on which weighing scale for the tool
     \label{tab:evaluation_of_the_suggested_tools}
 \end{table}
 
-The following table shows the evaluation of the tools which where chosen for their relevance to the problem space, based on the criteria and the weighting of the criteria:
+The following table shows the evaluation of the tools which were chosen for their relevance to the problem space, based on the criteria and the weighting of the criteria:
 
 \begin{table}[htb]
     \centering

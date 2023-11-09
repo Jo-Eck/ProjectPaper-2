@@ -12,24 +12,25 @@ It essentially creates a virtual environment for the process to run in, which ca
 This makes it possible to run multiple processes on the same machine, without having to worry about them interfering with each other or the rest of the system\footcite{IEEEXploreFullText}.
 This is especially useful for dependency management, as it allows running multiple versions of the same library on the same machine, and only the process that needs a specific version of the library will use it.
 In comparison to the more traditional approach of using virtual machines, containerization is much more lightweight, as it does not need to emulate a whole operating system, 
-but builds ontop of the hosts kernel and only isolates the user space\footcite{WhatContainerDocker}.
+but builds on top of the hosts kernel and only isolates the user space\footcite{WhatContainerDocker}.
 
 \subsection*{Container Solutions}
 
 Currently the containerization paradigm is spreading rapidly with multiple solutions available, the most popular being Docker \footcite{StackOverflowDeveloper}.
-But within the \ac{HPC} community Singularity \footcite{IntroductionSoftwareContainers} has gained more and more traction, while the previous options have historically been more popular in \ac{CC}
+However, within the \ac{HPC} community, Singularity \footcite{IntroductionSoftwareContainers} has gained more and more traction, while the previous options have historically been more popular in \ac{CC}
 The main differentiating factor between the two is that Docker is reliant on the Docker daemon, which needs to be run as root, while Singularity does not need a daemon and can be run as unprivileged user.
-This generally makes Singularity generally more appearing to \ac{HPC} users, as it is more in line with the security policies of most \ac{HPC} clusters, and simplifies the process of running containers on \ac{HPC} clusters.
+This makes Singularity generally more appealing to \ac{HPC} users, as it is more in line with the security policies of most \ac{HPC} clusters, and simplifies the process of running containers on \ac{HPC} clusters.
 But Docker is still the more popular option in \ac{CC}, as it is more flexible and has a larger ecosystem of tools and services built around it which makes rapid prototyping and development easier.
 
-These tools are make use of two features of the Linux kernel, namely cgroups and namespaces \footcite{WhatContainerDocker}.
+These tools make use of two features of the Linux kernel, namely cgroups and namespaces \footcite{WhatContainerDocker}.
 Cgroups are used to limit the resources a process can use, while namespaces are used to isolate the user space of the process.
 
 \subsection*{Software defined Infrastructure}
 
-Through the advent of large scale cloud endeavors and their offering of dynamically scaling services, the need for a way to automatically manage and partition the underlying infrastructure arose.
+Through the advent of large scale cloud endeavors and their offering of dynamic scaling services, the need for a way to automatically manage and partition the underlying infrastructure arose.
 This led to the development of software defined infrastructure, which is the process of abstracting the underlying infrastructure and managing it through software.
-The paradigm of software defined is especially pronounced in the field of networking\footcite{xiaSurveySoftwareDefinedNetworking2015}, where software defined networking is used to manage the underlying network infrastructure,
+The paradigm of software defined X is especially pronounced in the field of networking\footcite{xiaSurveySoftwareDefinedNetworking2015}.
+Software defined networking is used to manage the underlying network infrastructure,
 where the different underlying network devices are abstracted to a homogeneous network, which then gets managed through virtualization and software\footcite{baurCloudOrchestrationFeatures2015}.
 Large scale cloud providers like Amazon Web Services, Microsoft Azure and Google Cloud Platform all make use of software defined infrastructure to manage their underlying infrastructure.
 
@@ -38,7 +39,7 @@ Large scale cloud providers like Amazon Web Services, Microsoft Azure and Google
 These large scale software defined infrastructures are used in tandem and managed by large scale orchestrators like Openshift\footcite{RedHatOpenShift}, Openstack \footcite{OpenSourceCloud} and Kubernetes\footcite{ProductionGradeContainerOrchestration}. 
 The orchestrators interface with the underlying infrastructure and manage the services running on top of it and provide a unified interface for the user to interact with.
 This makes it possible to largely run on any, even heterogeneous, infrastructure, while providing a highly flexible and scalable interface for the user to interact with.
-Make it it especially useful for large scale cloud providers, as it allows them to provide a unified interface for their users, while still being able to use different underlying infrastructure.
+Make it especially useful for large scale cloud providers, as it allows them to provide a unified interface for their users, while still being able to use different underlying infrastructure.
 
 \section{High Performance Computing Frameworks}
 
@@ -54,10 +55,10 @@ Generally \ac{HPC} problems can be divided into two categories, \ac{LCP} and \ac
 Problems like a monte carlo simulation or a matrix multiplication are good examples of \ac{LCP} problems.
 
 From the perspective of the user, \ac{LCP} problems are the easiest to solve by using \ac{HPC}, as they can be solved by simply running the same program multiple times with different input parameters across multiple nodes.
-Seen from the perspective of the \ac{HPC} system, \ac{LCP} problems trivial at best as they do require very little communication between the different nodes.
+Seen from the perspective of the \ac{HPC} system, \ac{LCP} problems trivial at best as they require very little communication between the different nodes.
 
-The \ac{CC} community has already seen the need in this aspect and has developed and integrated systems to solve these.
-Containerized versions of MapReduce \footcite{camacho-rodriguezApacheHiveMapReduce2019} or cloud native solutions like Pachyderm \footcite{HomePagePachyderm}
+The \ac{CC} community has already seen the need in this aspect and has developed and integrated systems to solve these,
+such as containerized versions of MapReduce \footcite{camacho-rodriguezApacheHiveMapReduce2019} or cloud native solutions like Pachyderm \footcite{HomePagePachyderm}
 
 
 \subsection{Tightly Coupled Problems}
