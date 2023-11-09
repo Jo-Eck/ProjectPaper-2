@@ -13,17 +13,18 @@ as it enables the project to be partitioned into more manageable chunks which ca
 At their core prototyping is a state transition model, where a finial state is approached in a series of non-ideal intermediate steps,
 each of which revealing new information about the problem domain and the solution space and applying this new information to the next iteration\footcite{kraushaarPrototypingMethodApplications1985}.
 
-It is described as the methodology of with the highest constructive plasticity, as it supports many different flavors and variations of the core concept,
-but as long as it follows the core principles of this iterative approximation of an ideal version, and specifically evaluates the results of the iterations it should be considered a methodologically complete scientific method\footcite{wildeMethodenspektrumWirtschaftsinformatikUeberblick} .
+It is described as the methodology of the highest constructive plasticity, as it supports many different flavors and variations of the core concept.
+As long as it follows the core principles of this iterative approximation of an ideal version, and specifically evaluates the results of the iterations it should be considered a methodologically complete scientific method\footcite{wildeMethodenspektrumWirtschaftsinformatikUeberblick} .
 
 For this project we will be using a concatenated version of the so called \ac{RAD} model, which has been quite established in software development, as it is very well suited for projects with a high degree of complexity and uncertainty, while reducing the admistrative overhead of the project\footcite{martinRapidApplicationDevelopment1991}.
 Reducing the administrative overhead is especially important for this project, as the time frame is limited to 3 months, and the project is being done by a single person, 
 therefore more complex tools like the spiral model \footcite{boehmSpiralModelSoftware1988}, which is a popular model emphasizing a risk analysis with each step of the iteration, 
 would be too time-consuming to be feasible for this project.
 
-First there will be a central initial goal which will be the goal of what we are trying to reach,
-as the requirements will change with the knowledge acquired and the scope shifted with each iteration,
-we do not need to plan as meticulously as we would for a waterfall approach.
+
+First we define a loose goal for the project, which will be refined and adjusted with each iteration as we learn more about the problem domain and the solution space.
+Because of this we do not need to plan as meticulously as we would for a waterfall approach, where the requirements are known at the beginning of the project.
+
 
 We then enter the section with the prototyping iterations, 
 where we will alternate between the implementation of what we planned in the previous section and
@@ -38,7 +39,7 @@ and advice for the pickup of the project will be given.
 As previously described, the methodology of Prototyping benefits from a very tight loop of iterations between the different phases of the project.
 While this is highly effective in producing a good end result, it can also take many iterations and a lot of experimentation until an adequate tool or solution has been found.
 Given the constraints of a limited time frame for this project, it becomes crucial to use this time as efficiently as possible.
-Sometimes, when the time does not permit a thorough exploration of all the possible options and a decision with incomplete information needs to be made.
+Sometimes, when the time does not permit a thorough exploration of all the possible options, a decision with incomplete information needs to be made.
  
 To ensure that the decisions made are the most optimal within the constraints of the available information, adopting a systematic, replicable, and transparent decision-making process becomes essential. Over the years, various frameworks have been crafted to guide decision-making, 
 particularly when information is complex and multidimensional.
@@ -94,7 +95,6 @@ their aggregated weighted scores. This systematic approach equips
 decision-makers to choose solutions that align closely with their objectives.
 The computational formula integral to the \ac{SMART} method is:
 
-
 \begin{figure}[h]
     \centering
     \Large
@@ -104,7 +104,6 @@ The computational formula integral to the \ac{SMART} method is:
 
 \footnotetext{Taken from \cite[p. 6]{fulopIntroductionDecisionMaking2005}}
 
-Where:
 \begin{itemize}
     \item \( x_j \) Is the overall utility score for alternative \( j \). The higher the score, the better the alternative, in comparison to the other alternatives.
     \item \( a_{ij} \)  Is the utility score for alternative \( j \) for the criterion \( i \).
@@ -121,8 +120,8 @@ complex scenarios where criteria and alternatives are diverse in nature \footcit
 The \ac{SMART-ER} method is a variant of the \ac{SMART} method that attempts to alleviate the largest issue \footcitetext[p. 26]{barfodMulticriteriaDecisionAnalysis2014} of the original \ac{SMART} method, 
 namely the problem of a somewhat arbitrary ranking of the options if no numerical values can be derived.
 
-This method addresses the issue by letting the decision maker simply ranking the different criteria in relation to each other and then normalizing the weights\footcite[p. 296]{robertsWeightApproximationsMultiattribute2002a}.
-They propose the different weighting curves.
+This method addresses the issue by letting the decision maker simply rank the different criteria in relation to each other and then normalizing the weights\footcite[p. 296]{robertsWeightApproximationsMultiattribute2002a}.
+They propose the different weighting curves:
 
 \begin{figure}[h]
     \centering
@@ -138,7 +137,7 @@ The \ac{ROC} takes the centroid of the rank order and uses the reciprocal of the
     \caption{Formula for the \ac{RS} weights}
 \end{figure}
 
-The \ac{RS} uses linear curve where weights are normalized by dividing them by the sum of all weights.
+The \ac{RS} uses linear curve where weights are normaliz by dividing them by the sum of all weights.
 
 \begin{figure}[h]
     \centering

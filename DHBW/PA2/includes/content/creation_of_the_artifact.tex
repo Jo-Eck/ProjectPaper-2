@@ -18,8 +18,8 @@ with the option to increase the scope if the presented tools were not sufficient
 Therefore, the goals of the first iteration of this project was twofold, first to determine which, if any, of the presented tools were suitable for the task at hand,
 and to determine what would make an adequate \ac{PoC} for the customer.
 
-The following iterations are split into the tree main aspects of the project and will be discussed in their own subsections.
-While these steps where happening concurrently, they each address a different aspect of the project and therefore underwent their own iterative processes.
+The following iterations are split into the three main aspects of the project and will be discussed in their own subsections.
+While these steps where happening concurrently, they each addressed a different aspect of the project and therefore underwent their own iterative processes.
 
 
 \section{Overall Structure}
@@ -32,12 +32,12 @@ While these steps where happening concurrently, they each address a different as
 \end{figure}
 
 
-As can be seen in figure \ref{abb:pachykouda_three_aspects}, the artifact is composed of 3 main components, 
+As can be seen in figure \ref{abb:pachykouda_three_aspects}, the artifact is composed of three main components, 
 the \textbf{Central Workflow Engine} which is responsible for the orchestration of the workflows (center) and interfaces directly with the underlying infrastructure,
 the \textbf{\ac{HPC} Framework} which is responsible for the execution of \ac{TCP} workloads (left)
-and the \textbf{Supplementary Services} which aim at improving the usability and accessibility for the end user (right).
+and the \textbf{Supplementary Services} which aim to improve the usability and accessibility for the end user (right).
 
-All this is build on top of a hardware-agnostic \ac{k8s} cluster, which is responsible for the orchestration of the different components and the underlying infrastructure.
+All this is built on top of a hardware-agnostic \ac{k8s} cluster, which is responsible for the orchestration of the different components and the underlying infrastructure.
 
 
 \input{includes/content/selection_of _wmt.tex}
@@ -53,8 +53,8 @@ The original problems described in \ref{ProblemStatement} where seven-fold, and 
 \begin{itemize}
     \item \textbf{Workload Resilience and Fault Tolerance in HPC:}
     A problem which is typically addressed by the \ac{HPC} community by using a combination of checkpointing and job scheduling\footcite{jinOptimizingHPCFaultTolerant2010}
-    Is now being directly address via the inclusion of pachyderm.
-    Because Pachyderm isolates each of the processes into their own container, and tracks each of the steps induvidually
+    is now being directly address via the inclusion of Pachyderm.
+    Since Pachyderm isolates each of the processes into their own container, and tracks each of the steps induvidually
     it can easily restart a failed step, or even a failed job, without having to restart the entire workflow.
     While this only works for the standard \ac{LCP} workloads, its provenance features reduce the data loss, should a \ac{TCP} workload fail.
     \item \textbf{Environment/Package Management in HPC:} 
@@ -65,14 +65,14 @@ The original problems described in \ref{ProblemStatement} where seven-fold, and 
     Same goes for the probability issues, as the containerized approach allows for a much more fine-grained control of the environment,
     users can rapidly iterate and test their code on their local machines, before deploying it to the \ac{HPC} system.
     \item \textbf{Scalability issues with HPC:}
-    Scalability is one of the main features of \ac{k8s}, and therefore of Pachyderm a cluster can easily be scaled up or down, depending on the current workload.
+    Scalability is one of the main features of \ac{k8s}, and therefore of Pachyderm, a cluster can easily be scaled up or down, depending on the current workload.
     Many cloud providers even offer hosted \ac{k8s} clusters, which can be scaled up or down on demand, and therefore allow for a very flexible approach to the problem.
     While in classical \ac{HPC} systems, the cluster is usually fixed in size, and therefore the user has to wait for the next available slot.
     \item \textbf{Interconnected Problem-Solving in \ac{CC}}
-    This one was one of the problems which was not directly address by pachyderm or Kubernetes directly,
+    This one was one of the problems which was not directly address by Pachyderm or Kubernetes directly,
     in order to solve this problem, Arkouda was containerized and made usable for Pachyderm workloads.
     As of right now, the layers of network abstractions and the lack of OpenFAM support have a negative impact on the performance of the \ac{TCP} workloads,
-    but successfully proofs the concept of interconnected problem-solving on a \ac{CC} system.
+    but successfully prooves the concept of interconnected problem-solving on a \ac{CC} system.
     \item \textbf{Provenance and Versioning:}
     Combining the advantages the Pachyderm File System with the completely \ac{CI/CD} based approach to the deployment of the workflows,
     allows a tracking of each and every part that goes into each and every step of the workflows.

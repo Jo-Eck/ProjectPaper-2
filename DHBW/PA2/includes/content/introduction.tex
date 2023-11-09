@@ -8,9 +8,9 @@ result in solutions and further questions which are listed in the contributions 
 
 \section{Motivation}
 
-The proliferation of "Big Data" has led to the need to compute, analyze, and visualize ever-increasing amounts of datasets,
-which themselves are getting more and more complex and thereore computationally expensive to process resulting in
- an ever-increasing demand for more efficient and quicker ways to process data.
+The proliferation of "Big Data" has led to the need to compute, analyze, and visualize ever-
+increasing amounts of datasets, which themselves are getting more and more complex.
+This has  led to an ever-increasing demand for more efficient and quicker ways to process data.
 
 Both the \ac{HPC} and the \ac{CC} community have been working on solutions to distribute and parallelize computations for decades, 
 both with their own approaches and solutions to their respective problems.
@@ -18,14 +18,15 @@ both with their own approaches and solutions to their respective problems.
 While the \ac{HPC} community has been putting a lot of effort into developing new and extremely efficient ways to parallelize computations,
 the \ac{CC} community has been focusing on improving the flexibility, scalability and resilience of their solutions as well as enhancing usability for developers and end-users.
 
-Both used to be very distinct and separate communities due to their very different use cases, while the \ac{HPC} community was mostly concerned with scientific computing and simulations of physical phenomena,
+Both used to be very distinct and separate communities due to their very different use cases.
+While the \ac{HPC} community was mostly concerned with scientific computing and simulations of physical phenomena,
 the \ac{CC} community is mostly concerned with providing a reliable and easily up and down scalable infrastructure for the industry and businesses.
 
 Now with the advent of \ac{ML} and \ac{AI} the two communities are starting to converge, 
 as the \ac{ML} and \ac{AI} community is adopting the tools and techniques of both communities to solve their problems as they see fit.
 
-But this convergence of the two is not without its problems, being developed in two separate, coexisting communities, the tools and techniques of both communities are not always compatible with each other,
-the goal of this project is to find a way to bridge this gap and to find a way to combine the best of both worlds.
+However this convergence of the two is not without its problems, being developed in two separate, coexisting communities, the tools and techniques of both communities are not always compatible with each other.
+The goal of this project is to find a way to bridge this gap and to find a way to combine the best of both worlds.
 
 \newpage
 
@@ -47,7 +48,7 @@ The following key problems have emerged from the convergence of High Performance
 
     \item \textbf{Environment/Package Management in \ac{HPC}:} 
         \ac{HPC} systems are notorious for their complex package management systems.
-        As having a shared infrastructure between many users each with their own specific needs and requirements of different versions of packages, libaries and software,
+        As having a shared infrastructure between many users, each with their own specific needs and requirements of different versions of packages, libaries and software,
         all the while sharing a common environment.
         Many solutions to this problem have been developed, each with their own advantages and disadvantages.
         \footcite{duboisWhyJohnnyCan2003} \footcite{bzeznikNixHPCPackage2017} \footcite{gamblinSpackPackageManager2015} \footcite{hosteEasyBuildBuildingSoftware2012}
@@ -58,8 +59,8 @@ The following key problems have emerged from the convergence of High Performance
         This lack of portability contrasts sharply with the more platform-agnostic nature of \ac{CC} environments, where the containerization of applications has become the norm for ensuring portability.
 
     \item \textbf{Scalability and Flexibility in \ac{HPC}:}
-        Due to its direct access to the hardware and very specific hardware needs, \ac{HPC} systems are often hard to dynamically scale and inflexible. 
-        while \ac{CC} systems are designed to be easily scalable and flexible and are often designed to be hardware-agnostic and abstract away the underlying hardware.
+        Due to its direct access to the hardware and very specific hardware needs, \ac{HPC} systems are often inflexible and hard to dynamically scale. 
+        While \ac{CC} systems are designed to be easily scalable and flexible and are often designed to be hardware-agnostic and abstract away the underlying hardware.
         This becomes especially relevant in the context of heterogeneous hardware, where the hardware is not uniform and consists of different types of hardware,
         which is becoming more and more common in the context of ML and AI research.
       
@@ -72,11 +73,11 @@ The following key problems have emerged from the convergence of High Performance
         Another need that is becoming more and more important in the context of ML and AI research is the need for provenance and reproducibility of results.
         Being able to tell which data was used to train the model, is of ever-increasing importance as the influence the resulting models have on our lives increases as well as the data used to train the model.
         This is especially important since it is crucial to ensure that the data is not biased, outdated, or otherwise flawed, which could lead to incorrect predictions, decisions, or recommendations. 
-        in addition various data sources, from images to text, may have copyright restrictions that, when overlooked, can lead to significant legal complications.
+        In addition various data sources, from images to text, may have copyright restrictions that, when overlooked, can lead to significant legal complications.
 
     \item \textbf{Versioning Limitations:} 
         The dynamic nature of ML and AI research necessitates robust versioning solutions for data, configurations and code.
-        While \ac{CC} has developed many solutions to this problem over the years, making them their own subsection of the ecosystem,
+        \ac{CC} has developed many solutions to this problem over the years, making them their own subsection of the ecosystem,
         namely \ac{CI/CD} tools for the testing and deployment of applications as well as \ac{IaC} tools for the deployment of infrastructure.
         While many solutions have been developed for the one-off deployment of \ac{HPC} systems, the dynamic nature of \ac{CC} systems necessitates a more robust solution to this problem, 
         from which the \ac{HPC} community could benefit as well. 
@@ -103,7 +104,7 @@ This process of integration and prototyping as well as the explanation of the un
 
 In order to address the problems stated above, find answers to the research questions and to bridge the gap between the two paradigms, the following contributions were made:
 \begin{itemize}
-    \item \textbf{C1:} \textit{ An analysis of the problem space and existing solution, within the constraints of time, resources and businesses needs.}
-    \item \textbf{C2:} \textit{ A prototype implementation combining the Arkouda framework with the \ac{k8s} based workflow orchestrator 'Pachyderm' running on the Heydar Cluster}
-    \item \textbf{C3:} \textit{ Further integrations of tools from both sides of the spectrum, addressing many of aforementioned pain-points}
+    \item \textbf{C1:} \textit{ An analysis of the problem space and existing solution, within the constraints of time, resources, and businesses needs.}
+    \item \textbf{C2:} \textit{ A prototype implementation combining the Arkouda framework with the \ac{k8s} based workflow orchestrator 'Pachyderm' running on the Heydar Cluster.}
+    \item \textbf{C3:} \textit{ Further integrations of tools from both sides of the spectrum, addressing many of aforementioned pain-points.}
 \end{itemize}
