@@ -29,11 +29,11 @@ Due to this extensive list of diverse tools, a set of criteria was established t
 The following list of criteria was established to evaluate the tools:
 
 \begin{itemize}
-    \item \textbf{Ease of use:} 
-        As the hinted end users of the tool are not primarily \ac{HPC} experts, the tool needs to be easy to use and understand,
-        and should not require the end user to have a deep understanding of the underlying infrastructure.
-        While we can expect that the administration of the infrastructure will be done by adequately trained personnel, 
-        the end users should be spared having to adapt to the underlying infrastructure as much as possible.
+    % \item \textbf{Ease of use:} 
+    %     As the hinted end users of the tool are not primarily \ac{HPC} experts, the tool needs to be easy to use and understand,
+    %     and should not require the end user to have a deep understanding of the underlying infrastructure.
+    %     While we can expect that the administration of the infrastructure will be done by adequately trained personnel, 
+    %     the end users should be spared having to adapt to the underlying infrastructure as much as possible.
 
     \item \textbf{Community, Support and  Documentation:}
         Due to the limited time frame in which this project is being executed, the time to learn the intricacies of a given software is limited an important factor for this is therefore, that software needs to be adequately documented, and a support framework needs to be in place.
@@ -71,7 +71,7 @@ The first step of which is the ranking of the criteria from most important to le
     \item \textbf{ Community, Support \& Docs } This also applies for the external support available to the development team as if they are stuck, no developed can proceed, no matter the other factors.
     \item \textbf{ License } This criterion has to weighted carefully, as a highly restrictive license might be a deal-breaker, but a license that is too permissive might conflict with the strategic alignment with \ac{HPE}.
     \item \textbf{ Strategic alignment with \ac{HPE} } As this is developed by and for \ac{HPE} their requirements need to be considered as well.
-    \item \textbf{ Ease of Use } While the ease of use is important as this should eventually become a product, for now the central aspect is to create a \ac{PoC} therefore the usability is a priority, but not the highest.
+    % \item \textbf{ Ease of Use } While the ease of use is important as this should eventually become a product, for now the central aspect is to create a \ac{PoC} therefore the usability is a priority, but not the highest.
     \item \textbf{ Cost } As this is a \ac{PoC} and not a commercial product, the cost is not the highest priority as this will be of small scale and therefore the cost will be negligible in most cases.
     \item \textbf{ Maturity } While the maturity of the tool is important, as this is a \ac{PoC} and not a commercial product, if the maturity of the tool does not impact the extensibility of the tool or the development process, it is not the highest priority.
 \end{enumerate}
@@ -84,12 +84,12 @@ The lookup tables for the weighting function can be found in the appendix \ref{a
     \centering
     \begin{tabular}{|l|l|} \hline
         \textbf{Criteria}                       & \textbf{Weight}       \\ \hline
-        Community, Support and  Documentation   &  0.2143               \\ \hline
-        License                                 &  0.1786               \\ \hline
-        Strategic alignment with \ac{HPE}       &  0.1429               \\ \hline
-        Ease of use                             &  0.1071               \\ \hline
-        Maturity                                &  0.0714               \\ \hline
-        Cost                                    &  0.0357               \\ \hline
+        Community, Support and  Documentation   &  0.3333               \\ \hline
+        License                                 &  0.2667               \\ \hline
+        Strategic alignment with \ac{HPE}       &  0.2000               \\ \hline
+        % Ease of use                             &  0.1071               \\ \hline
+        Maturity                                &  0.1333               \\ \hline
+        Cost                                    &  0.0667               \\ \hline
     \end{tabular}
     \caption{Weighting of the criteria}
     \label{tab:weighting_of_the_criteria}
@@ -99,14 +99,14 @@ The lookup tables for the weighting function can be found in the appendix \ref{a
 
 Now that we have established the criteria as well as their weighing, we can begin to evaluate the tools based on the criteria.
 Here we will be using a mix of Methodologies, as some of these criteria can simply be indexed via analogous values, while others are of a more non-specific nature.
-The discussion of which values will be used on which weighing scale for the tools' comparison can be found in the appendix under 
+The discussion of which values will be used on which weighing scale for the tools' comparison can be found in the appendix in the sections 1 - 5 \ref{tool_eval}
 
 
 \begin{table}[htb]
     \centering
     \begin{tabular}{|l|l|l|l|l|} \hline
         \textbf{Criteria}                                          & \textbf{Pachyderm}    & \textbf{Argo}         & \textbf{\ac{CLASP}}   & \textbf{Snaplogic}     \\ \hline
-        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
+        % Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                    \\ \hline
         Community, Support \& Docs                                 & 8.43                   & 2.32                   & 2.5                   & 5.03                   \\ \hline
         Maturity                                                   & 7.86                 & 5.2                   & 2.5                   & 5                   \\ \hline
         Strategic alignment                                        & 10                   & 2.5                   & 7.5                   & 0                    \\ \hline
@@ -123,7 +123,7 @@ The following table shows the evaluation of the tools which where chosen for the
     \centering
     \begin{tabular}{|l|l|l|l|l|l|} \hline
         \textbf{Criteria}                                          & \textbf{Airflow}      & \textbf{Kubeflow}     & \textbf{Knative}      & \textbf{Luigi}        & \textbf{CWL}          \\ \hline
-        Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
+        % Ease of use                                                & TBD                   & TBD                   & TBD                   & TBD                   & TBD                   \\ \hline
         Community, Support \& Docs                                 & 10                    & 2.25                  & 0.74                  & 2.29                  & 0.22                  \\ \hline
         Maturity                                                   & 9.41                  & 5.05                  & 6.43                  & 5.23                  & 3.98                  \\ \hline
         Strategic alignment                                        & 2.5                   & 2.5                   & 2.5                   & 2.5                   & 2.5                   \\ \hline
@@ -137,6 +137,42 @@ The following table shows the evaluation of the tools which where chosen for the
 
 \subsubsection{Conclusion of the Selection Process}
 
-\textcolor{red}{TODO: Write conclusion of the selection process}
+Now we can use these values and the weighting of the criteria to calculate the overall score of the tools, in order to find out which tool is the most suitable for the task at hand.
+The following table shows the overall score of the tools:
 
-\blindtext[1]
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|} \hline
+    \textbf{Tool} & \textbf{Score} \\ \hline
+    Pachyderm     & 8.9247         \\ \hline
+    Airflow       & 7.7546         \\ \hline
+    CLASP         & 6.0005         \\ \hline
+    Argo          & 4.6337         \\ \hline
+    Luigi         & 4.6277         \\ \hline
+    Kubeflow      & 4.5903         \\ \hline
+    Knative       & 4.2710         \\ \hline
+    CWL           & 3.7711         \\ \hline
+    Snaplogic     & 2.5431         \\ \hline
+\end{tabular}
+\caption{Overall score of the tools}
+\label{tab:overall_score_of_the_tools}
+\end{table}
+
+
+As can be seen in table \ref{tab:overall_score_of_the_tools}, Pachyderm emerged as the most suitable tool, with the highest overall score of 8.9247. 
+This suggests that Pachyderm aligns well with the project's goals and the requirements of HPE, thanks to its strong community support, documentation, and strategic alignment with HPE's objectives.
+
+Airflow followed Pachyderm with a score of 7.7546, indicating its strength in community support and documentation, as well as its cost-effectiveness.
+Although Airflow did not score as high as Pachyderm, it remains a strong contender for use in future iterations of the project.
+
+CLASP, an in-house developed tool, had a moderate score of 6.0005, which might make it suitable for initial\ac{PoC} phases due to its alignment with the existing ecosystem and its no-cost advantage.
+However, its lower scores in other criteria might limit its potential for broader implementation.
+
+Argo, Luigi, Kubeflow, and Knative scored in the middle range,
+suggesting they could be considered for specific use cases but may not be as well-rounded for the project's current needs as Pachyderm or Airflow.
+
+CWL's lower score of 3.7711 indicates it may not meet the project's requirements as effectively as the other tools evaluated.
+Its lower score in community support and strategic alignment with HPE's goals could be areas of concern.
+
+Lastly, Snaplogic scored the lowest at 2.5431, suggesting that it may not be well-suited for this project's objectives,
+especially given its lack of a strong strategic alignment with HPE and lower scores in community support and documentation. 
