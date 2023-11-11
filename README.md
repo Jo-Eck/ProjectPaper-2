@@ -7,17 +7,17 @@ This repository encompasses both the project and its corresponding paper of my s
 **Abstract:**
 
 This Second project paper presents the development and demonstration of a proof-of-concept for the
-integration of \ac{HPC} programming frameworks in ta a container-base workflow orchestrator the convergence of
-\ac{HPC} and \ac{CC} has revealed novel potential in highly scalable and flexible computing.
+integration of HPC programming frameworks in ta a container-base workflow orchestrator the convergence of
+HPC and CC has revealed novel potential in highly scalable and flexible computing.
 
-This project aim to reconcile the different demands of the \ac{HPC} and \ac{CC} communities by demonstrating the integration of
-the \ac{HPC} programming framework Arkouda into the container-based workflow orchestrator Pachyderm, showing the technical feasibility of this approach.
+This project aim to reconcile the different demands of the HPC and CC communities by demonstrating the integration of
+the HPC programming framework Arkouda into the container-based workflow orchestrator Pachyderm, showing the technical feasibility of this approach.
 
 A prototype implementing this integrated system is constructed and evaluated through prototyping methodologies, with a focus on resilience, scalability, portability, and user-friendliness.
-The prototype is iteratively refined to address \ac{LCP} and \ac{TCP}, with particular attention to the usability of the system for non \ac{CC} experts.
+The prototype is iteratively refined to address LCP and TCP, with particular attention to the usability of the system for non CC experts.
 
 This project paper contributes to the body of knowledge by way of practical example, lessons learned with each iteration, and sheds lith on pathways for future research towards
-a landscape where the seamless and efficient integration of \ac{HPC} workloads in \ac{CC} environments becomes possible
+a landscape where the seamless and efficient integration of HPC workloads in CC environments becomes possible
 
 The complete paper can be found here: \
 📜 [Full Paper](DHBW/PA2/studienarbeit.pdf)
