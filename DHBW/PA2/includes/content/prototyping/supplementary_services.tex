@@ -23,17 +23,17 @@ But as soon as we moved over to the Heydar system keeping the Hosts internal reg
 Therefore we added a private docker registry to the cluster \footcite{kumarHowSetupPrivate2020}.
 The deployment config is based on the official docker registry helm chart\footcite{Dockerregistry10Phntom} and can be found in the projects repo \footcite{dokcer_registry} .
 
-\subsubsection{Frogejo Catalogue}
+\subsubsection{Forgejo Catalogue}
 
 As this should be the \ac{PoC} of an end user tool, we should also look into usability features and based on previous experience of the team,
 the need for a catalogue of previously developed pipelines and processing code was identified.
 The idea was to create something similar to the \ac{CLASP} catalogue\footcite{sayersCLoudApplicationServices2015} but for the Pachyderm ecosystem.
-Meaning that users can share, search and deploy workflows from a central catalog, without having to worry about the underlying infrastructure.
+This means that users can share, search and deploy workflows from a central catalog, without having to worry about the underlying infrastructure.
 
 Having \ac{HPC} software in a completely contained and versioned system directly addresses many of the original problem statements,
 described in \ref{ProblemStatement}, especially the problem of reproducibility, environment management, and the lack of portability.
 
-To start ofsf we, installed a simple github-like interface for the catalogue, called Frogejo\footcite{forgejoForgejo}, which is a fork of the \ac{FOSS} project Gitea\footcite{GiteaGitCup2023},
+To start off we, installed a simple github-like interface for the catalogue, called Forgejo\footcite{forgejoForgejo}, which is a fork of the \ac{FOSS} project Gitea\footcite{GiteaGitCup2023},
 being maintained by the \ac{NPO} Codeberg e.V.\footcite{codebergCodebergOrg}.
 The installation was done using their official helm chart\footcite{Forgejo13Forgejo} and can be found at in the project repo\footcite{Forgejo config}.
 
@@ -42,7 +42,7 @@ The installation was done using their official helm chart\footcite{Forgejo13Forg
 Now that we have a place to hold and version the code files and a place to hold the resulting docker images, we need a way to build and deploy them automatically.
 For that purpose an installation of Jenkins was added to the Cluster. Jenkins is a \ac{FOSS} \ac{CI/CD} tool, which is widely used in industry \footcite{JenkinsMarketShare}.
 It enables us to execute arbitrary code in an controlled environment based on triggers or schedules.
-We will be using it to automatically build and deploy docker images whenever code is pushed to the Frogejo catalogue, as well as automatically deploying pipeline scripts to Pachyderm.
+We will be using it to automatically build and deploy docker images whenever code is pushed to the Forgejo catalogue, as well as automatically deploying pipeline scripts to Pachyderm.
 
 By using this we ensure that the code and the docker images are always in sync and that the user does not have to worry about building and deploying the images manually or interacting with the underlying Cluster.
 We also extend the factor of provenance which was limited to the data itself, to the containers code and pipeline spec as well, now having total oversight into which input begets what output.
@@ -50,7 +50,7 @@ This was achieved in multiple steps as this turned out to be quite an involved p
 
 First off was of course the general installation of the project into the cluster based on the image provided by Jenkins \footcite{JenkinsJenkinsJenkinsci}.
 Then we have to integrate Jenkins into the the Kubernetes cluster as well, as we want it to be able to spawn its own worker pods within the cluster to handle the building of the containers and pushing of the pipelines.
-Also an integration with the Frogejo catalogue was needed, so that Jenkins would be informed about new commits to the catalogue and could start the building process.
+Also an integration with the Forgejo catalogue was needed, so that Jenkins would be informed about new commits to the catalogue and could start the building process.
 
 The installation instructions, \ac{RBAC} and the configuration of the Jenkins installation can be found at \ref{appendix:cicd_installation_instructions}.
 
@@ -84,7 +84,7 @@ The pipeline itself is written in a mix of Groovy, Python and bash, a flowchart 
 
 There was also a custom container image created, extending official Jenkins worker image\footcite{JenkinsJenkinsDocker}, enabling us to build docker images from within a running container in the cluster by using a dedicated kaniko 
 sidecar container \footcite{KanikoBuildImages2023} which enables us to build docker images without having to run Docker in Docker, which is not recommended \footcite{UsingDockerinDockerYour}.
-The image also contains the necessary tools to interact with the Pahcyderm API and to run the python scripts which are used to analyze the project structure and do t   e code generation, it can be found in the project Repo\footcite{PipelineImage}.
+The image also contains the necessary tools to interact with the Pahcyderm API and to run the Python scripts which are used to analyze the project structure and do t   e code generation, it can be found in the project Repo\footcite{PipelineImage}.
 
 While this pipeline does technically work, it is still still quite finicky and is missing many edgcases and does need further development to be able to handle more thant the most basic projects.
 Even though its development was cut short it does show the potential of this approach and how it could be used to make the Pachyderm ecosystem more accessible to users which are not as familiar with the underlying infrastructure, 
