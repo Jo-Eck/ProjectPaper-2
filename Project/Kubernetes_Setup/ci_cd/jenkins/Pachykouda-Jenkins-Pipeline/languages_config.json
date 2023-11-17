@@ -1,0 +1,28 @@
+{
+    "Python": {
+        "baseline_image": "python:3.9-slim",
+        "execute_command": ["python3", "/app/"],
+        "file_extension": ".py"
+    },
+    "JavaScript": {
+        "baseline_image": "node:16-slim",
+        "execute_command": ["node", "/app/"],
+        "file_extension": ".js"
+    },
+    "Java": {
+        "baseline_image": "openjdk:11-jre-slim",
+        "execute_command": ["java", "-jar", "/app/"],
+        "file_extension": ".jar"
+    },
+    "Go": {
+        "baseline_image": "golang:1.16-slim",
+        "execute_command": ["/app/"],
+        "file_extension": ".go"
+    },
+    "Ruby": {
+        "baseline_image": "ruby:2.7-slim",
+        "execute_command": ["ruby", "/app/"],
+        "file_extension": ".rb"
+    }
+
+}
