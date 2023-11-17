@@ -42,7 +42,7 @@ using kubeadm as it provides deep integration with the underlying infrastructure
 However a bare metal cluster also comes with its own set of challenges, as the cluster needs to be provisioned and configured manually.
 In order to automate this process, the Ansible automation tool was used to set up all the nodes in parallel and to ensure that the all the nodes are in the same state.
 Ansible is a declarative tool which allows for the automation of the provisioning and configuration of the cluster\footcite{Ansible2023}, by specifying the desired state of the cluster in a playbook and then applying it to the cluster.
-The Ansible playbook used for the setup of the cluster can be found in the projects repo\footcite{ansible_scipt}.
+The Ansible playbook used for the setup of the cluster can be found in the projects repo\footcite{eckerthProjectRepoAnsible}.
 
 The application of this configuration on the cluster unknowingly caused conflict between the Ansible playbook and the maintenance scripts of the cluster as the Heydar machines.
 As \ac{k8s} needs very specific configurations on the underlying infrastructure like the deactivation of swap space\footcite{InstallingKubeadm}.
@@ -63,7 +63,7 @@ it was decided to use Flannel as a \ac{CNI} instead.
 Flannel turned out to be much easier to set up and configure, as it is a very lightweight \ac{CNI} which is designed for bare metal clusters\footcite{Flannel2023}, 
 and foregoes the more advanced security features of Calico. 
 
-The Flannel configuration used for the cluster can be found in the project repo\footcite{Flannel_config}, it is closely based on the example configuration provided by the Flannel documentation\footcite{FlannelInstallConfig}.
+The Flannel configuration used for the cluster can be found in the project repo\footcite{eckerthProjectRepoFlannel}, it is closely based on the example configuration provided by the Flannel documentation\footcite{FlannelInstallConfig}.
 
 \subsubsection*{Learnings from the second iteration}
 
