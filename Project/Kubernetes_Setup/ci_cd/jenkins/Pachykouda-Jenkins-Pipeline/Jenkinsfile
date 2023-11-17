@@ -1,0 +1,117 @@
+pipeline {
+agent {
+    // Define the agent to be used for the pipeline
+    kubernetes {
+        label 'custom-jenkins'
+        defaultContainer 'custom-jenkins'
+        yaml '''
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              labels:
+                generate-jobs-label: custom-jenkins-value
+            spec:
+              containers:
+                - name: custom-jenkins
+                  image: x/custom-jenkins
+                - name: kaniko
+                  image: gcr.io/kaniko-project/executor:debug
+                  command:
+                    - sleep
+                  args:
+                    - "9999999"
+        '''
+    }
+}
+    environment {
+        CREDENTIALS_ID = 'x'
+        DOCKER_REGISTRY = 'x'
+        PIPELINE_TOOLS = 'x'
+        PACHYDERM_URL = 'x'
+    }
+
+stages {
+        stage('Checkout Pipeline Tools') {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: CREDENTIALS_ID, keyFileVariable: 'SSH_KEY')]) {
+                    echo 'Checking out tools from the PIPELINE_TOOLS repository...'
+                    sh '''
+                        export GIT_SSH_COMMAND="ssh -i $SSH_KEY -o StrictHostKeyChecking=no"
+                        if [ -d "Pachykouda-Jenkins-Pipeline" ]; then
+                            cd Pachykouda-Jenkins-Pipeline && git pull
+                        else
+                            git clone -b main $PIPELINE_TOOLS --depth 1
+                        fi
+                    '''
+                    stash includes: 'Pachykouda-Jenkins-Pipeline/**', name: 'pipeline-tools'
+                    echo 'Pipeline tools checkout completed.'
+                }
+            }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                echo 'Checking out code from the repository...'
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: env.URL, credentialsId: CREDENTIALS_ID]],
+                    doGenerateSubmoduleConfigurations: false
+                ])
+                unstash 'pipeline-tools'
+                echo 'Code checkout completed.'
+            }
+        }
+
+        stage('Analyse Repo') {
+            steps {
+                echo 'Analysing the  Structure of the Repo..'
+                sh 'python3 ./Pachykouda-Jenkins-Pipeline/analyze_repo.py'
+                echo 'Analysis of repo completed.'
+            }
+        }
+
+        stage('Debug info'){
+            steps{
+                sh 'pwd'
+                sh 'ls -la'
+                sh 'tree .. -L 4'
+            }
+        }
+
+        stage('Deploying') {
+            steps {
+                    echo 'Deploying to Pachyderm...'
+                    sh 'python3 ./Pachykouda-Jenkins-Pipeline/deploy.py'
+                    echo 'Deployment to Pachyderm completed.'
+                    sh 'rm repo_structure.json'
+            }
+        }
+
+        stage('Debug info2'){
+            steps{
+                sh 'pwd'
+                sh 'ls -la'
+                sh 'tree .. -L 4'
+            }
+        }
+
+        stage('Building Docker Image') {
+            steps {
+                container('kaniko') {
+                    echo 'Executing all docker build scripts...'
+                    sh '''
+                        for script in docker_builds/*.sh; do
+                            chmod +x $script
+                            cat $script
+                            ./$script
+                        done
+                    '''
+                    echo 'docker_builds executed successfully.'
+                    sh 'rm -rf docker_builds'
+                    echo 'docker_builds folder deleted.'
+                }
+            }
+        }
+    }
+}
