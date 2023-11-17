@@ -21,7 +21,7 @@ During the first iterations when the development was being done on Minikube as d
 of the node was enough.
 But as soon as we moved over to the Heydar system keeping the Hosts internal registries in sync was of course not feasible,
 Therefore we added a private docker registry to the cluster \footcite{kumarHowSetupPrivate2020}.
-The deployment config is based on the official docker registry helm chart\footcite{Dockerregistry10Phntom} and can be found in the projects repo \footcite{dokcer_registry} .
+The deployment config is based on the official docker registry helm chart\footcite{Dockerregistry10Phntom} and can be found in the projects repo \footcite{eckerthProjectRepoDocker} .
 
 \subsubsection{Forgejo Catalogue}
 
@@ -35,7 +35,7 @@ described in \ref{ProblemStatement}, especially the problem of reproducibility, 
 
 To start off we, installed a simple github-like interface for the catalogue, called Forgejo\footcite{forgejoForgejo}, which is a fork of the \ac{FOSS} project Gitea\footcite{GiteaGitCup2023},
 being maintained by the \ac{NPO} Codeberg e.V.\footcite{codebergCodebergOrg}.
-The installation was done using their official helm chart\footcite{Forgejo13Forgejo} and can be found at in the project repo\footcite{Forgejo config}.
+The installation was done using their official helm chart\footcite{Forgejo13Forgejo} and can be found at in the project repo\footcite{eckerthProjectRepoForgejo}.
 
 \subsubsection{Jenkins}
 
