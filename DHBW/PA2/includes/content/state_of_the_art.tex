@@ -2,18 +2,30 @@
 \label{State_of_the_Art}
 
 While this project assumes that the reader is already familiar with the basic concepts of High Performance Computation
-as well as having a basic understanding of the cloud computing tech stack, especially containerization and software defined infrastructure,
+as well as having a basic understanding of the Cloud Computing technology stack, especially containerization and software defined infrastructure,
 this chapter will give a brief overview of the current state of the art in the field of High Performance Computing and Cloud Computing.
 
 \section{Containerization}
-
-Containerization is the process of isolating a process from the rest of the user space of the operating system.
-It essentially creates a virtual environment for the process to run in, which can be customized to the needs of the process, without affecting the rest of the system.
-This makes it possible to run multiple processes on the same machine, without having to worry about them interfering with each other or the rest of the system\footcite{IEEEXploreFullText}.
-This is especially useful for dependency management, as it allows running multiple versions of the same library on the same machine, and only the process that needs a specific version of the library will use it.
-In comparison to the more traditional approach of using virtual machines, containerization is much more lightweight, as it does not need to emulate a whole operating system, 
-but builds on top of the hosts kernel and only isolates the user space\footcite{WhatContainerDocker}.
-
+Containerization, a concept originated within the cloud computing community, refers to the process of
+isolating a process from the rest of the operating system's user space. It
+provides a virtual environment for the process to run in, which can be
+specifically tailored to the process's needs without impacting the rest of the
+system. Such isolation is particularly advantageous when running multiple
+processes on the same machine, as it eliminates the risk of interference between
+processes or with the system itself\footcite{shenoiHPCEducationDomain2019}. A
+notable benefit of containerization is its streamlined dependency management,
+enabling different versions of the same library to coexist on a single machine,
+with each process accessing the version it requires. Containerization offers a
+lightweight alternative to traditional virtual machines by building on the
+host's kernel to isolate only the user space, rather than emulating an entire
+operating system\footcite{WhatContainerDocker}. Although prevalent in cloud
+computing, containerization technologies are only recently being adopted in
+\ac{HPC} domains. The \ac{HPC} community's cautious approach
+towards containerization stems from the imperative to preserve system
+performance, which is paramount in high-stakes computational tasks. This section
+will delve into the nuances of containerization within the \ac{HPC} ecosystem,
+elucidating the reasons behind its gradual integration and the potential
+benefits it heralds for future applications.
 \subsection*{Container Solutions}
 
 Currently the containerization paradigm is spreading rapidly with multiple solutions available, the most popular being Docker \footcite{StackOverflowDeveloper}.
@@ -43,8 +55,8 @@ Make it especially useful for large scale cloud providers, as it allows them to 
 
 \section{High Performance Computing Frameworks}
 
-\ac{HPC} is the process of using multiple computing nodes in collaboration to solve a problem, that would be too computationally expensive for a single node to solve in a reasonable amount of time.
-The computational power provided by \ac{HPC} is used in a wide variety of fields, ranging from weather forecasting to computational fluid dynamics and even in the field of machine learning.
+\ac{HPC} is the process of using multiple computing nodes in collaboration to solve a problem in less time or with better accuracy than would be possible with a single node.
+ The computational power provided by \ac{HPC} is used in a wide variety of fields, ranging from weather forecasting to computational fluid dynamics and even in the field of machine learning.
 While \ac{HPC} is as diverse as the problems it is used to solve, there are some common patterns that can be found in most \ac{HPC} problems.
 Generally \ac{HPC} problems can be divided into two categories, \ac{LCP} and \ac{TCP} problems, which are discussed in more detail in \ref{state_of_the_art_tcp}.
 
@@ -58,7 +70,7 @@ From the perspective of the user, \ac{LCP} problems are the easiest to solve by 
 Seen from the perspective of the \ac{HPC} system, \ac{LCP} problems trivial at best as they require very little communication between the different nodes.
 
 The \ac{CC} community has already seen the need in this aspect and has developed and integrated systems to solve these,
-such as containerized versions of MapReduce \footcite{camacho-rodriguezApacheHiveMapReduce2019} or cloud native solutions like Pachyderm \footcite{HomePagePachyderm}
+such as containerized versions of MapReduce \footcite{camacho-rodriguezApacheHiveMapReduce2019} or cloud native solutions like Pachyderm \footcite{HomePage2022}
 
 
 \subsection{Tightly Coupled Problems}
@@ -70,5 +82,5 @@ A good example of a \ac{TCP} problem are the n-body problems, where the position
 These kind of problems require a more sufisticated approach, as they need to share state across the multiple computing nodes.
 Sharing the necessary information between the nodes while maintaining performance at scale, has become its own sector in industry and science.
 
-Communication protocols like \ac{MPI}\footcite{snirMPICompleteReference1998}, \ac{OpenSHMEM} \footcite{chapmanIntroducingOpenSHMEMSHMEM2010}
+Communication protocols like \ac{MPI}\footcite{snirMPICompleteReference1998},\break \ac{OpenSHMEM} \footcite{chapmanIntroducingOpenSHMEMSHMEM2010}
 have been developed to facilitate the communication between nodes and processes, but are still being continuously developed and optimized.

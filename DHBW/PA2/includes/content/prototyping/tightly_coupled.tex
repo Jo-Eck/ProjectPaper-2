@@ -22,11 +22,11 @@ After the worker has finished its task, the resulting datums are then collected 
 A more detailed swim lane diagram of this process can be found in the appendix at \ref{abb:pipeline_communication_sld}
 
 This approach is very well suited for \ac{LCP} problems, as the datums are independent of each other and can be processed in parallel without any issues.
-Atlrhoug it is not well suited for Large \ac{TCP} problems, if the computation of the data can not be split into distinct independent datum files, or the computation is reliant on the intercommunication of the datums.
+Although it is not well suited for Large \ac{TCP} problems, if the computation of the data can not be split into distinct independent datum files, or the computation is reliant on the intercommunication of the datums.
 If the datasets are small enough, this does not really present a problem as one can simply take all the data into a single worker node and process it there.
 However as a single worker node can only utilize the resources of a single physical compute node, this does not scale well with the size of the dataset and defeats the purpose of a distributed system in the first place.
 
-So our goal for this section is to find a way to enable pachyderm to pool the entire resources of the cluster, in order to solve a \ac{TCP} problem.
+So our goal for this section is to find a way to enable Pachyderm to pool the entire resources of the cluster, in order to solve a \ac{TCP} problem.
 
 \subsubsection{First iteration - PachyKouda}
 

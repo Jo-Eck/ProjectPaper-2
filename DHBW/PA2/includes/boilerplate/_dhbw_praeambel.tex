@@ -41,15 +41,32 @@
   bibencoding=utf8]{biblatex}
 \input{includes/boilerplate/_dhbw_biblatex-config.tex} % mit DHBW-spezifischen Einstellungen
 
+% Redefine the footcite command
+\DeclareCiteCommand{\footcite}[\mkbibfootnote]
+  {\usebibmacro{prenote}}
+  {\ifnameundef{labelname}
+     {\printfield[citetitle]{labeltitle}} % fallback to title
+     {\printnames{labelname}}% print author name
+   \setunit*{\nameyeardelim}%
+   \usebibmacro{cite:labeldate+extradate}%
+   \setunit{\bibpagespunct}%
+   \printfield{pages}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+ 
+
+
 \usepackage{hyperref}       % URL-Formatierung, klickbare Verweise
-
 \usepackage{tocloft}        % für Verzeichnis der Anhänge
-
 \usepackage{graphicx}       % Einbinden von Grafiken
 \usepackage{tikz}           %  -"-
 \usepackage{float}
 \usepackage{amsmath}
+\usepackage{seqsplit}
 
+\DeclareFieldFormat{url}{\urlstyle{same}\href{#1}{\seqsplit{#1}}}
+\DeclareFieldFormat{note}{\seqsplit{#1}}
+\DeclareFieldFormat{doi}{\seqsplit{#1}}
 
 \newcounter{anhcnt}
 \setcounter{anhcnt}{0}
@@ -131,5 +148,5 @@
 
 \setlength\cftaftertoctitleskip{\myAfterTitleSkip}
 \setlength\cftafterloftitleskip{\myAfterTitleSkip}
-\setlength\cftafterlottitleskip{\myAfterTitleSkip}                                                            
+\setlength\cftafterlottitleskip{\myAfterTitleSkip}
 %%% Ende der Präambel %%%
