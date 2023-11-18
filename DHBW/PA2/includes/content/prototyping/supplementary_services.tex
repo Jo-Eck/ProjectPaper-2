@@ -80,11 +80,11 @@ However as we want to minimize the interaction with the underlying infrastructur
 In order to achieve this, the pipeline first detects the existence of the above components.
 We then try to make a reasonable assumption about the structure of the project and the relation between the components, considering: directory structure, naming conventions, and static code analysis.
 The pipeline will then try to fill in gaps in the project structure, like missing Dockerfile by using default values and insights gained form the previous steps.
-The pipeline itself is written in a mix of Groovy, Python and bash, a flowchart describing the process in more detail can be found in the appendix at \ref{abb:flowchart_pipeline_upper} its code can be found in the projects repo\footcite{Pipeline}.
+The pipeline itself is written in a mix of Groovy, Python and bash, a flowchart describing the process in more detail can be found in the appendix at \ref{abb:flowchart_pipeline_upper} its code can be found in the projects repo\footcite{eckerthProjectRepoJenkins}.
 
 There was also a custom container image created, extending official Jenkins worker image\footcite{JenkinsJenkinsDocker}, enabling us to build docker images from within a running container in the cluster by using a dedicated kaniko 
 sidecar container \footcite{KanikoBuildImages2023} which enables us to build docker images without having to run Docker in Docker, which is not recommended \footcite{UsingDockerinDockerYour}.
-The image also contains the necessary tools to interact with the Pahcyderm API and to run the Python scripts which are used to analyze the project structure and do t   e code generation, it can be found in the project Repo\footcite{PipelineImage}.
+The image also contains the necessary tools to interact with the Pahcyderm API and to run the Python scripts which are used to analyze the project structure and do t   e code generation, it can be found in the project Repo\footcite{eckerthProjectRepoJenkinsa}.
 
 While this pipeline does technically work, it is still still quite finicky and is missing many edgcases and does need further development to be able to handle more thant the most basic projects.
 Even though its development was cut short it does show the potential of this approach and how it could be used to make the Pachyderm ecosystem more accessible to users which are not as familiar with the underlying infrastructure, 
