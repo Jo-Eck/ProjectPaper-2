@@ -313,3 +313,4 @@ project/Kymera/Arkouda/arkouda
 .pachykouda
 project/Kymera/Arkouda/config/secrets/
 DHBW/PA2/studienarbeit.app
+Project/Kubernetes_Setup/ci_cd/jenkins/.vscode/settings.json
