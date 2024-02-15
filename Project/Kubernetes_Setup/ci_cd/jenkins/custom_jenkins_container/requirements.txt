@@ -1,5 +1,5 @@
 gitdb==4.0.10
-GitPython==3.1.32
+GitPython==3.1.41
 Pygments==2.16.1
 smmap==5.0.0
 gitignore-parser==0.1.6
