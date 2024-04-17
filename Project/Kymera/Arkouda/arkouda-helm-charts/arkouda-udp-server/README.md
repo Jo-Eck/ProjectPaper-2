@@ -57,7 +57,7 @@ The arkouda-udp-server deployment discovers all arkouda-udp-locale pods on start
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: arkouda-pod-reader
+  name: pod-reader
 rules:
 - apiGroups: [""]
   resources: ["pods"]
@@ -70,7 +70,7 @@ This ClusterRole is bound to the arkouda Kubernetes user as follows:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: arkouda-pod-reader-binding
+  name: pod-reader-binding
 subjects:
 - kind: User
   name: arkouda

@@ -20,7 +20,7 @@ server:
   port:  # Arkouda port, defaults to 5555
   memTrack: true # needs to be true to enable memory metrics and memory use forecasting 
   numLocales: 4 # number of arkouda-udp-locale pods
-  threadsPerLocale: 1 # number of CPU cores for each locale
+  threadsPerLocale: 12 # number of CPU cores for each locale
 external:
   persistence: 
     enabled: true

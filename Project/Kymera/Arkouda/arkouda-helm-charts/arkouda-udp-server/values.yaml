@@ -20,7 +20,7 @@ server:
   numLocales: 1 # total number of Arkouda locales = number of arkouda-udp-locale pods + 1
   authenticate: false # whether to require token authentication
   verbose: true # enable verbose logging
-  threadsPerLocale: # number of cpu cores to be used per locale
+  threadsPerLocale: 12 # number of cpu cores to be used per locale
   memMax: # maximum bytes of RAM to be used per locale
   memTrack: true
   logLevel: LogLevel.DEBUG
